@@ -1,9 +1,16 @@
 "use client";
+import Loading from "@/components/common/Loading";
+import Navbar from "@/components/common/Navbar";
+import useFetch from "@/hooks/useFetch";
+import { User } from "@/models/User";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const { data: user, isLoading } = useFetch<{ user: Omit<User, "role"> }>(
+    `${process.env.NEXT_PUBLIC_API_URL}/user`
+  );
   const router = useRouter();
 
   useEffect(() => {
@@ -24,5 +31,12 @@ export default function Layout({ children }: { children: ReactNode }) {
     refreshToken();
   }, []);
 
-  return <>{children}</>;
+  if (isLoading || !user) return <Loading />;
+
+  return (
+    <>
+      <Navbar user={user.user} />
+      {children}
+    </>
+  );
 }
