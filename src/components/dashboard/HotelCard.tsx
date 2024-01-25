@@ -10,7 +10,7 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
     hotel.description = hotel.description.slice(0, 500) + "...";
 
   return (
-    <div className="mt-3 ml-3 border-solid border border-slate-400 rounded-xl flex flex-col">
+    <div className="mt-3 mx-2 border-solid border border-slate-400 rounded-xl flex flex-col bg-slate-50 hover:shadow-xl transition-shadow">
       <Carousel
         indicators={false}
         leftControl
@@ -18,7 +18,12 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
         className="w-full h-52 object-cover rounded-tr-xl rounded-tl-xl"
       >
         {hotel.photoURLs.map((photo, id) => (
-          <img key={id} src={photo} alt="..." className="object-cover z--0" />
+          <img
+            key={id}
+            src={photo}
+            alt="..."
+            className="object-cover z-0 h-full"
+          />
         ))}
       </Carousel>
       <h4 className="p-2 m-0 text-xl font-bold">{hotel.name}</h4>
@@ -26,7 +31,7 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
         {hotel.description}
       </p>
       <button
-        className="my-3 bg-blue-500 hover:bg-blue-600 border-none px-3 py-2 rounded-md text-white hover:cursor-pointer w-fit m-auto"
+        className="my-3 bg-blue-500 hover:bg-blue-600 border-none px-3 py-2 rounded-md text-white hover:cursor-pointer w-fit m-auto dark:bg-red-500"
         onClick={() => router.push(`/dashboard/hotels/${hotel.uid}`)}
       >
         Show details
