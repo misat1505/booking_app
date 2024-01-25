@@ -23,7 +23,7 @@ function DashboardInner() {
   return (
     <>
       <NewHotelForm />
-      <div className="flex flex-wrap">
+      <div className="w-3/4 m-auto mb-4 grid grid-cols-4">
         {hotels.map((hotel) => (
           <HotelCard key={hotel.uid} hotel={hotel} />
         ))}
