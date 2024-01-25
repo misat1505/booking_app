@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/components/common/Loading";
+import HotelCard from "@/components/dashboard/HotelCard";
 import { Hotel } from "@/models/Hotel";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -30,5 +31,11 @@ export default function Dashboard() {
 
   if (isLoading) return <Loading />;
 
-  return <div>{JSON.stringify(hotels)}</div>;
+  return (
+    <div className="flex flex-wrap">
+      {hotels.map((hotel) => (
+        <HotelCard key={hotel.uid} hotel={hotel} />
+      ))}
+    </div>
+  );
 }
