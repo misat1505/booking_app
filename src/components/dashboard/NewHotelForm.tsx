@@ -32,7 +32,7 @@ export default function NewHotelForm() {
         className="bg-blue-500 hover:bg-blue-600 px-4 py-3 border-none rounded-md text-white hover:cursor-pointer"
         onClick={() => setOpenModal(true)}
       >
-        create new hotel
+        Create new hotel
       </button>
       <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         <Modal.Header />
