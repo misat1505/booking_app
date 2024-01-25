@@ -1,22 +1,27 @@
 import { auth } from "@/firebase/firebase-admin";
 import { encode } from "../utils/jwt";
-import { NextResponse } from "next/server";
+import { User } from "@/models/User";
+import { createResponse } from "../../utils/createResponse";
+import { ApiError } from "@/models/api/ApiError";
+import { NextRequest } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { idToken } = (await req.json()) as any;
 
     const decodedToken = await auth.verifyIdToken(idToken);
 
-    const userId = decodedToken.uid;
-    const email = decodedToken.email;
+    const { uid, email } = decodedToken;
 
-    const payload = { userId, email };
-    const token = encode(payload);
-    const response = new NextResponse(JSON.stringify(payload), { status: 200 });
+    const payload = { uid, email, role: "provider" } as Partial<User>;
+    const token = encode(payload, { expiresIn: "5m" });
+    const response = createResponse<{ token: string }>(
+      { token },
+      { status: 200 }
+    );
 
     const date = new Date();
-    const expDate = new Date(date.setMonth(date.getMonth() + 1));
+    const expDate = new Date(date.setMinutes(date.getMinutes() + 5));
 
     response.cookies.set("token", token, {
       httpOnly: true,
@@ -25,8 +30,11 @@ export async function POST(req: Request) {
     });
     return response;
   } catch (error) {
-    return new NextResponse(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-    });
+    return (
+      createResponse<ApiError>({ error: "Unauthorized" }),
+      {
+        status: 401,
+      }
+    );
   }
 }

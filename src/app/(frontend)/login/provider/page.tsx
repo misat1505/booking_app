@@ -15,7 +15,7 @@ export default function Login() {
         { idToken: id },
         { withCredentials: true }
       );
-      router.push("/");
+      router.push("/dashboard");
     } catch (e) {}
   };
 
