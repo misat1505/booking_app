@@ -24,15 +24,17 @@ export default function Login() {
       <div className="bg-white p-8 rounded shadow-md w-96 text-center">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png"
-          className="w-[200px] h-[200px]"
+          className="w-[200px] h-[200px] m-auto"
         />
-        <h2 className="text-2xl mb-4 font-bold mt-8">Choose action</h2>
+        <h2 className="text-2xl mb-4 font-bold mt-8">
+          Use your Google account to log in
+        </h2>
         <div className="flex space-x-4 justify-center">
           <button
             onClick={handleLogin}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border-none hover:cursor-pointer"
           >
-            Log In
+            Log in with Google
           </button>
         </div>
       </div>
