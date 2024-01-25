@@ -4,8 +4,10 @@ import { Label, Modal, TextInput, Textarea } from "flowbite-react";
 import { ChangeEvent, useRef, useState } from "react";
 import HotelImages from "./HotelImages";
 import { uploadMultipleFiles } from "@/utils/uploadFiles";
+import { useHotelsContext } from "@/app/contexts/dashboard/hotelsContext";
 
 export default function NewHotelForm() {
+  const { addHotel } = useHotelsContext();
   const hotelNameInputRef = useRef<HTMLInputElement>(null);
   const hotelDescriptionInputRef = useRef<HTMLTextAreaElement>(null);
   const hotelFilesInputRef = useRef<HTMLInputElement>(null);
@@ -37,7 +39,10 @@ export default function NewHotelForm() {
         photoURLs: urls,
       }
     );
-    console.log(response);
+
+    const newHotel = response.data.hotel;
+    addHotel(newHotel);
+    setOpenModal(false);
   };
 
   const handleFilesInputChange = (e: ChangeEvent<HTMLInputElement>) => {

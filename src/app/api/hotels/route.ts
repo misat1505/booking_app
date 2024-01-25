@@ -4,7 +4,9 @@ import { getAccessToken } from "../auth/utils/getAccessToken";
 import { createResponse } from "../utils/createResponse";
 import { ApiError } from "@/models/api/ApiError";
 import { NewId } from "@/models/api/NewId";
-import { MultipleHotels } from "./types";
+import { MultipleHotels, SingleHotel } from "./types";
+import { auth } from "@/firebase/firebase-admin";
+import { Hotel } from "@/models/Hotel";
 
 export async function POST(req: NextRequest) {
   const { success, data } = getAccessToken(req);
@@ -18,7 +20,22 @@ export async function POST(req: NextRequest) {
     data!.uid
   );
 
-  return createResponse<NewId>({ uid: newId }, { status: 200 });
+  const user = await auth.getUser(data!.uid);
+
+  const newHotel: Hotel = {
+    uid: newId,
+    name,
+    description,
+    photoURLs,
+    owner: {
+      uid: user.uid,
+      displayName: user.displayName!,
+      photoURL: user.photoURL!,
+      email: user.email!,
+    },
+  };
+
+  return createResponse<SingleHotel>({ hotel: newHotel }, { status: 200 });
 }
 
 export async function GET(req: NextRequest) {
