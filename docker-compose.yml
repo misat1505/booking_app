@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo
+    container_name: booking2_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - booking2_mongodb_data:/data/db
+
+volumes:
+  booking2_mongodb_data:
