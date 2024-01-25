@@ -8,15 +8,12 @@ export default function Navbar({ user }: { user: Omit<User, "role"> }) {
   const router = useRouter();
 
   const handleLogout = async () => {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`
-    );
-    console.log(response);
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
     router.push("/");
   };
 
   return (
-    <header className="sticky flex justify-between items-center p-6 bg-slate-200">
+    <header className="sticky top-0 flex justify-between items-center p-6 bg-slate-200 z-10">
       <div>{user.displayName}</div>
       <Avatar
         img={user.photoURL}

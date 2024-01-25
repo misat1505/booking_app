@@ -43,6 +43,8 @@ export default function NewHotelForm() {
     const newHotel = response.data.hotel;
     addHotel(newHotel);
     setOpenModal(false);
+    setFiles([]);
+    hotelFilesInputRef.current!.value = "";
   };
 
   const handleFilesInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +102,7 @@ export default function NewHotelForm() {
               <input
                 type="file"
                 className="hidden"
-                accept=".png, .jpg, .svg"
+                accept=".png, .jpg, .svg, .webp"
                 ref={hotelFilesInputRef}
                 multiple
                 onChange={handleFilesInputChange}

@@ -12,6 +12,14 @@ function DashboardInner() {
 
   if (isLoading) return <Loading />;
 
+  if (hotels.length === 0)
+    return (
+      <>
+        <NewHotelForm />
+        <div>You have not created any hotels yet.</div>
+      </>
+    );
+
   return (
     <>
       <NewHotelForm />

@@ -36,7 +36,7 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
         className="w-full h-52 object-cover rounded-tr-xl rounded-tl-xl"
       >
         {hotel.photoURLs.map((photo, id) => (
-          <img key={id} src={photo} alt="..." className="object-cover" />
+          <img key={id} src={photo} alt="..." className="object-cover z--0" />
         ))}
       </Carousel>
       <h4 className="p-2 m-0 text-xl font-bold">{hotel.name}</h4>
