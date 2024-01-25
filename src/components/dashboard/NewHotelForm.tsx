@@ -1,14 +1,29 @@
 "use client";
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
-import { useState } from "react";
+import axios from "axios";
+import { Label, Modal, TextInput, Textarea } from "flowbite-react";
+import { useRef, useState } from "react";
 
 export default function NewHotelForm() {
+  const hotelNameInputRef = useRef<HTMLInputElement>(null);
+  const hotelDescriptionInputRef = useRef<HTMLTextAreaElement>(null);
   const [openModal, setOpenModal] = useState(false);
   const [email, setEmail] = useState("");
 
   const onCloseModal = () => {
     setOpenModal(false);
     setEmail("");
+  };
+
+  const handleCreateNewHotel = async () => {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/hotels`,
+      {
+        name: hotelNameInputRef.current?.value,
+        description: hotelDescriptionInputRef.current?.value,
+        photoURLs: [],
+      }
+    );
+    console.log(response);
   };
 
   return (
@@ -24,15 +39,18 @@ export default function NewHotelForm() {
         <Modal.Body>
           <div className="space-y-6">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Sign in to our platform
+              Create new hotel
             </h3>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email" value="Your email" />
+                <Label
+                  onClick={() => hotelNameInputRef.current?.focus()}
+                  value="Name"
+                />
               </div>
               <TextInput
-                id="email"
-                placeholder="name@company.com"
+                ref={hotelNameInputRef}
+                placeholder="hotel name"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 required
@@ -40,33 +58,20 @@ export default function NewHotelForm() {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="password" value="Your password" />
+                <Label
+                  onClick={() => hotelDescriptionInputRef.current?.focus()}
+                  value="Description"
+                />
               </div>
-              <TextInput id="password" type="password" required />
-            </div>
-            <div className="flex justify-between">
-              <div className="flex items-center gap-2">
-                <Checkbox id="remember" />
-                <Label htmlFor="remember">Remember me</Label>
-              </div>
-              <a
-                href="#"
-                className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
-              >
-                Lost Password?
-              </a>
+              <Textarea ref={hotelDescriptionInputRef} required />
             </div>
             <div className="w-full">
-              <Button>Log in to your account</Button>
-            </div>
-            <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?&nbsp;
-              <a
-                href="#"
-                className="text-cyan-700 hover:underline dark:text-cyan-500"
+              <button
+                className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white"
+                onClick={handleCreateNewHotel}
               >
-                Create account
-              </a>
+                Create hotel
+              </button>
             </div>
           </div>
         </Modal.Body>
