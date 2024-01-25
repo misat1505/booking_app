@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { getUserHotels, insertNewHotel } from "./utils/functions";
+import { getHotel, getUserHotels, insertNewHotel } from "./utils/functions";
 import { getAccessToken } from "../auth/utils/getAccessToken";
 import { createResponse } from "../utils/createResponse";
 import { ApiError } from "@/models/api/ApiError";
@@ -40,10 +40,16 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("user");
+  const hotelId = req.nextUrl.searchParams.get("hotel");
 
   if (userId) {
     const hotels = await getUserHotels(userId);
     return createResponse<MultipleHotels>({ hotels }, { status: 200 });
+  }
+
+  if (hotelId) {
+    const hotel = await getHotel(hotelId);
+    return createResponse<SingleHotel>({ hotel }, { status: 200 });
   }
 
   return createResponse("nothing");

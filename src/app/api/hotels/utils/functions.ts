@@ -2,6 +2,7 @@ import { connectToDatabase } from "@/db/mongodb";
 import { auth } from "@/firebase/firebase-admin";
 import { Hotel } from "@/models/Hotel";
 import { User } from "@/models/User";
+import { ObjectId } from "mongodb";
 
 export async function insertNewHotel(
   hotel: Omit<Hotel, "owner" | "uid">,
@@ -38,4 +39,38 @@ export async function getUserHotels(userId: string): Promise<Hotel[]> {
   }));
 
   return hotelsWithOwner as any;
+}
+
+export async function getHotel(hotelId: string): Promise<Hotel> {
+  const db = await connectToDatabase();
+  const hotelsCollection = db.collection("hotels");
+
+  const hotelFetched = (
+    await hotelsCollection
+      .find({
+        _id: new ObjectId(hotelId),
+      })
+      .toArray()
+  )[0];
+  const ownerId = (hotelFetched as any).ownerId;
+
+  const user = await auth.getUser(ownerId);
+  const { uid, displayName, photoURL, email } = user;
+
+  const userData: Omit<User, "role"> = {
+    uid,
+    email: email!,
+    displayName: displayName!,
+    photoURL: photoURL!,
+  };
+
+  const { _id, ownerId: owner, ...rest } = hotelFetched as any;
+
+  const hotel: Hotel = {
+    ...rest,
+    uid: _id,
+    owner: userData,
+  };
+
+  return hotel;
 }
