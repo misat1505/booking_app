@@ -1,6 +1,7 @@
 "use client";
 import { Hotel } from "@/models/Hotel";
 import { Avatar } from "flowbite-react";
+import RoomsInspector from "./RoomsInspector";
 
 export default function HotelTiles({ hotel }: { hotel: Hotel }) {
   return (
@@ -35,12 +36,7 @@ export default function HotelTiles({ hotel }: { hotel: Hotel }) {
             Show {hotel.owner.displayName}'s page
           </button>
         </div>
-        <div className="w-full bg-slate-100 p-4 mb-4 rounded-md text-left text-lg border-solid border border-slate-300">
-          <h2 className="font-bold">Rooms</h2>
-          <button className="px-3 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 hover:cursor-pointer text-sm">
-            Add room
-          </button>
-        </div>
+        <RoomsInspector hotel={hotel} />
       </div>
     </div>
   );
