@@ -4,12 +4,11 @@ import { createResponse } from "../utils/createResponse";
 import { ApiError } from "@/models/api/ApiError";
 import { getHotel } from "../hotels/utils/functions";
 import { Room } from "@/models/Room";
-import { insertNewRoom } from "./utils/functions";
-import { NewRoom } from "./types";
+import { getHotelRooms, insertNewRoom } from "./utils/functions";
+import { MultipleRooms, SingleRoom } from "./types";
 
 export async function POST(req: NextRequest) {
   const { success, data } = getAccessToken(req);
-  console.log(success, data);
   if (!success)
     return createResponse<ApiError>({ error: "Unauthorized" }, { status: 401 });
 
@@ -26,5 +25,19 @@ export async function POST(req: NextRequest) {
 
   const newRoom = await insertNewRoom(body);
 
-  return createResponse<NewRoom>({ room: newRoom }, { status: 201 });
+  return createResponse<SingleRoom>({ room: newRoom }, { status: 201 });
+}
+
+export async function GET(req: NextRequest) {
+  const hotelId = req.nextUrl.searchParams.get("hotel");
+
+  if (!hotelId)
+    return createResponse<ApiError>(
+      { error: "No hotelId given in url." },
+      { status: 400 }
+    );
+
+  const rooms = await getHotelRooms(hotelId);
+
+  return createResponse<MultipleRooms>({ rooms }, { status: 200 });
 }

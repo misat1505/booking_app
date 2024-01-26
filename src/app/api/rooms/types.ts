@@ -1,5 +1,9 @@
 import { Room } from "@/models/Room";
 
-export type NewRoom = {
+export type SingleRoom = {
   room: Room;
+};
+
+export type MultipleRooms = {
+  rooms: Room[];
 };
