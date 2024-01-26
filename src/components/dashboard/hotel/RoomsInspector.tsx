@@ -3,13 +3,14 @@ import useFetch from "@/hooks/useFetch";
 import { Hotel } from "@/models/Hotel";
 import { Room } from "@/models/Room";
 import { Accordion } from "flowbite-react";
+import RoomAdder from "./RoomAdder";
 
 export default function RoomsInspector({ hotel }: { hotel: Hotel }) {
   const { data, isLoading } = useFetch<{ rooms: Room[] }>(
     `${process.env.NEXT_PUBLIC_API_URL}/rooms/?hotel=${hotel.uid}`
   );
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <></>;
 
   const { rooms } = data!;
 
@@ -45,11 +46,9 @@ export default function RoomsInspector({ hotel }: { hotel: Hotel }) {
 
   return (
     <div className="w-full bg-slate-100 p-4 mb-4 rounded-md text-left text-lg border-solid border border-slate-300">
-      <h2 className="font-bold">Rooms</h2>
+      <h2 className="mb-4 font-bold">Rooms</h2>
       <RoomsInfo />
-      <button className="px-3 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 hover:cursor-pointer text-sm">
-        Add room
-      </button>
+      <RoomAdder hotel={hotel} />
     </div>
   );
 }
