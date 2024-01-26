@@ -74,3 +74,41 @@ export async function getHotel(hotelId: string): Promise<Hotel> {
 
   return hotel;
 }
+
+export async function getHotels(
+  start: number,
+  count: number
+): Promise<Hotel[]> {
+  const db = await connectToDatabase();
+  const hotelsCollection = db.collection("hotels");
+
+  const hotels: any[] = (
+    await hotelsCollection.find({}).skip(start).limit(count).toArray()
+  ).map(({ _id, ...rest }) => ({ uid: _id, ...rest }));
+
+  const owners = hotels.map((hotel) => ({ uid: hotel.ownerId }));
+
+  const uniqueOwners = owners.filter(
+    (owner, index, self) => index === self.findIndex((o) => o.uid === owner.uid)
+  );
+
+  const users = (await auth.getUsers(uniqueOwners)).users;
+
+  const hotelsWithOwners = hotels.map((hotel) => {
+    const ownerInfo = users.find((user) => user.uid === hotel.ownerId);
+
+    if (ownerInfo) {
+      hotel.owner = {
+        uid: ownerInfo.uid,
+        displayname: ownerInfo.displayName,
+        email: ownerInfo.email,
+        photoURL: ownerInfo.photoURL,
+      };
+    }
+
+    const { ownerId, uid, ...rest } = hotel;
+    return { uid: uid.toString(), ...rest };
+  });
+
+  return hotelsWithOwners as Hotel[];
+}

@@ -1,5 +1,10 @@
 import { NextRequest } from "next/server";
-import { getHotel, getUserHotels, insertNewHotel } from "./utils/functions";
+import {
+  getHotel,
+  getHotels,
+  getUserHotels,
+  insertNewHotel,
+} from "./utils/functions";
 import { getAccessToken } from "../auth/utils/getAccessToken";
 import { createResponse } from "../utils/createResponse";
 import { ApiError } from "@/models/api/ApiError";
@@ -50,6 +55,14 @@ export async function GET(req: NextRequest) {
   if (hotelId) {
     const hotel = await getHotel(hotelId);
     return createResponse<SingleHotel>({ hotel }, { status: 200 });
+  }
+
+  const start = req.nextUrl.searchParams.get("start");
+  const count = req.nextUrl.searchParams.get("count");
+
+  if (start && count) {
+    const hotels = await getHotels(parseInt(start), parseInt(count));
+    return createResponse<MultipleHotels>({ hotels }, { status: 200 });
   }
 
   return createResponse("nothing");
