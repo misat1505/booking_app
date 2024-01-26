@@ -1,9 +1,10 @@
-import { Hotel } from "@/models/Hotel";
 import { useRef, useState } from "react";
 import { Modal, Label, TextInput } from "flowbite-react";
 import axios from "axios";
+import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
 
-export default function RoomAdder({ hotel }: { hotel: Hotel }) {
+export default function RoomAdder() {
+  const { hotel, addRoom } = useHotelContext();
   const [openModal, setOpenModal] = useState(false);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const capacityInputRef = useRef<HTMLInputElement>(null);
@@ -25,6 +26,7 @@ export default function RoomAdder({ hotel }: { hotel: Hotel }) {
 
     const newRoom = data.data.room;
 
+    addRoom(newRoom);
     setOpenModal(false);
   };
 

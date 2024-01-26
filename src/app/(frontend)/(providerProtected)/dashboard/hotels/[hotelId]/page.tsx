@@ -1,25 +1,31 @@
+"use client";
+import {
+  HotelContextProvider,
+  useHotelContext,
+} from "@/app/contexts/dashboard/hotelContext";
+import Loading from "@/components/common/Loading";
 import HotelImagesCarousel from "@/components/dashboard/hotel/HotelImagesCarousel";
 import HotelTiles from "@/components/dashboard/hotel/HotelTiles";
-import { Hotel } from "@/models/Hotel";
-import axios from "axios";
 
-export default async function HotelPage({
-  params,
-}: {
-  params: { hotelId: string };
-}) {
-  const data = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/hotels/?hotel=${params.hotelId}`
-  );
+async function HotelPageInner() {
+  const { hotel, isLoading } = useHotelContext();
 
-  const hotel = data.data.hotel as Hotel;
+  if (isLoading) return <Loading />;
 
   return (
     <div>
-      <HotelImagesCarousel hotel={hotel} />
+      <HotelImagesCarousel />
       <div className="absolute z-10" style={{ top: "86px" }}>
-        <HotelTiles hotel={hotel} />
+        <HotelTiles />
       </div>
     </div>
+  );
+}
+
+export default function HotelPage({ params }: { params: { hotelId: string } }) {
+  return (
+    <HotelContextProvider hotelId={params.hotelId}>
+      <HotelPageInner />
+    </HotelContextProvider>
   );
 }

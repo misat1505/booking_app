@@ -1,9 +1,11 @@
 "use client";
-import { Hotel } from "@/models/Hotel";
 import { Avatar } from "flowbite-react";
 import RoomsInspector from "./RoomsInspector";
+import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
 
-export default function HotelTiles({ hotel }: { hotel: Hotel }) {
+export default function HotelTiles() {
+  const { hotel } = useHotelContext();
+
   return (
     <div className="text-center">
       <h2
@@ -36,7 +38,7 @@ export default function HotelTiles({ hotel }: { hotel: Hotel }) {
             Show {hotel.owner.displayName}'s page
           </button>
         </div>
-        <RoomsInspector hotel={hotel} />
+        <RoomsInspector />
       </div>
     </div>
   );

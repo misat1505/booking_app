@@ -1,21 +1,13 @@
-import Loading from "@/components/common/Loading";
-import useFetch from "@/hooks/useFetch";
-import { Hotel } from "@/models/Hotel";
-import { Room } from "@/models/Room";
 import { Accordion } from "flowbite-react";
 import RoomAdder from "./RoomAdder";
+import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
 
-export default function RoomsInspector({ hotel }: { hotel: Hotel }) {
-  const { data, isLoading } = useFetch<{ rooms: Room[] }>(
-    `${process.env.NEXT_PUBLIC_API_URL}/rooms/?hotel=${hotel.uid}`
-  );
-
-  if (isLoading) return <></>;
-
-  const { rooms } = data!;
+export default function RoomsInspector() {
+  const { hotel, rooms } = useHotelContext();
 
   function RoomsInfo() {
-    if (rooms.length === 0) return <div>Hotel {hotel.name} has no rooms.</div>;
+    if (rooms.length === 0)
+      return <div className="text-sm">{hotel.name} has no rooms.</div>;
 
     return (
       <Accordion collapseAll>
@@ -48,7 +40,7 @@ export default function RoomsInspector({ hotel }: { hotel: Hotel }) {
     <div className="w-full bg-slate-100 p-4 mb-4 rounded-md text-left text-lg border-solid border border-slate-300">
       <h2 className="mb-4 font-bold">Rooms</h2>
       <RoomsInfo />
-      <RoomAdder hotel={hotel} />
+      <RoomAdder />
     </div>
   );
 }

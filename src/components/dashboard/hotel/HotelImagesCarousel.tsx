@@ -1,7 +1,9 @@
-import { Hotel } from "@/models/Hotel";
+import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
 import { Carousel } from "flowbite-react";
 
-export default function HotelImagesCarousel({ hotel }: { hotel: Hotel }) {
+export default function HotelImagesCarousel() {
+  const { hotel } = useHotelContext();
+
   return (
     <div
       className="fixed text-center z-0"
