@@ -31,7 +31,7 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
         {hotel.description}
       </p>
       <button
-        className="my-3 bg-blue-500 hover:bg-blue-600 border-none px-3 py-2 rounded-md text-white hover:cursor-pointer w-fit m-auto dark:bg-red-500"
+        className="my-3 bg-blue-500 hover:bg-blue-600 border-none px-3 py-2 rounded-md text-white hover:cursor-pointer w-fit m-auto text-sm"
         onClick={() => router.push(`/dashboard/hotels/${hotel.uid}`)}
       >
         Show details

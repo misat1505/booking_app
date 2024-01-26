@@ -1,3 +1,4 @@
+"use client";
 import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
 import { Carousel } from "flowbite-react";
 

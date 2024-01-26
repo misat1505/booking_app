@@ -1,31 +1,31 @@
-"use client";
-import {
-  HotelContextProvider,
-  useHotelContext,
-} from "@/app/contexts/dashboard/hotelContext";
-import Loading from "@/components/common/Loading";
+import { HotelContextProvider } from "@/app/contexts/dashboard/hotelContext";
 import HotelImagesCarousel from "@/components/dashboard/hotel/HotelImagesCarousel";
 import HotelTiles from "@/components/dashboard/hotel/HotelTiles";
+import axios from "axios";
 
-async function HotelPageInner() {
-  const { hotel, isLoading } = useHotelContext();
-
-  if (isLoading) return <Loading />;
-
-  return (
-    <div>
-      <HotelImagesCarousel />
-      <div className="absolute z-10" style={{ top: "86px" }}>
-        <HotelTiles />
-      </div>
-    </div>
+export default async function HotelPage({
+  params,
+}: {
+  params: { hotelId: string };
+}) {
+  const response1 = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/hotels/?hotel=${params.hotelId}`
   );
-}
+  const hotel = response1.data.hotel;
 
-export default function HotelPage({ params }: { params: { hotelId: string } }) {
+  const response2 = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/rooms/?hotel=${hotel.uid}`
+  );
+  const rooms = response2.data.rooms;
+
   return (
-    <HotelContextProvider hotelId={params.hotelId}>
-      <HotelPageInner />
+    <HotelContextProvider initHotel={hotel} initRooms={rooms}>
+      <div>
+        <HotelImagesCarousel />
+        <div className="absolute z-10" style={{ top: "86px" }}>
+          <HotelTiles />
+        </div>
+      </div>
     </HotelContextProvider>
   );
 }

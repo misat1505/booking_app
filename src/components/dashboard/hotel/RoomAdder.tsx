@@ -10,7 +10,9 @@ export default function RoomAdder() {
   const capacityInputRef = useRef<HTMLInputElement>(null);
   const chargeInputRef = useRef<HTMLInputElement>(null);
 
-  const handleCreateRoom = async () => {
+  const handleCreateRoom = async (e: any) => {
+    e.preventDefault();
+
     const name = nameInputRef.current?.value;
     const capacity = capacityInputRef.current?.value;
     const dailyFee = chargeInputRef.current?.value;
