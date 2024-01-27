@@ -1,6 +1,7 @@
 "use client";
 import { Hotel } from "@/models/Hotel";
 import { Avatar } from "flowbite-react";
+import RoomsDisplayer from "./RoomsDisplayer";
 
 export default function HotelInner({ hotel }: { hotel: Hotel }) {
   return (
@@ -35,6 +36,7 @@ export default function HotelInner({ hotel }: { hotel: Hotel }) {
             Show {hotel.owner.displayName}'s page
           </button>
         </div>
+        <RoomsDisplayer hotel={hotel} />
       </div>
     </div>
   );
