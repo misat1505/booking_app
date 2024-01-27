@@ -84,7 +84,7 @@ export default function RoomAdder() {
               </div>
               <TextInput
                 ref={chargeInputRef}
-                placeholder="daily charge"
+                placeholder="daily charge ($)"
                 required
                 type="number"
               />

@@ -21,7 +21,7 @@ export default function RoomsInspector() {
               </div>
               <div className="text-sm">
                 <span className="font-semibold">Daily charge: </span>
-                {room.dailyFee}
+                {room.dailyFee}$
               </div>
               <button
                 onClick={() => {}}
