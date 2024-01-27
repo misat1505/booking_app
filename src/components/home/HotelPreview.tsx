@@ -3,7 +3,13 @@ import { Hotel } from "@/models/Hotel";
 import { Carousel } from "flowbite-react";
 import { useRouter } from "next/navigation";
 
-export default function HotelPreview({ hotel }: { hotel: Hotel }) {
+export default function HotelPreview({
+  hotel,
+  price,
+}: {
+  hotel: Hotel;
+  price: number | "N/A";
+}) {
   const router = useRouter();
 
   return (
@@ -28,6 +34,11 @@ export default function HotelPreview({ hotel }: { hotel: Hotel }) {
       </Carousel>
       <div className="mt-4 px-2">
         <h2 className="font-semibold text-md">{hotel.name}</h2>
+      </div>
+      <div className="mt-2 px-2">
+        <h2 className="font-semibold text-md">
+          {price}$<span className="font-normal"> a night</span>
+        </h2>
       </div>
     </div>
   );
