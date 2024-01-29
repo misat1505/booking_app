@@ -11,7 +11,15 @@ export async function GET(req: NextRequest) {
   if (!success)
     return createResponse<ApiError>({ error: "Unauthorized" }, { status: 401 });
 
-  const user = (await auth.getUser(data!.uid)) as Omit<User, "role">;
+  const fetchedUser = await auth.getUser(data!.uid);
+
+  const user: User = {
+    uid: data!.uid,
+    email: fetchedUser.email!,
+    role: data!.role,
+    displayName: fetchedUser.displayName!,
+    photoURL: fetchedUser.photoURL!,
+  };
 
   return createResponse({ user }, { status: 200 });
 }

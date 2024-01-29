@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
   const { uid, email, role } = data!;
   const payload = { uid, email, role } as Partial<User>;
   const token = encode(payload, { expiresIn: "5m" });
+  console.log(token);
   const response = createResponse<{ token: string }>(
     { token },
     { status: 200 }

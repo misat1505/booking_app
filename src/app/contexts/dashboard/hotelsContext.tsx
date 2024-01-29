@@ -28,12 +28,11 @@ export const HotelsContextProvider = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const response1 = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/decode`,
-        {},
+      const response1 = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/user`,
         { withCredentials: true }
       );
-      const userId = response1.data.data.uid;
+      const userId = response1.data.user.uid;
 
       const response2 = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/hotels/?user=${userId}`
