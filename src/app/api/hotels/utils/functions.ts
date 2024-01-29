@@ -88,11 +88,11 @@ export async function getHotels(
 
   const hotels = (
     (await hotelsCollection
-      .find({})
+      .find()
       .skip(start)
       .limit(count)
       .toArray()) as MongoHotel[]
-  ).map(({ _id, ...rest }) => ({ uid: _id, ...rest }));
+  ).map(({ _id, ...rest }) => ({ uid: _id.toString(), ...rest }));
 
   const owners = hotels.map((hotel) => ({ uid: hotel.ownerId }));
 
@@ -108,15 +108,15 @@ export async function getHotels(
 
       if (!ownerInfo) return undefined;
 
-      const owner = {
+      const owner: Omit<User, "role"> = {
         uid: ownerInfo.uid,
         displayName: ownerInfo.displayName,
         email: ownerInfo.email,
         photoURL: ownerInfo.photoURL,
       };
 
-      const { ownerId, uid, ...rest } = hotel;
-      return { uid: uid.toString(), owner, ...rest } as Hotel;
+      const { ownerId, ...rest } = hotel;
+      return { owner, ...rest } as Hotel;
     })
     .filter((hotel): hotel is Hotel => hotel !== undefined);
 
