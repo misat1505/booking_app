@@ -35,7 +35,7 @@ export default function HotelTiles() {
             onClick={() => {}}
             className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white text-sm"
           >
-            Show {hotel.owner.displayName}'s page
+            Show {hotel.owner.displayName}&apos;s page
           </button>
         </div>
         <RoomsInspector />

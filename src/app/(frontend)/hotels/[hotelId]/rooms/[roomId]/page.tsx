@@ -2,7 +2,6 @@ import NavbarSpaceFill from "@/components/common/NavbarSpaceFill";
 import { Booking } from "@/models/Booking";
 import { Room } from "@/models/Room";
 import axios from "axios";
-import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import DatePicker from "@/components/hotel/rooms/DatePicker";
 
 export default async function RoomPage({

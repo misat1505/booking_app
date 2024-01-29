@@ -1,6 +1,7 @@
 "use client";
 import { Hotel } from "@/models/Hotel";
 import { Carousel } from "flowbite-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function HotelPreview({
@@ -24,10 +25,12 @@ export default function HotelPreview({
         rightControl
         className="w-full h-52 object-cover rounded-tr-xl rounded-tl-xl overflow-x-hidden"
       >
-        <img
-          src={
-            hotel.photoURLs[Math.floor(Math.random() * hotel.photoURLs.length)]
-          }
+        <Image
+          src={hotel.photoURLs[
+            Math.floor(Math.random() * hotel.photoURLs.length)
+          ].replace("\\", "/")}
+          width={1000}
+          height={1000}
           alt="..."
           className="object-cover z-0 h-full overflow-x-hidden"
         />
