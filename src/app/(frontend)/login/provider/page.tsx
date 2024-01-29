@@ -1,10 +1,13 @@
 "use client";
+import { useUserContext } from "@/app/contexts/userContext";
 import { signInWithGoogle } from "@/firebase/firebase";
+import { User } from "@/models/User";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Login() {
+  const { setUser } = useUserContext();
   const router = useRouter();
   let redirect: string | null = null;
 
@@ -22,6 +25,11 @@ export default function Login() {
         { idToken: id },
         { withCredentials: true }
       );
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/user`
+      );
+      const responseUser = response.data.user as User;
+      setUser(responseUser);
       router.push(redirect ? redirect : "/dashboard");
     } catch (e) {}
   };

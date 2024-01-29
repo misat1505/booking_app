@@ -1,24 +1,27 @@
 "use client";
+import { useUserContext } from "@/app/contexts/userContext";
 import { User } from "@/models/User";
 import axios from "axios";
 import { Avatar, Modal } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Navbar({ user }: { user: Omit<User, "role"> }) {
+export default function Navbar() {
+  const { user, setUser } = useUserContext();
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
 
   const handleLogout = async () => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
+    setUser(null);
     router.push("/");
   };
 
   return (
     <header className="sticky w-full top-0 flex justify-between items-center p-6 bg-slate-200 z-50">
-      <div>{user.displayName}</div>
+      <div>{user?.displayName}</div>
       <Avatar
-        img={user.photoURL}
+        img={user?.photoURL}
         rounded
         className="hover:cursor-pointer"
         onClick={() => setOpenModal(true)}
