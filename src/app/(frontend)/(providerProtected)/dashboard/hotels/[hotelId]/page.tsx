@@ -1,5 +1,5 @@
 import { HotelContextProvider } from "@/app/contexts/dashboard/hotelContext";
-import HotelImagesCarousel from "@/components/dashboard/hotel/HotelImagesCarousel";
+import CarouselBackground from "@/components/common/CarouselBackground";
 import HotelTiles from "@/components/dashboard/hotel/HotelTiles";
 import axios from "axios";
 
@@ -20,7 +20,7 @@ export default async function HotelPage({
 
   return (
     <HotelContextProvider initHotel={hotel} initRooms={rooms}>
-      <HotelImagesCarousel />
+      <CarouselBackground images={hotel.photoURLs} />
       <div className="relative z-10">
         <HotelTiles />
       </div>

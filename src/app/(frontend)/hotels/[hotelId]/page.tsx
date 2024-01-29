@@ -1,5 +1,5 @@
+import CarouselBackground from "@/components/common/CarouselBackground";
 import HotelInner from "@/components/hotel/HotelInner";
-import PreviewImageCarousel from "@/components/hotel/PreviewImageCarousel";
 import { Hotel } from "@/models/Hotel";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ export default async function HotelPreviewPage({
 
   return (
     <div>
-      <PreviewImageCarousel hotel={hotel} />
+      <CarouselBackground images={hotel.photoURLs} />
       <div className="absolute z-10">
         <HotelInner hotel={hotel} />
       </div>

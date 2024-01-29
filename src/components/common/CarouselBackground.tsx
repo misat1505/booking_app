@@ -1,10 +1,6 @@
-"use client";
-import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
 import { Carousel } from "flowbite-react";
 
-export default function HotelImagesCarousel() {
-  const { hotel } = useHotelContext();
-
+export default function CarouselBackground({ images }: { images: string[] }) {
   return (
     <div
       className="fixed text-center z-0 top-0"
@@ -20,7 +16,7 @@ export default function HotelImagesCarousel() {
         rightControl
         className="w-full h-full object-cover rounded-none first:rounded-none last:rounded-none"
       >
-        {hotel.photoURLs.map((image, id) => (
+        {images.map((image, id) => (
           <img
             src={image}
             key={id}
