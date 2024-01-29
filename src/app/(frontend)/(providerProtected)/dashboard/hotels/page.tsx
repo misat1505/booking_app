@@ -3,15 +3,15 @@ import {
   HotelsContextProvider,
   useHotelsContext,
 } from "@/app/contexts/dashboard/hotelsContext";
-import Loading from "@/components/common/Loading";
+import { useUserContext } from "@/app/contexts/userContext";
 import NavbarSpaceFill from "@/components/common/NavbarSpaceFill";
 import HotelCard from "@/components/dashboard/HotelCard";
 import NewHotelForm from "@/components/dashboard/NewHotelForm";
+import { Hotel } from "@/models/Hotel";
+import axios from "axios";
 
 function DashboardInner() {
-  const { isLoading, hotels } = useHotelsContext();
-
-  if (isLoading) return <Loading />;
+  const { hotels } = useHotelsContext();
 
   if (hotels.length === 0)
     return (
@@ -35,9 +35,17 @@ function DashboardInner() {
   );
 }
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const { user } = useUserContext();
+
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/hotels/?user=${user?.uid}`
+  );
+
+  const hotels = response.data.hotels as Hotel[];
+
   return (
-    <HotelsContextProvider>
+    <HotelsContextProvider initHotels={hotels}>
       <DashboardInner />
     </HotelsContextProvider>
   );

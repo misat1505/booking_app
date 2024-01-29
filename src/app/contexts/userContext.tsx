@@ -25,11 +25,15 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const retreiveUserSession = async () => {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/user`
-      );
-      const fetchedUser = response.data.user || null;
-      setUser(fetchedUser);
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/user`
+        );
+        const fetchedUser = response.data.user || null;
+        setUser(fetchedUser);
+      } catch (e) {
+        setUser(null);
+      }
     };
 
     retreiveUserSession();
