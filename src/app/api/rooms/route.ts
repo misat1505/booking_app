@@ -14,16 +14,23 @@ export async function POST(req: NextRequest) {
 
   const { uid } = data!;
 
-  const body = (await req.json()) as Omit<Room, "uid">;
+  const body = await req.json();
 
-  const hotel = await getHotel(body.hotelId);
+  const roomData: Omit<Room, "uid"> = {
+    name: body.name,
+    hotelId: body.hotelId,
+    capacity: parseInt(body.capacity),
+    dailyFee: parseInt(body.dailyFee),
+  };
+
+  const hotel = await getHotel(roomData.hotelId);
 
   if (!hotel || hotel.owner.uid !== uid)
     return createResponse<ApiError>({
       error: "Can't create room for this hotel.",
     });
 
-  const newRoom = await insertNewRoom(body);
+  const newRoom = await insertNewRoom(roomData);
 
   return createResponse<SingleRoom>({ room: newRoom }, { status: 201 });
 }
