@@ -1,32 +1,37 @@
 import { connectToDatabase } from "@/db/mongodb";
-import { Room } from "@/models/Room";
+import { MongoRoom, Room } from "@/models/Room";
 import { ObjectId } from "mongodb";
 
 export async function insertNewRoom(newRoom: Omit<Room, "uid">): Promise<Room> {
   const db = await connectToDatabase();
   const roomsCollection = db.collection("rooms");
 
+  const roomDataCopy = { ...newRoom };
+
   const insertedRoomId = (
     await roomsCollection.insertOne(newRoom)
   ).insertedId.toString();
 
-  const room = { uid: insertedRoomId, ...newRoom };
+  const room = { uid: insertedRoomId, ...roomDataCopy } as Room;
 
-  const { _id, ...rest } = room as any;
-
-  return { ...rest };
+  return room;
 }
 
 export async function getHotelRooms(hotelId: string): Promise<Room[]> {
   const db = await connectToDatabase();
   const roomsCollection = db.collection("rooms");
 
-  const fetchedRooms = await roomsCollection.find({ hotelId }).toArray();
+  const fetchedRooms = (await roomsCollection
+    .find({ hotelId })
+    .toArray()) as MongoRoom[];
 
-  const rooms: any[] = fetchedRooms.map(({ _id, ...rest }) => ({
-    uid: _id.toString(),
-    ...rest,
-  }));
+  const rooms = fetchedRooms.map(
+    ({ _id, ...rest }) =>
+      ({
+        uid: _id.toString(),
+        ...rest,
+      } as Room)
+  );
 
   return rooms;
 }
@@ -38,12 +43,13 @@ export async function getRoom(
   const db = await connectToDatabase();
   const roomsCollection = db.collection("rooms");
 
-  const room = (await roomsCollection
-    .find({ _id: new ObjectId(roomId), hotelId })
-    .toArray()) as any;
+  const room = (await roomsCollection.findOne({
+    _id: new ObjectId(roomId),
+    hotelId,
+  })) as MongoRoom | null;
 
-  if (!room[0]) return null;
+  if (!room) return null;
 
-  const { _id, ...rest } = room[0];
-  return { uid: _id, ...rest };
+  const { _id, ...rest } = room;
+  return { uid: _id.toString(), ...rest } as Room;
 }

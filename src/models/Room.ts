@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export type Room = {
   uid: string;
   name: string;
@@ -5,3 +7,5 @@ export type Room = {
   hotelId: string;
   capacity: number;
 };
+
+export type MongoRoom = Omit<Room, "uid"> & { _id: ObjectId };
