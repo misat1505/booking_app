@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           { withCredentials: true }
         );
       } catch (e) {
-        router.push("/login/provider");
+        router.push(`/login/provider?redirect=${window.location.pathname}`);
       }
     };
 

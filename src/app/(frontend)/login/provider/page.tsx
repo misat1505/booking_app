@@ -2,9 +2,16 @@
 import { signInWithGoogle } from "@/firebase/firebase";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Login() {
   const router = useRouter();
+  let redirect: string | null = null;
+
+  useEffect(() => {
+    const url = new URLSearchParams(window.location.search);
+    redirect = url.get("redirect");
+  }, []);
 
   const handleLogin = async () => {
     try {
@@ -15,7 +22,7 @@ export default function Login() {
         { idToken: id },
         { withCredentials: true }
       );
-      router.push("/dashboard");
+      router.push(redirect ? redirect : "/dashboard");
     } catch (e) {}
   };
 

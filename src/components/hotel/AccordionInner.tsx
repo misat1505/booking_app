@@ -1,9 +1,11 @@
 "use client";
 import { Room } from "@/models/Room";
 import { Label, TextInput } from "flowbite-react";
+import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
 
 export default function AccordionInner({ rooms }: { rooms: Room[] }) {
+  const router = useRouter();
   const [displayedRooms, setDisplayedRooms] = useState<Room[]>(rooms);
   const capacityInputRef = useRef<HTMLInputElement>(null);
   const minChargeInputRef = useRef<HTMLInputElement>(null);
@@ -38,19 +40,19 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
             <Label onClick={() => capacityInputRef.current?.focus()}>
               Capacity
             </Label>
-            <TextInput type="number" ref={capacityInputRef} />
+            <TextInput color="#3e83f8" type="number" ref={capacityInputRef} />
           </div>
           <div>
             <Label onClick={() => minChargeInputRef.current?.focus()}>
               Minimum charge ($)
             </Label>
-            <TextInput type="number" ref={minChargeInputRef} />
+            <TextInput color="#3e83f8" type="number" ref={minChargeInputRef} />
           </div>
           <div>
             <Label onClick={() => maxChargeInputRef.current?.focus()}>
               Maximum charge ($)
             </Label>
-            <TextInput type="number" ref={maxChargeInputRef} />
+            <TextInput color="#3e83f8" type="number" ref={maxChargeInputRef} />
           </div>
         </div>
         <button className="h-12 px-3 py-2 bg-blue-500 rounded-md hover:bg-blue-600 hover:cursor-pointer text-white text-sm mt-4">
@@ -68,7 +70,10 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
             <div className="font-semibold">
               {room.dailyFee}$ <span className="font-normal">a night</span>
             </div>
-            <button className="px-3 py-2 bg-blue-500 rounded-md text-white hover:bg-blue-600 hover:cursor-pointer text-sm">
+            <button
+              className="px-3 py-2 bg-blue-500 rounded-md text-white hover:bg-blue-600 hover:cursor-pointer text-sm"
+              onClick={() => router.push(`/rooms/${room.uid}`)}
+            >
               book now
             </button>
           </div>
