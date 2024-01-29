@@ -7,10 +7,9 @@ export default function HotelImagesCarousel() {
 
   return (
     <div
-      className="fixed text-center z-0"
+      className="fixed text-center z-0 top-0"
       style={{
-        top: "86px",
-        height: "calc(100vh - 86px)",
+        height: "100vh",
         width: "calc(100% + 2rem)",
         marginLeft: "-1rem",
       }}
