@@ -1,6 +1,6 @@
 import { connectToDatabase } from "@/db/mongodb";
 import { auth } from "@/firebase/firebase-admin";
-import { Hotel } from "@/models/Hotel";
+import { Hotel, MongoHotel } from "@/models/Hotel";
 import { User } from "@/models/User";
 import { ObjectId } from "mongodb";
 
@@ -22,7 +22,9 @@ export async function getUserHotels(userId: string): Promise<Hotel[]> {
   const db = await connectToDatabase();
   const hotelsCollection = db.collection("hotels");
 
-  const hotels = await hotelsCollection.find({ ownerId: userId }).toArray();
+  const hotels = (await hotelsCollection
+    .find({ ownerId: userId })
+    .toArray()) as MongoHotel[];
 
   const { uid, email, displayName, photoURL } = await auth.getUser(userId);
   const userData: Omit<User, "role"> = {
@@ -32,27 +34,29 @@ export async function getUserHotels(userId: string): Promise<Hotel[]> {
     photoURL: photoURL!,
   };
 
-  const hotelsWithOwner = hotels.map(({ _id, ownerId, ...rest }) => ({
-    ...rest,
-    uid: _id,
-    owner: userData,
-  }));
+  const hotelsWithOwner = hotels.map(
+    ({ _id, ownerId, ...rest }) =>
+      ({
+        ...rest,
+        uid: _id.toString(),
+        owner: userData,
+      } as Hotel)
+  );
 
-  return hotelsWithOwner as any;
+  return hotelsWithOwner;
 }
 
-export async function getHotel(hotelId: string): Promise<Hotel> {
+export async function getHotel(hotelId: string): Promise<Hotel | null> {
   const db = await connectToDatabase();
   const hotelsCollection = db.collection("hotels");
 
-  const hotelFetched = (
-    await hotelsCollection
-      .find({
-        _id: new ObjectId(hotelId),
-      })
-      .toArray()
-  )[0];
-  const ownerId = (hotelFetched as any).ownerId;
+  const hotelFetched = (await hotelsCollection.findOne({
+    _id: new ObjectId(hotelId),
+  })) as MongoHotel | null;
+
+  if (!hotelFetched) return null;
+
+  const ownerId = hotelFetched.ownerId;
 
   const user = await auth.getUser(ownerId);
   const { uid, displayName, photoURL, email } = user;
@@ -64,11 +68,11 @@ export async function getHotel(hotelId: string): Promise<Hotel> {
     photoURL: photoURL!,
   };
 
-  const { _id, ownerId: owner, ...rest } = hotelFetched as any;
+  const { _id, ownerId: owner, ...rest } = hotelFetched;
 
   const hotel: Hotel = {
     ...rest,
-    uid: _id,
+    uid: _id.toString(),
     owner: userData,
   };
 
@@ -82,8 +86,12 @@ export async function getHotels(
   const db = await connectToDatabase();
   const hotelsCollection = db.collection("hotels");
 
-  const hotels: any[] = (
-    await hotelsCollection.find({}).skip(start).limit(count).toArray()
+  const hotels = (
+    (await hotelsCollection
+      .find({})
+      .skip(start)
+      .limit(count)
+      .toArray()) as MongoHotel[]
   ).map(({ _id, ...rest }) => ({ uid: _id, ...rest }));
 
   const owners = hotels.map((hotel) => ({ uid: hotel.ownerId }));
@@ -94,21 +102,23 @@ export async function getHotels(
 
   const users = (await auth.getUsers(uniqueOwners)).users;
 
-  const hotelsWithOwners = hotels.map((hotel) => {
-    const ownerInfo = users.find((user) => user.uid === hotel.ownerId);
+  const hotelsWithOwners: Hotel[] = hotels
+    .map((hotel) => {
+      const ownerInfo = users.find((user) => user.uid === hotel.ownerId);
 
-    if (ownerInfo) {
-      hotel.owner = {
+      if (!ownerInfo) return undefined;
+
+      const owner = {
         uid: ownerInfo.uid,
-        displayname: ownerInfo.displayName,
+        displayName: ownerInfo.displayName,
         email: ownerInfo.email,
         photoURL: ownerInfo.photoURL,
       };
-    }
 
-    const { ownerId, uid, ...rest } = hotel;
-    return { uid: uid.toString(), ...rest };
-  });
+      const { ownerId, uid, ...rest } = hotel;
+      return { uid: uid.toString(), owner, ...rest } as Hotel;
+    })
+    .filter((hotel): hotel is Hotel => hotel !== undefined);
 
-  return hotelsWithOwners as Hotel[];
+  return hotelsWithOwners;
 }
