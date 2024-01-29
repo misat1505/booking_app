@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   if (!success)
     return createResponse<ApiError>({ error: "Unauthorized" }, { status: 401 });
 
-  const { uid, email, role } = data!;
+  const { uid, email, role } = data;
   const payload = { uid, email, role };
   const newToken = encode(payload, { expiresIn: "0m" });
 
