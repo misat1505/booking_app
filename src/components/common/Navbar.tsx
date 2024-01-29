@@ -14,7 +14,7 @@ export default function Navbar() {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
     setUser(null);
     setOpenModal(false);
-    router.push("/");
+    if (window.location.pathname.startsWith("/dashboard")) router.push("/");
   };
 
   return (
