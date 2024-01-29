@@ -30,3 +30,20 @@ export async function getHotelRooms(hotelId: string): Promise<Room[]> {
 
   return rooms;
 }
+
+export async function getRoom(
+  hotelId: string,
+  roomId: string
+): Promise<Room | null> {
+  const db = await connectToDatabase();
+  const roomsCollection = db.collection("rooms");
+
+  const room = (await roomsCollection
+    .find({ _id: new ObjectId(roomId), hotelId })
+    .toArray()) as any;
+
+  if (!room[0]) return null;
+
+  const { _id, ...rest } = room[0];
+  return { uid: _id, ...rest };
+}

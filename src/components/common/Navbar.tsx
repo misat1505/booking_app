@@ -1,6 +1,5 @@
 "use client";
 import { useUserContext } from "@/app/contexts/userContext";
-import { User } from "@/models/User";
 import axios from "axios";
 import { Avatar, Modal } from "flowbite-react";
 import { useRouter } from "next/navigation";

@@ -72,7 +72,9 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
             </div>
             <button
               className="px-3 py-2 bg-blue-500 rounded-md text-white hover:bg-blue-600 hover:cursor-pointer text-sm"
-              onClick={() => router.push(`/rooms/${room.uid}`)}
+              onClick={() =>
+                router.push(`/hotels/${room.hotelId}/rooms/${room.uid}`)
+              }
             >
               book now
             </button>
