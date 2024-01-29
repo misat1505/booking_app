@@ -1,10 +1,10 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getAccessToken } from "../utils/getAccessToken";
 import { createResponse } from "../../utils/createResponse";
 import { ApiError } from "@/models/api/ApiError";
 import { encode } from "../utils/jwt";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   const { success, data } = getAccessToken(req);
 
   if (!success)

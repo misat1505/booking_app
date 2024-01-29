@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getAccessToken } from "../auth/utils/getAccessToken";
 import { createResponse } from "../utils/createResponse";
 import { ApiError } from "@/models/api/ApiError";
@@ -7,7 +7,7 @@ import { Room } from "@/models/Room";
 import { getHotelRooms, getRoom, insertNewRoom } from "./utils/functions";
 import { MultipleRooms, SingleRoom } from "./types";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   const { success, data } = getAccessToken(req);
   if (!success)
     return createResponse<ApiError>({ error: "Unauthorized" }, { status: 401 });
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   return createResponse<SingleRoom>({ room: newRoom }, { status: 201 });
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
     const hotelId = req.nextUrl.searchParams.get("hotel");
     const roomId = req.nextUrl.searchParams.get("room");

@@ -1,11 +1,11 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getAccessToken } from "../utils/getAccessToken";
 import { createResponse } from "../../utils/createResponse";
 import { ApiError } from "@/models/api/ApiError";
 import { encode } from "../utils/jwt";
 import { User } from "@/models/User";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   const { success, data } = getAccessToken(req);
   if (!success)
     return createResponse<ApiError>({ error: "Unauthorized" }, { status: 401 });

@@ -3,9 +3,9 @@ import { encode } from "../utils/jwt";
 import { User } from "@/models/User";
 import { createResponse } from "../../utils/createResponse";
 import { ApiError } from "@/models/api/ApiError";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const { idToken } = (await req.json()) as any;
 
@@ -30,8 +30,8 @@ export async function POST(req: NextRequest) {
     });
     return response;
   } catch (error) {
-    return (
-      createResponse<ApiError>({ error: "Unauthorized" }),
+    return createResponse<ApiError>(
+      { error: "Unauthorized" },
       {
         status: 401,
       }

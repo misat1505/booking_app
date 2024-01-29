@@ -12,7 +12,7 @@ import { MultipleHotels, SingleHotel } from "./types";
 import { auth } from "@/firebase/firebase-admin";
 import { Hotel } from "@/models/Hotel";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   const { success, data } = getAccessToken(req);
   const { name, description, photoURLs } = await req.json();
 

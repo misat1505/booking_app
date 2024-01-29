@@ -1,7 +1,7 @@
 export type User = {
   uid: string;
   role: "provider" | "buyer";
-  displayName: string;
-  email: string;
-  photoURL: string;
+  displayName: string | undefined;
+  email: string | undefined;
+  photoURL: string | undefined;
 };
