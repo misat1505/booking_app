@@ -10,7 +10,7 @@ export default function HotelTiles() {
     <div className="text-center">
       <h2
         className="font-bold text-6xl text-white drop-shadow-xl [text-shadow:_1px_1px_1px_rgb(0_0_0_/_60%)]"
-        style={{ margin: "50vh 0", transform: "translateY(-100px)" }}
+        style={{ margin: "50vh 0", transform: "translateY(-50%)" }}
       >
         {hotel.name}
       </h2>

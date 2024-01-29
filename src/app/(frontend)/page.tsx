@@ -1,3 +1,4 @@
+import NavbarSpaceFill from "@/components/common/NavbarSpaceFill";
 import HotelPreview from "@/components/home/HotelPreview";
 import { connectToDatabase } from "@/db/mongodb";
 import { Hotel } from "@/models/Hotel";
@@ -51,6 +52,7 @@ export default async function Home() {
 
   return (
     <main>
+      <NavbarSpaceFill />
       <div className="w-4/5 mt-12 m-auto grid grid-cols-6 gap-6">
         {result.map(({ hotel, price }) => (
           <HotelPreview key={hotel.uid} hotel={hotel} price={price} />

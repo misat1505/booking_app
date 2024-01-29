@@ -14,11 +14,12 @@ export default function Navbar() {
   const handleLogout = async () => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
     setUser(null);
+    setOpenModal(false);
     router.push("/");
   };
 
   return (
-    <header className="sticky w-full top-0 flex justify-between items-center p-6 bg-slate-200 z-50">
+    <header className="fixed w-full top-0 flex justify-between items-center p-6 bg-slate-200 z-50">
       <div>{user?.displayName}</div>
       <Avatar
         img={user?.photoURL}
