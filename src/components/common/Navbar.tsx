@@ -4,6 +4,7 @@ import axios from "axios";
 import { Avatar, Modal } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ScaleLoader } from "react-spinners";
 
 export default function Navbar() {
   const { user, setUser } = useUserContext();
