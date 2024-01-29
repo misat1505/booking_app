@@ -20,13 +20,24 @@ export default function Navbar() {
 
   return (
     <header className="fixed w-full top-0 flex justify-between items-center p-6 bg-slate-200 z-50">
-      <div>{user?.displayName}</div>
       <Avatar
-        img={user?.photoURL}
+        img={"/logo.avif"}
         rounded
         className="hover:cursor-pointer"
-        onClick={() => setOpenModal(true)}
+        onClick={() => router.push("/")}
       />
+      <div className="flex gap-4 items-center">
+        <div>{user?.displayName}</div>
+        <Avatar
+          img={user?.photoURL}
+          rounded
+          title={user ? "logout" : "login"}
+          className="hover:cursor-pointer"
+          onClick={() =>
+            user ? setOpenModal(true) : router.push("/login/provider")
+          }
+        />
+      </div>
       <Modal
         show={openModal}
         size="md"
