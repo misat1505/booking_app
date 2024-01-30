@@ -2,6 +2,7 @@
 import { Booking } from "@/models/Booking";
 import { Room } from "@/models/Room";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
+import axios from "axios";
 import { useState } from "react";
 
 type ValuePiece = Date | null;
@@ -50,6 +51,26 @@ export default function DatePicker({
     return false;
   };
 
+  const handleSubmit = async () => {
+    const price = Math.round(
+      (((value as any)[1].getTime() - (value as any)[0].getTime()) /
+        (1000 * 60 * 60 * 24)) *
+        room.dailyFee
+    );
+
+    const body = {
+      roomId: room.uid,
+      start: (value as any)[0],
+      finish: (value as any)[1],
+      price: price,
+    };
+
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings`,
+      body
+    );
+  };
+
   return (
     <div>
       <DateRangePicker
@@ -70,7 +91,7 @@ export default function DatePicker({
               (1000 * 60 * 60 * 24)) *
               room.dailyFee
           )}
-          $
+          $<button onClick={handleSubmit}>submit</button>
         </p>
       )}
     </div>

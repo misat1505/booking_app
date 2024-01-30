@@ -15,29 +15,16 @@ export default async function RoomPage({
 
   const room = response.data.room as Room;
 
-  const bookings: Booking[] = [
-    {
-      uid: "1",
-      roomId: params.roomId,
-      userId: "1",
-      start: new Date(2024, 0, 28),
-      finish: new Date(2024, 0, 30),
-    },
-    {
-      uid: "2",
-      roomId: params.roomId,
-      userId: "1",
-      start: new Date(2024, 1, 2),
-      finish: new Date(2024, 1, 5),
-    },
-    {
-      uid: "3",
-      roomId: params.roomId,
-      userId: "1",
-      start: new Date(2024, 1, 8),
-      finish: new Date(2024, 1, 15),
-    },
-  ];
+  const bookingsResponse = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings/?room=${params.roomId}`
+  );
+
+  bookingsResponse.data.bookings.forEach((booking: any) => {
+    booking.start = new Date(booking.start);
+    booking.finish = new Date(booking.finish);
+  });
+
+  const bookings = bookingsResponse.data.bookings as Booking[];
 
   return (
     <div>

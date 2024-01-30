@@ -2,6 +2,7 @@
 import { Hotel } from "@/models/Hotel";
 import { Carousel } from "flowbite-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function HotelPreview({
@@ -14,8 +15,8 @@ export default function HotelPreview({
   const router = useRouter();
 
   return (
-    <div
-      onClick={() => router.push(`/hotels/${hotel.uid}`)}
+    <Link
+      href={`/hotels/${hotel.uid}`}
       className="w-full text-left rounded-md flex flex-col hover:bg-slate-100 hover:cursor-pointer"
       title="show details"
     >
@@ -43,6 +44,6 @@ export default function HotelPreview({
           {price}$<span className="font-normal"> a night</span>
         </h2>
       </div>
-    </div>
+    </Link>
   );
 }
