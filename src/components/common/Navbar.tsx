@@ -25,7 +25,7 @@ export default function Navbar() {
         <Avatar
           img={user?.photoURL}
           rounded
-          title={user ? "logout" : "login"}
+          title={openSidebar ? "close sidebar" : "open sidebar"}
           className="hover:cursor-pointer"
           onClick={() => setOpenSidebar((prev) => !prev)}
         />
@@ -34,7 +34,10 @@ export default function Navbar() {
         openSidebar={openSidebar}
         setOpenSidebar={setOpenSidebar}
       />
-      {/* <NavbarLogoutModal openModal={openModal} setOpenModal={setOpenModal} /> */}
+      {/* <NavbarLogoutModal
+        openModal={openSidebar}
+        setOpenModal={setOpenSidebar}
+      /> */}
     </header>
   );
 }

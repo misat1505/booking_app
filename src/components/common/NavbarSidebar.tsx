@@ -1,5 +1,7 @@
+import { useUserContext } from "@/app/contexts/userContext";
 import { Dispatch, SetStateAction } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import SidebarGuest from "./SidebarGuest";
 
 export default function NavbarSidebar({
   openSidebar,
@@ -8,6 +10,8 @@ export default function NavbarSidebar({
   openSidebar: boolean;
   setOpenSidebar: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { user } = useUserContext();
+
   return (
     <Offcanvas
       show={openSidebar}
@@ -15,13 +19,11 @@ export default function NavbarSidebar({
       placement="end"
     >
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Responsive offcanvas</Offcanvas.Title>
+        <Offcanvas.Title>
+          Hello, {user ? user.displayName : "guest"}!
+        </Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body>
-        <p className="mb-0">
-          This is content within an <code>.offcanvas-lg</code>.
-        </p>
-      </Offcanvas.Body>
+      <Offcanvas.Body>{!user && <SidebarGuest />}</Offcanvas.Body>
     </Offcanvas>
   );
 }

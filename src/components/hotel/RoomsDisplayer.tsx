@@ -14,7 +14,7 @@ export default async function RoomsDisplayer({ hotel }: { hotel: Hotel }) {
       <h2 className="text-left font-bold text-lg mb-4">Rooms</h2>
       <Accordion collapseAll>
         <Accordion.Panel>
-          <AccordionTitle>Show rooms</AccordionTitle>
+          <AccordionTitle className="p-3">Show rooms</AccordionTitle>
           <Accordion.Content>
             <AccordionInner rooms={rooms} />
           </Accordion.Content>

@@ -13,8 +13,8 @@ export default function RoomsInspector() {
       <Accordion collapseAll>
         {rooms.map((room, id) => (
           <Accordion.Panel key={id}>
-            <Accordion.Title>{room.name}</Accordion.Title>
-            <Accordion.Content>
+            <Accordion.Title className="p-3">{room.name}</Accordion.Title>
+            <Accordion.Content className="p-4">
               <div className="text-sm">
                 <span className="font-semibold">Capacity: </span>
                 {room.capacity}
