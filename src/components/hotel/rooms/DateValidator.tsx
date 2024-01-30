@@ -87,7 +87,7 @@ export default function DateValidator() {
         className="px-3 py-2 w-full bg-blue-500 rounded-md text-white hover:bg-blue-600 hover:cursor-pointer text-sm"
         onClick={handleSubmit}
       >
-        Book and pay
+        Book & Pay
       </button>
     </>
   );

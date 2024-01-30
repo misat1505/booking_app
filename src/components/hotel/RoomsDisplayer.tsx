@@ -1,13 +1,16 @@
+"use client";
 import { Hotel } from "@/models/Hotel";
-import axios from "axios";
 import { Accordion, AccordionTitle } from "flowbite-react";
 import AccordionInner from "./AccordionInner";
+import useFetch from "@/hooks/useFetch";
+import { Room } from "@/models/Room";
 
-export default async function RoomsDisplayer({ hotel }: { hotel: Hotel }) {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/rooms/?hotel=${hotel.uid}`
+export default function RoomsDisplayer({ hotel }: { hotel: Hotel }) {
+  const { data, isLoading } = useFetch<{ rooms: Room[] }>(
+    `${process.env.NEXT_PUBLIC_API_URL}/rooms?hotel=${hotel.uid}`
   );
-  const rooms = response.data.rooms;
+
+  if (isLoading || !data) return <></>;
 
   return (
     <div className="bg-slate-100 w-full p-4 rounded-md mb-4 border border-solid boder-slate-300">
@@ -16,7 +19,7 @@ export default async function RoomsDisplayer({ hotel }: { hotel: Hotel }) {
         <Accordion.Panel>
           <AccordionTitle className="p-3">Show rooms</AccordionTitle>
           <Accordion.Content>
-            <AccordionInner rooms={rooms} />
+            <AccordionInner rooms={data.rooms} />
           </Accordion.Content>
         </Accordion.Panel>
       </Accordion>

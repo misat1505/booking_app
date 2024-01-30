@@ -4,6 +4,7 @@ import "@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
+import "./overrides.css";
 import { UserContextProvider } from "./contexts/userContext";
 import Navbar from "@/components/common/Navbar";
 
