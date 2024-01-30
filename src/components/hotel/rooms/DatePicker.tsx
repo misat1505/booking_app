@@ -51,12 +51,16 @@ export default function DatePicker({
     return false;
   };
 
-  const handleSubmit = async () => {
-    const price = Math.round(
+  const calculatePrice = (): number => {
+    return Math.round(
       (((value as any)[1].getTime() - (value as any)[0].getTime()) /
         (1000 * 60 * 60 * 24)) *
         room.dailyFee
     );
+  };
+
+  const handleSubmit = async (): Promise<void> => {
+    const price = calculatePrice();
 
     const body = {
       roomId: room.uid,
@@ -84,15 +88,12 @@ export default function DatePicker({
         </p>
       )}
       {!isConflict && value && (
-        <p>
-          Charge:{" "}
-          {Math.round(
-            (((value as any)[1].getTime() - (value as any)[0].getTime()) /
-              (1000 * 60 * 60 * 24)) *
-              room.dailyFee
+        <div>
+          Charge: {calculatePrice()}$
+          {calculatePrice() !== 0 && (
+            <button onClick={handleSubmit}>submit</button>
           )}
-          $<button onClick={handleSubmit}>submit</button>
-        </p>
+        </div>
       )}
     </div>
   );

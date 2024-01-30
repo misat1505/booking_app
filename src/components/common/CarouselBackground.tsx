@@ -12,6 +12,7 @@ export default function CarouselBackground({ images }: { images: string[] }) {
     >
       <Carousel
         indicators={false}
+        draggable={false}
         leftControl
         rightControl
         className="w-full h-full object-cover rounded-none first:rounded-none last:rounded-none"

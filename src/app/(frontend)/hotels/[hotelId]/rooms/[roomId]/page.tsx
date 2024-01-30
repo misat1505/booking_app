@@ -3,21 +3,31 @@ import { Booking } from "@/models/Booking";
 import { Room } from "@/models/Room";
 import axios from "axios";
 import DatePicker from "@/components/hotel/rooms/DatePicker";
+import { Hotel } from "@/models/Hotel";
+import CarouselBackground from "@/components/common/CarouselBackground";
 
-export default async function RoomPage({
-  params,
-}: {
-  params: { hotelId: string; roomId: string };
-}) {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/rooms/?hotel=${params.hotelId}&room=${params.roomId}`
-  );
+type RoomsPageData = {
+  hotel: Hotel;
+  room: Room;
+  bookings: Booking[];
+};
 
-  const room = response.data.room as Room;
+const fetchData = async (
+  hotelId: string,
+  roomId: string
+): Promise<RoomsPageData> => {
+  const [hotelsResponse, roomsResponse, bookingsResponse] = await Promise.all([
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/hotels/?hotel=${hotelId}`),
+    axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/rooms/?hotel=${hotelId}&room=${roomId}`
+    ),
+    axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings/?room=${roomId}`
+    ),
+  ]);
 
-  const bookingsResponse = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings/?room=${params.roomId}`
-  );
+  const hotel = hotelsResponse.data.hotel as Hotel;
+  const room = roomsResponse.data.room as Room;
 
   bookingsResponse.data.bookings.forEach((booking: any) => {
     booking.start = new Date(booking.start);
@@ -26,12 +36,33 @@ export default async function RoomPage({
 
   const bookings = bookingsResponse.data.bookings as Booking[];
 
+  return {
+    hotel,
+    room,
+    bookings,
+  };
+};
+
+export default async function RoomPage({
+  params,
+}: {
+  params: { hotelId: string; roomId: string };
+}) {
+  const { hotel, room, bookings } = await fetchData(
+    params.hotelId,
+    params.roomId
+  );
+
   return (
-    <div>
-      <NavbarSpaceFill />
-      {JSON.stringify(room)}
-      {JSON.stringify(bookings)}
-      <DatePicker bookings={bookings} room={room} />
-    </div>
+    <>
+      <CarouselBackground images={hotel.photoURLs} />
+
+      <div className="absolute z-10">
+        <NavbarSpaceFill />
+        {JSON.stringify(room)}
+        {JSON.stringify(bookings)}
+        <DatePicker bookings={bookings} room={room} />
+      </div>
+    </>
   );
 }
