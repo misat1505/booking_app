@@ -9,7 +9,7 @@ export default function SidebarGuest() {
         href={"/"}
         className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200"
       >
-        <IoHome />
+        <IoHome className="text-blue-500" />
         Home
       </Link>
       <Link

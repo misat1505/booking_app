@@ -22,7 +22,13 @@ export default function NavbarLogoutModal({
   };
 
   return (
-    <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+    <Modal
+      show={openModal}
+      size="md"
+      onClose={() => setOpenModal(false)}
+      popup
+      style={{ zIndex: 9999 }}
+    >
       <Modal.Header />
       <Modal.Body>
         <div className="space-y-6">
