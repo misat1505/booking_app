@@ -1,24 +1,14 @@
 "use client";
-import { Booking } from "@/models/Booking";
-import { Room } from "@/models/Room";
+import {
+  Value,
+  useRoomPageContext,
+} from "@/app/contexts/public/RoomPageContext";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
-import axios from "axios";
-import { useState } from "react";
+import DateValidator from "./DateValidator";
 
-type ValuePiece = Date | null;
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
-export default function DatePicker({
-  bookings,
-  room,
-}: {
-  bookings: Booking[];
-  room: Room;
-}) {
-  const [value, onChange] = useState<Value>([new Date(), new Date()]);
-
-  const [isConflict, setIsConflict] = useState<boolean>(false);
+export default function DatePicker() {
+  const { bookings, dateInterval, setDateInterval, setIsConflict } =
+    useRoomPageContext();
 
   const checkForConflict = (start: Date, finish: Date): boolean => {
     for (const booking of bookings) {
@@ -39,7 +29,7 @@ export default function DatePicker({
       const conflict = checkForConflict(start!, finish!);
       setIsConflict(conflict);
     }
-    onChange(newValue);
+    setDateInterval(newValue);
   };
 
   const isTileDisabled = (date: Date): boolean => {
@@ -51,50 +41,15 @@ export default function DatePicker({
     return false;
   };
 
-  const calculatePrice = (): number => {
-    return Math.round(
-      (((value as any)[1].getTime() - (value as any)[0].getTime()) /
-        (1000 * 60 * 60 * 24)) *
-        room.dailyFee
-    );
-  };
-
-  const handleSubmit = async (): Promise<void> => {
-    const price = calculatePrice();
-
-    const body = {
-      roomId: room.uid,
-      start: (value as any)[0],
-      finish: (value as any)[1],
-      price: price,
-    };
-
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings`,
-      body
-    );
-  };
-
   return (
-    <div>
+    <div className="w-full bg-slate-100 rounded-md p-4 row-span-2 flex flex-col justify-between">
       <DateRangePicker
+        className="w-fit max-w-full"
         onChange={handleDateChange}
-        value={value}
+        value={dateInterval}
         tileDisabled={({ date }) => isTileDisabled(date)}
       />
-      {isConflict && (
-        <p style={{ color: "red" }}>
-          Wybrany przedział koliduje z istniejącą rezerwacją!
-        </p>
-      )}
-      {!isConflict && value && (
-        <div>
-          Charge: {calculatePrice()}$
-          {calculatePrice() !== 0 && (
-            <button onClick={handleSubmit}>submit</button>
-          )}
-        </div>
-      )}
+      <DateValidator />
     </div>
   );
 }
