@@ -2,6 +2,7 @@
 import { Hotel } from "@/models/Hotel";
 import { Avatar } from "flowbite-react";
 import RoomsDisplayer from "./RoomsDisplayer";
+import Link from "next/link";
 
 export default function HotelInner({ hotel }: { hotel: Hotel }) {
   return (
@@ -25,9 +26,13 @@ export default function HotelInner({ hotel }: { hotel: Hotel }) {
           </div>
           <div>
             <div className="font-semibold">Contact</div>
-            <a href={`mailto:${hotel.owner.email}`} title="send email">
-              <div className="text-sm">{hotel.owner.email}</div>
-            </a>
+            <Link
+              href={`mailto:${hotel.owner.email}`}
+              title="send email"
+              className="text-sm"
+            >
+              {hotel.owner.email}
+            </Link>
           </div>
           <button
             onClick={() => {}}

@@ -21,7 +21,7 @@ export default async function HotelPage({
   return (
     <HotelContextProvider initHotel={hotel} initRooms={rooms}>
       <CarouselBackground images={hotel.photoURLs} />
-      <div className="relative z-10">
+      <div className="absolute z-10 top-0">
         <HotelTiles />
       </div>
     </HotelContextProvider>

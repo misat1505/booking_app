@@ -55,7 +55,6 @@ export default async function RoomPage({
 
   return (
     <RoomPageContextProvider hotel={hotel} room={room} bookings={bookings}>
-      <NavbarSpaceFill />
       <CarouselBackground images={hotel.photoURLs} />
 
       <div className="absolute z-10 grid grid-cols-2 m-auto left-1/2 -translate-x-1/2 mt-4 gap-6">

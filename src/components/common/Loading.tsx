@@ -1,3 +1,4 @@
+"use client";
 import { ScaleLoader } from "react-spinners";
 
 export default function Loading({ text }: { text?: string }) {

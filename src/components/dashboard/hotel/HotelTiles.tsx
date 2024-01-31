@@ -2,6 +2,7 @@
 import { Avatar } from "flowbite-react";
 import RoomsInspector from "./RoomsInspector";
 import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
+import Link from "next/link";
 
 export default function HotelTiles() {
   const { hotel } = useHotelContext();
@@ -27,16 +28,20 @@ export default function HotelTiles() {
           </div>
           <div>
             <div className="font-semibold">Contact</div>
-            <a href={`mailto:${hotel.owner.email}`} title="send email">
-              <div className="text-sm">{hotel.owner.email}</div>
-            </a>
+            <Link
+              href={`mailto:${hotel.owner.email}`}
+              title="send email"
+              className="text-sm"
+            >
+              {hotel.owner.email}
+            </Link>
           </div>
-          <button
-            onClick={() => {}}
-            className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white text-sm"
+          <Link
+            href={"#"}
+            className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white text-sm text-center"
           >
             Show {hotel.owner.displayName}&apos;s page
-          </button>
+          </Link>
         </div>
         <RoomsInspector />
       </div>

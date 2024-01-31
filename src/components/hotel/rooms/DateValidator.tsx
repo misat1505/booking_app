@@ -27,8 +27,6 @@ export default function DateValidator() {
       `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings`,
       body
     );
-
-    console.log(response);
   };
 
   if (isConflict)

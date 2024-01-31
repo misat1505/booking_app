@@ -1,6 +1,7 @@
 "use client";
 import { Room } from "@/models/Room";
 import { Label, TextInput } from "flowbite-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
 
@@ -56,7 +57,7 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
           </div>
         </div>
         <button className="h-12 px-3 py-2 bg-blue-500 rounded-md hover:bg-blue-600 hover:cursor-pointer text-white text-sm mt-4">
-          apply filter
+          Apply filter
         </button>
       </form>
       <div className="mt-12">
@@ -70,14 +71,12 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
             <div className="font-semibold">
               {room.dailyFee}$ <span className="font-normal">a night</span>
             </div>
-            <button
+            <Link
               className="px-3 py-2 bg-blue-500 rounded-md text-white hover:bg-blue-600 hover:cursor-pointer text-sm"
-              onClick={() =>
-                router.push(`/hotels/${room.hotelId}/rooms/${room.uid}`)
-              }
+              href={`/hotels/${room.hotelId}/rooms/${room.uid}`}
             >
-              book now
-            </button>
+              Book now
+            </Link>
           </div>
         ))}
       </div>

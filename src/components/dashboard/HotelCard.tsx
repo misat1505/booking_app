@@ -1,6 +1,8 @@
 "use client";
 import { Hotel } from "@/models/Hotel";
 import { Carousel } from "flowbite-react";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function HotelCard({ hotel }: { hotel: Hotel }) {
@@ -18,10 +20,12 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
         className="w-full h-52 object-cover rounded-tr-xl rounded-tl-xl"
       >
         {hotel.photoURLs.map((photo, id) => (
-          <img
+          <Image
             key={id}
-            src={photo}
+            src={photo.replace("\\", "/")}
             alt="..."
+            width={500}
+            height={300}
             className="object-cover z-0 h-full"
           />
         ))}
@@ -30,12 +34,12 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
       <p className="border-solid border-l-0 border-r-0 border-t-0 border-b border-b-slate-400 px-2 m-0 py-2 text-sm flex-grow">
         {hotel.description}
       </p>
-      <button
+      <Link
         className="my-3 bg-blue-500 hover:bg-blue-600 border-none px-3 py-2 rounded-md text-white hover:cursor-pointer w-fit m-auto text-sm"
-        onClick={() => router.push(`/dashboard/hotels/${hotel.uid}`)}
+        href={`/dashboard/hotels/${hotel.uid}`}
       >
         Show details
-      </button>
+      </Link>
     </div>
   );
 }

@@ -25,7 +25,6 @@ function DashboardPageInner() {
 
   return (
     <HotelsContextProvider initHotels={data.hotels}>
-      <NavbarSpaceFill />
       <DashboardInner />
     </HotelsContextProvider>
   );

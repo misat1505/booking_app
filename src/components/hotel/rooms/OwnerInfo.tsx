@@ -15,9 +15,13 @@ export default function OwnerInfo() {
       </div>
       <div>
         <div className="font-semibold">Contact</div>
-        <a href={`mailto:${hotel.owner.email}`} title="send email">
-          <div className="text-sm">{hotel.owner.email}</div>
-        </a>
+        <Link
+          href={`mailto:${hotel.owner.email}`}
+          title="send email"
+          className="text-sm"
+        >
+          {hotel.owner.email}
+        </Link>
       </div>
       <Link
         href={"/"}
