@@ -1,3 +1,4 @@
+"use client";
 import { useUserContext } from "@/app/contexts/userContext";
 import { Dispatch, SetStateAction } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -13,6 +14,19 @@ export default function NavbarSidebar({
 }) {
   const { user } = useUserContext();
 
+  const greeting = (date: Date): string => {
+    const currentHour = date.getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return "Good morning";
+    } else if (currentHour >= 12 && currentHour < 17) {
+      return "Good afternoon";
+    } else if (currentHour >= 17 && currentHour < 21) {
+      return "Good evening";
+    }
+    return "Good night";
+  };
+
   return (
     <Offcanvas
       show={openSidebar}
@@ -21,7 +35,7 @@ export default function NavbarSidebar({
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
-          Hello, {user ? user.displayName : "guest"}!
+          {greeting(new Date())}, {user ? user.displayName : "guest"}!
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
