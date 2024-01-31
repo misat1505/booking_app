@@ -72,6 +72,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     throw new Error();
   } catch (e) {
+    console.log(e);
     return createResponse<ApiError>({ error: "Bad request." }, { status: 400 });
   }
 }

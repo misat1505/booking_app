@@ -27,6 +27,7 @@ export async function getUserHotels(userId: string): Promise<Hotel[]> {
     .toArray()) as MongoHotel[];
 
   const { uid, email, displayName, photoURL } = await auth.getUser(userId);
+  console.log(uid, email);
   const userData: Omit<User, "role"> = {
     uid,
     email: email!,

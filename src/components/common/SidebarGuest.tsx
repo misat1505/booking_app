@@ -14,7 +14,7 @@ export default function SidebarGuest() {
       </Link>
       <Link
         className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200"
-        href={"/login/provider"}
+        href={`/login/provider?redirect=${window.location.pathname}`}
       >
         <CiLogin color="green" />
         Login

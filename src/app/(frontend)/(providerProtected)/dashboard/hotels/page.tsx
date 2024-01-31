@@ -1,22 +1,31 @@
 "use client";
 import { HotelsContextProvider } from "@/app/contexts/dashboard/hotelsContext";
 import { useUserContext } from "@/app/contexts/userContext";
+import Loading from "@/components/common/Loading";
+import NavbarSpaceFill from "@/components/common/NavbarSpaceFill";
 import DashboardInner from "@/components/dashboard/DasboardInner";
-
+import useFetch from "@/hooks/useFetch";
 import { Hotel } from "@/models/Hotel";
-import axios from "axios";
 
-export default async function Dashboard() {
+export default function Dashboard() {
   const { user } = useUserContext();
 
-  const response = await axios.get(
+  if (!user) return <></>;
+  return <DashboardPageInner />;
+}
+
+function DashboardPageInner() {
+  const { user } = useUserContext();
+
+  const { data, isLoading } = useFetch<{ hotels: Hotel[] }>(
     `${process.env.NEXT_PUBLIC_API_URL}/hotels/?user=${user?.uid}`
   );
 
-  const hotels = response.data.hotels as Hotel[];
+  if (isLoading || !data) return <Loading />;
 
   return (
-    <HotelsContextProvider initHotels={hotels}>
+    <HotelsContextProvider initHotels={data.hotels}>
+      <NavbarSpaceFill />
       <DashboardInner />
     </HotelsContextProvider>
   );

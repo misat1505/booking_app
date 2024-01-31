@@ -9,7 +9,6 @@ export default function DashboardInner() {
   if (hotels.length === 0)
     return (
       <>
-        <NavbarSpaceFill />
         <NewHotelForm />
         <div>You have not created any hotels yet.</div>
       </>
@@ -17,7 +16,6 @@ export default function DashboardInner() {
 
   return (
     <>
-      <NavbarSpaceFill />
       <NewHotelForm />
       <div className="w-full m-auto mb-4 grid grid-cols-1 lg:w-3/4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         {hotels.map((hotel) => (
