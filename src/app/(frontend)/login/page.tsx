@@ -1,12 +1,14 @@
 "use client";
 import { useUserContext } from "@/app/contexts/userContext";
+import Loading from "@/components/common/Loading";
 import { signInWithGoogle } from "@/firebase/firebase";
 import { User } from "@/models/User";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Login() {
+  const [role, setRole] = useState<string | null>(null);
   const { setUser } = useUserContext();
   const router = useRouter();
   let redirect: string | null = null;
@@ -14,6 +16,17 @@ export default function Login() {
   useEffect(() => {
     const url = new URLSearchParams(window.location.search);
     redirect = url.get("redirect");
+    const incomingRole = url.get("role");
+
+    if (
+      !incomingRole ||
+      !["SALESMAN", "CUSTOMER"].includes(incomingRole.toUpperCase())
+    ) {
+      router.replace("/404");
+      return;
+    }
+
+    setRole(incomingRole.toUpperCase());
   }, []);
 
   const handleLogin = async () => {
@@ -22,7 +35,7 @@ export default function Login() {
       const id = await user.getIdToken();
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
-        { idToken: id, role: "SALESMAN" },
+        { idToken: id, role: role?.toUpperCase() },
         { withCredentials: true }
       );
       const response = await axios.get(
@@ -30,9 +43,14 @@ export default function Login() {
       );
       const responseUser = response.data.user as User;
       setUser(responseUser);
-      router.push(redirect ? redirect : "/dashboard");
+      if (role?.toUpperCase() === "SALESMAN")
+        router.push(redirect ? redirect : "/dashboard");
+      else if (role?.toUpperCase() === "CUSTOMER")
+        router.push(redirect ? redirect : "/");
     } catch (e) {}
   };
+
+  if (!role) return <Loading />;
 
   return (
     <div className="min-h-screen flex items-center justify-center fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -43,7 +61,7 @@ export default function Login() {
         />
         <h2 className="text-2xl mb-4 font-semibold mt-8">
           Use your Google account to log in as{" "}
-          <span className="text-green-500">salesman</span>.
+          <span className="text-green-500">{role && role.toLowerCase()}</span>.
         </h2>
         <div className="flex space-x-4 justify-center">
           <button
