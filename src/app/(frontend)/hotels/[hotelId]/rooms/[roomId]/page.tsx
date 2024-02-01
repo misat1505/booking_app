@@ -1,9 +1,4 @@
-import NavbarSpaceFill from "@/components/common/NavbarSpaceFill";
-import { Booking } from "@/models/Booking";
-import { Room } from "@/models/Room";
-import axios from "axios";
 import DatePicker from "@/components/hotel/rooms/DatePicker";
-import { Hotel } from "@/models/Hotel";
 import CarouselBackground from "@/components/common/CarouselBackground";
 import {
   RoomPageContextProvider,
@@ -11,30 +6,27 @@ import {
 } from "@/app/contexts/public/RoomPageContext";
 import RoomInfo from "@/components/hotel/rooms/RoomInfo";
 import OwnerInfo from "@/components/hotel/rooms/OwnerInfo";
+import { getHotel } from "@/app/api/hotels/utils/functions";
+import { getRoom } from "@/app/api/rooms/utils/functions";
+import { getRoomBookings } from "@/app/api/rooms/bookings/functions";
+import { notFound } from "next/navigation";
 
 const fetchData = async (
   hotelId: string,
   roomId: string
 ): Promise<RoomsPageData> => {
-  const [hotelsResponse, roomsResponse, bookingsResponse] = await Promise.all([
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/hotels/?hotel=${hotelId}`),
-    axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/rooms/?hotel=${hotelId}&room=${roomId}`
-    ),
-    axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings/?room=${roomId}`
-    ),
+  const [hotel, room, bookings] = await Promise.all([
+    getHotel(hotelId),
+    getRoom(hotelId, roomId),
+    getRoomBookings(roomId),
   ]);
 
-  const hotel = hotelsResponse.data.hotel as Hotel;
-  const room = roomsResponse.data.room as Room;
+  if (!hotel || !room) notFound();
 
-  bookingsResponse.data.bookings.forEach((booking: any) => {
+  bookings.forEach((booking: any) => {
     booking.start = new Date(booking.start);
     booking.finish = new Date(booking.finish);
   });
-
-  const bookings = bookingsResponse.data.bookings as Booking[];
 
   return {
     hotel,
@@ -48,10 +40,8 @@ export default async function RoomPage({
 }: {
   params: { hotelId: string; roomId: string };
 }) {
-  const { hotel, room, bookings } = await fetchData(
-    params.hotelId,
-    params.roomId
-  );
+  const { hotelId, roomId } = params;
+  const { hotel, room, bookings } = await fetchData(hotelId, roomId);
 
   return (
     <RoomPageContextProvider hotel={hotel} room={room} bookings={bookings}>

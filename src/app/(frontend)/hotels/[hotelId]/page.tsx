@@ -1,17 +1,15 @@
+import { getHotel } from "@/app/api/hotels/utils/functions";
 import CarouselBackground from "@/components/common/CarouselBackground";
 import HotelInner from "@/components/hotel/HotelInner";
-import { Hotel } from "@/models/Hotel";
-import axios from "axios";
+import { notFound } from "next/navigation";
 
 export default async function HotelPreviewPage({
   params,
 }: {
   params: { hotelId: string };
 }) {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/hotels/?hotel=${params.hotelId}`
-  );
-  const hotel = response.data.hotel as Hotel;
+  const hotel = await getHotel(params.hotelId);
+  if (!hotel) notFound();
 
   return (
     <div>

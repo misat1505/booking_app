@@ -1,22 +1,19 @@
+import { getHotel } from "@/app/api/hotels/utils/functions";
+import { getHotelRooms } from "@/app/api/rooms/utils/functions";
 import { HotelContextProvider } from "@/app/contexts/dashboard/hotelContext";
 import CarouselBackground from "@/components/common/CarouselBackground";
 import HotelTiles from "@/components/dashboard/hotel/HotelTiles";
-import axios from "axios";
+import { notFound } from "next/navigation";
 
 export default async function HotelPage({
   params,
 }: {
   params: { hotelId: string };
 }) {
-  const response1 = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/hotels/?hotel=${params.hotelId}`
-  );
-  const hotel = response1.data.hotel;
+  const hotel = await getHotel(params.hotelId);
+  if (!hotel) notFound();
 
-  const response2 = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/rooms/?hotel=${hotel.uid}`
-  );
-  const rooms = response2.data.rooms;
+  const rooms = await getHotelRooms(hotel.uid);
 
   return (
     <HotelContextProvider initHotel={hotel} initRooms={rooms}>
