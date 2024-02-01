@@ -11,11 +11,9 @@ export default function Login() {
   const [role, setRole] = useState<string | null>(null);
   const { setUser } = useUserContext();
   const router = useRouter();
-  let redirect: string | null = null;
 
   useEffect(() => {
     const url = new URLSearchParams(window.location.search);
-    redirect = url.get("redirect");
     const incomingRole = url.get("role");
 
     if (
@@ -31,6 +29,9 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
+      const url = new URLSearchParams(window.location.search);
+      const redirect = url.get("redirect");
+
       const user = await signInWithGoogle();
       const id = await user.getIdToken();
       await axios.post(

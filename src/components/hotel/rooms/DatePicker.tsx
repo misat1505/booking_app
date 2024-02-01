@@ -8,11 +8,18 @@ import DateValidator from "./DateValidator";
 import { useUserContext } from "@/app/contexts/userContext";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import Loading from "@/components/common/Loading";
 
 export default function DatePicker() {
   const { user } = useUserContext();
+  const [selfPath, setSelfPath] = useState<string | null>(null);
   const { bookings, dateInterval, setDateInterval, setIsConflict } =
     useRoomPageContext();
+
+  useEffect(() => {
+    setSelfPath(window.location.pathname);
+  }, []);
 
   const checkForConflict = (start: Date, finish: Date): boolean => {
     for (const booking of bookings) {
@@ -45,6 +52,13 @@ export default function DatePicker() {
     return false;
   };
 
+  if (!selfPath)
+    return (
+      <div className="relative w-full bg-slate-100 rounded-md p-4 row-span-2 flex flex-col justify-between items-center">
+        <Loading />
+      </div>
+    );
+
   if (!user || user.role !== "CUSTOMER")
     return (
       <div className="w-full bg-slate-100 rounded-md p-4 row-span-2 flex flex-col justify-between items-center">
@@ -56,10 +70,10 @@ export default function DatePicker() {
           className="rounded-lg"
         />
         <Link
-          href={`/login/buyer?redirect=${window.location.pathname}`}
+          href={`/login?role=customer&redirect=${selfPath}`}
           className="px-3 py-2 w-full bg-blue-500 rounded-md text-white hover:bg-blue-600 hover:cursor-pointer text-sm text-center"
         >
-          Log in as buyer to book.
+          Log in as customer to book.
         </Link>
       </div>
     );
