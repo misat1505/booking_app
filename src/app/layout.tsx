@@ -3,10 +3,12 @@ import { Inter } from "next/font/google";
 import "@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import "./overrides.css";
 import { UserContextProvider } from "./contexts/userContext";
 import Navbar from "@/components/common/Navbar";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +28,18 @@ export default function RootLayout({
         <UserContextProvider>
           <Navbar />
           {children}
+          <ToastContainer
+            position="bottom-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
         </UserContextProvider>
       </body>
     </html>

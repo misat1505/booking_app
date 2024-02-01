@@ -1,5 +1,7 @@
 import { useRoomPageContext } from "@/app/contexts/public/RoomPageContext";
+import { errorConfig, loadingConfig, successConfig } from "@/utils/showToasts";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function DateValidator() {
   const { dateInterval, isConflict, room } = useRoomPageContext();
@@ -23,10 +25,17 @@ export default function DateValidator() {
       price: price,
     };
 
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings`,
-      body
-    );
+    const toastID = toast.loading("Please wait...", loadingConfig());
+
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings`,
+        body
+      );
+      toast.update(toastID, successConfig("Successfully booked."));
+    } catch (e) {
+      toast.update(toastID, errorConfig("An error occured during booking."));
+    }
   };
 
   if (isConflict)
