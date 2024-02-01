@@ -34,12 +34,12 @@ export default function HotelInner({ hotel }: { hotel: Hotel }) {
               {hotel.owner.email}
             </Link>
           </div>
-          <button
-            onClick={() => {}}
-            className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white text-sm"
+          <Link
+            href={"#"}
+            className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white text-sm text-center"
           >
             Show {hotel.owner.displayName}&apos;s page
-          </button>
+          </Link>
         </div>
         <RoomsDisplayer hotel={hotel} />
       </div>

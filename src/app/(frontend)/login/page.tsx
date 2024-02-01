@@ -4,34 +4,22 @@ import Loading from "@/components/common/Loading";
 import { signInWithGoogle } from "@/firebase/firebase";
 import { User } from "@/models/User";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function Login() {
-  const [role, setRole] = useState<string | null>(null);
   const { setUser } = useUserContext();
+  const searchParams = useSearchParams();
   const router = useRouter();
 
-  useEffect(() => {
-    const url = new URLSearchParams(window.location.search);
-    const incomingRole = url.get("role");
+  const role = searchParams.get("role");
+  if (!role || !["SALESMAN", "CUSTOMER"].includes(role.toUpperCase()))
+    router.replace("/404");
 
-    if (
-      !incomingRole ||
-      !["SALESMAN", "CUSTOMER"].includes(incomingRole.toUpperCase())
-    ) {
-      router.replace("/404");
-      return;
-    }
-
-    setRole(incomingRole.toUpperCase());
-  }, []);
+  const redirect = searchParams.get("redirect");
 
   const handleLogin = async () => {
     try {
-      const url = new URLSearchParams(window.location.search);
-      const redirect = url.get("redirect");
-
       const user = await signInWithGoogle();
       const id = await user.getIdToken();
       await axios.post(
@@ -48,7 +36,9 @@ export default function Login() {
         router.push(redirect ? redirect : "/dashboard");
       else if (role?.toUpperCase() === "CUSTOMER")
         router.push(redirect ? redirect : "/");
-    } catch (e) {}
+    } catch (e) {
+      toast.error("An error occured when logging in.");
+    }
   };
 
   if (!role) return <Loading />;
