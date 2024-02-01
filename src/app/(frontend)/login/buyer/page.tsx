@@ -22,7 +22,7 @@ export default function Login() {
       const id = await user.getIdToken();
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
-        { idToken: id, role: "provider" },
+        { idToken: id, role: "buyer" },
         { withCredentials: true }
       );
       const response = await axios.get(
@@ -30,7 +30,7 @@ export default function Login() {
       );
       const responseUser = response.data.user as User;
       setUser(responseUser);
-      router.push(redirect ? redirect : "/dashboard");
+      router.push(redirect ? redirect : "/");
     } catch (e) {}
   };
 
@@ -42,7 +42,7 @@ export default function Login() {
           className="w-[200px] h-[200px] m-auto"
         />
         <h2 className="text-2xl mb-4 font-bold mt-8">
-          Use your Google account to log in as provider.
+          Use your Google account to log in as buyer.
         </h2>
         <div className="flex space-x-4 justify-center">
           <button

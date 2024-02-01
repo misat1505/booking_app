@@ -7,13 +7,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const { idToken } = (await req.json()) as any;
+    const { idToken, role } = (await req.json()) as any;
 
     const decodedToken = await auth.verifyIdToken(idToken);
 
     const { uid, email } = decodedToken;
 
-    const payload = { uid, email, role: "provider" } as Partial<User>;
+    const payload = { uid, email, role } as Partial<User>;
     const token = encode(payload, { expiresIn: "5m" });
     const response = createResponse<{ token: string }>(
       { token },

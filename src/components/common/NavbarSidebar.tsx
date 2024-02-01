@@ -33,7 +33,7 @@ export default function NavbarSidebar({
       onHide={() => setOpenSidebar(false)}
       placement="end"
     >
-      <Offcanvas.Header closeButton>
+      <Offcanvas.Header>
         <Offcanvas.Title>
           {greeting(new Date())}, {user ? user.displayName : "guest"}!
         </Offcanvas.Title>
