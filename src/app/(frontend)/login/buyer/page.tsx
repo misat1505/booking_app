@@ -35,19 +35,20 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
       <div className="bg-white p-8 rounded shadow-md w-96 text-center">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png"
           className="w-[200px] h-[200px] m-auto"
         />
-        <h2 className="text-2xl mb-4 font-bold mt-8">
-          Use your Google account to log in as buyer.
+        <h2 className="text-2xl mb-4 font-semibold mt-8">
+          Use your Google account to log in as{" "}
+          <span className="text-green-500">buyer</span>.
         </h2>
         <div className="flex space-x-4 justify-center">
           <button
             onClick={handleLogin}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border-none hover:cursor-pointer"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border-none hover:cursor-pointer text-sm"
           >
             Log in with Google
           </button>
