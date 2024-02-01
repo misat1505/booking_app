@@ -22,7 +22,7 @@ export default function Login() {
       const id = await user.getIdToken();
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
-        { idToken: id, role: "buyer" },
+        { idToken: id, role: "CUSTOMER" },
         { withCredentials: true }
       );
       const response = await axios.get(
@@ -43,7 +43,7 @@ export default function Login() {
         />
         <h2 className="text-2xl mb-4 font-semibold mt-8">
           Use your Google account to log in as{" "}
-          <span className="text-green-500">buyer</span>.
+          <span className="text-green-500">customer</span>.
         </h2>
         <div className="flex space-x-4 justify-center">
           <button

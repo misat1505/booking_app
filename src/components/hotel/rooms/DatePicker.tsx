@@ -45,7 +45,7 @@ export default function DatePicker() {
     return false;
   };
 
-  if (!user || user.role !== "buyer")
+  if (!user || user.role !== "CUSTOMER")
     return (
       <div className="w-full bg-slate-100 rounded-md p-4 row-span-2 flex flex-col justify-between items-center">
         <Image

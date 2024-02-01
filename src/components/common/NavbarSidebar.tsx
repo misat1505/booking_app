@@ -41,8 +41,8 @@ export default function NavbarSidebar({
       </Offcanvas.Header>
       <Offcanvas.Body>
         {!user && <SidebarGuest />}
-        {user?.role === "provider" && <SidebarProvider />}
-        {user?.role === "buyer" && <SidebarBuyer />}
+        {user?.role === "SALESMAN" && <SidebarProvider />}
+        {user?.role === "CUSTOMER" && <SidebarBuyer />}
       </Offcanvas.Body>
     </Offcanvas>
   );

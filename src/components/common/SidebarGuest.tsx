@@ -16,17 +16,17 @@ export default function SidebarGuest() {
       <div>
         <Link
           className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200 mt-3 font-semibold"
-          href={`/login/buyer?redirect=${window.location.pathname}`}
+          href={`/login/customer?redirect=${window.location.pathname}`}
         >
           <FaBasketShopping color="green" />
-          Login as buyer
+          Login as customer
         </Link>
         <Link
           className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200 mt-3 font-semibold"
-          href={`/login/provider?redirect=${window.location.pathname}`}
+          href={`/login/buyer?redirect=${window.location.pathname}`}
         >
           <MdSell color="green" />
-          Login as provider
+          Login as salesman
         </Link>
       </div>
     </div>
