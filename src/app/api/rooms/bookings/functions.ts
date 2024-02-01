@@ -31,3 +31,18 @@ export async function getRoomBookings(roomId: string): Promise<Booking[]> {
 
   return bookings;
 }
+
+export async function getUserBookings(userId: string): Promise<Booking[]> {
+  const db = await connectToDatabase();
+  const bookingsCollection = db.collection("bookings");
+
+  const mongoBookings = (await bookingsCollection
+    .find({ userId })
+    .toArray()) as MongoBooking[];
+
+  const bookings = mongoBookings.map(
+    ({ _id, ...rest }) => ({ uid: _id.toString(), ...rest } as Booking)
+  );
+
+  return bookings;
+}

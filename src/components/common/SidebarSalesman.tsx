@@ -1,14 +1,13 @@
-import { useUserContext } from "@/app/contexts/userContext";
 import Link from "next/link";
 import { useState } from "react";
+import { AiFillDashboard } from "react-icons/ai";
 import { CiLogout } from "react-icons/ci";
 import { FaHotel } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 import NavbarLogoutModal from "./NavbarLogoutModal";
 
-export default function SidebarBuyer() {
+export default function SidebarSalesman() {
   const [openModal, setOpenModal] = useState(false);
-  const { user } = useUserContext();
 
   return (
     <div className="flex flex-col justify-between h-full">
@@ -21,11 +20,18 @@ export default function SidebarBuyer() {
           Home
         </Link>
         <Link
-          href={"#"}
+          href={"/dashboard"}
+          className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200 mb-3 font-semibold"
+        >
+          <AiFillDashboard className="text-blue-500" />
+          Dashboard
+        </Link>
+        <Link
+          href={"/dashboard/hotels"}
           className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200 mb-3 font-semibold"
         >
           <FaHotel className="text-blue-500" />
-          My bookings
+          My Hotels
         </Link>
       </div>
       <div

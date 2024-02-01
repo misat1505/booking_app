@@ -3,8 +3,8 @@ import { useUserContext } from "@/app/contexts/userContext";
 import { Dispatch, SetStateAction } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import SidebarGuest from "./SidebarGuest";
-import SidebarProvider from "./SidebarProvider";
-import SidebarBuyer from "./SidebarBuyer";
+import SidebarSalesman from "./SidebarSalesman";
+import SidebarCustomer from "./SidebarCustomer";
 
 export default function NavbarSidebar({
   openSidebar,
@@ -41,8 +41,8 @@ export default function NavbarSidebar({
       </Offcanvas.Header>
       <Offcanvas.Body>
         {!user && <SidebarGuest />}
-        {user?.role === "SALESMAN" && <SidebarProvider />}
-        {user?.role === "CUSTOMER" && <SidebarBuyer />}
+        {user?.role === "SALESMAN" && <SidebarSalesman />}
+        {user?.role === "CUSTOMER" && <SidebarCustomer />}
       </Offcanvas.Body>
     </Offcanvas>
   );
