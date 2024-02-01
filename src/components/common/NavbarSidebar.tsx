@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import SidebarGuest from "./SidebarGuest";
 import SidebarProvider from "./SidebarProvider";
+import SidebarBuyer from "./SidebarBuyer";
 
 export default function NavbarSidebar({
   openSidebar,
@@ -41,6 +42,7 @@ export default function NavbarSidebar({
       <Offcanvas.Body>
         {!user && <SidebarGuest />}
         {user?.role === "provider" && <SidebarProvider />}
+        {user?.role === "buyer" && <SidebarBuyer />}
       </Offcanvas.Body>
     </Offcanvas>
   );

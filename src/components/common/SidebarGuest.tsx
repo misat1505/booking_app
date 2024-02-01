@@ -12,13 +12,22 @@ export default function SidebarGuest() {
         <IoHome className="text-blue-500" />
         Home
       </Link>
-      <Link
-        className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200"
-        href={`/login/provider?redirect=${window.location.pathname}`}
-      >
-        <CiLogin color="green" />
-        Login
-      </Link>
+      <div>
+        <Link
+          className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200 mt-3"
+          href={`/login/buyer?redirect=${window.location.pathname}`}
+        >
+          <CiLogin color="green" />
+          Login as buyer
+        </Link>
+        <Link
+          className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200 mt-3"
+          href={`/login/provider?redirect=${window.location.pathname}`}
+        >
+          <CiLogin color="green" />
+          Login as provider
+        </Link>
+      </div>
     </div>
   );
 }
