@@ -9,7 +9,7 @@ import { MultipleRooms, SingleRoom } from "./types";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const { success, data } = getAccessToken(req);
-  if (!success)
+  if (!success || data.role.toUpperCase() !== "SALESMAN")
     return createResponse<ApiError>({ error: "Unauthorized" }, { status: 401 });
 
   const { uid } = data!;

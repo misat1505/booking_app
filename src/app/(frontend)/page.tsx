@@ -1,4 +1,3 @@
-import NavbarSpaceFill from "@/components/common/NavbarSpaceFill";
 import HotelPreview from "@/components/home/HotelPreview";
 import { connectToDatabase } from "@/db/mongodb";
 import { Hotel } from "@/models/Hotel";

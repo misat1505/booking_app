@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import "./overrides.css";
 import { UserContextProvider } from "./contexts/userContext";
-import Navbar from "@/components/common/Navbar";
+import Navbar from "@/components/common/nav/Navbar";
 import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });

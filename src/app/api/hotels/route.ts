@@ -16,7 +16,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const { success, data } = getAccessToken(req);
   const { name, description, photoURLs } = await req.json();
 
-  if (!success)
+  if (!success || data.role.toUpperCase() !== "SALESMAN")
     return createResponse<ApiError>({ error: "Unauthorized" }, { status: 401 });
 
   const newId = await insertNewHotel(
