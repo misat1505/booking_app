@@ -1,33 +1,30 @@
-import Link from "next/link";
 import { FaBasketShopping } from "react-icons/fa6";
 import { IoHome } from "react-icons/io5";
 import { MdSell } from "react-icons/md";
+import StyledLink from "../StyledLink";
 
 export default function SidebarGuest() {
   return (
     <div className="flex flex-col justify-between h-full">
-      <Link
-        href={"/"}
-        className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200 font-semibold"
-      >
+      <StyledLink href={"/"} variant="nav">
         <IoHome className="text-blue-500" />
         Home
-      </Link>
+      </StyledLink>
       <div>
-        <Link
-          className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200 mt-3 font-semibold"
+        <StyledLink
+          variant="nav"
           href={`/login?role=customer&redirect=${window.location.pathname}`}
         >
           <FaBasketShopping color="green" />
           Login as customer
-        </Link>
-        <Link
-          className="flex items-center gap-2 bg-slate-100 p-3 rounded-md hover:bg-slate-200 mt-3 font-semibold"
+        </StyledLink>
+        <StyledLink
+          variant="nav"
           href={`/login?role=salesman&redirect=${window.location.pathname}`}
         >
           <MdSell color="green" />
           Login as salesman
-        </Link>
+        </StyledLink>
       </div>
     </div>
   );
