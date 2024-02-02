@@ -27,7 +27,10 @@ export const HotelContextProvider = ({
   const [rooms, setRooms] = useState<Room[]>(initRooms);
   const { user } = useUserContext();
 
-  if (user?.uid !== initHotel.owner.uid) notFound();
+  if (user?.uid !== initHotel.owner.uid)
+    throw new Error(
+      `You are not the owner of ${initHotel.name}, thus you can't preview it.`
+    );
 
   const addRoom = (room: Room) => {
     setRooms((prev) => [...prev, room]);

@@ -11,7 +11,9 @@ export default function Layout({ children }: { children: ReactNode }) {
       try {
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`);
       } catch (e) {
-        router.push(`/login/provider?redirect=${window.location.pathname}`);
+        router.push(
+          `/login/?role=salesman&redirect=${window.location.pathname}`
+        );
       }
     };
 
