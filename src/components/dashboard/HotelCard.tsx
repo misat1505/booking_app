@@ -9,7 +9,7 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
     hotel.description = hotel.description.slice(0, 500) + "...";
 
   return (
-    <div className="mt-3 mx-2 border-solid border border-slate-400 rounded-xl flex flex-col bg-slate-50 hover:shadow-xl transition-shadow">
+    <div className="mt-3 mx-2 border-solid border border-slate-400 rounded-xl flex flex-col bg-slate-50 hover:shadow-xl transition-shadow min-w-64 max-w-[350px]">
       <Carousel
         indicators={false}
         leftControl
