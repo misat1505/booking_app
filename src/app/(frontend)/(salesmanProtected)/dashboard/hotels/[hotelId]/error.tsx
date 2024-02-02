@@ -22,9 +22,7 @@ export default function Error({
     }
 
     if (user && !hasResetBeenCalled.current) {
-      console.log(user, hasResetBeenCalled.current);
       hasResetBeenCalled.current = true;
-      console.log("calling reset", hasResetBeenCalled.current);
       reset();
     }
   }, [user, reset]);

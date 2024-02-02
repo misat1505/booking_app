@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Modal, Label, TextInput } from "flowbite-react";
 import axios from "axios";
 import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
+import StyledButton from "@/components/common/StyledButton";
 
 export default function RoomAdder() {
   const { hotel, addRoom } = useHotelContext();
@@ -34,12 +35,9 @@ export default function RoomAdder() {
 
   return (
     <>
-      <button
-        onClick={() => setOpenModal(true)}
-        className="mt-4 px-3 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 hover:cursor-pointer text-sm"
-      >
+      <StyledButton className="mt-4" onClick={() => setOpenModal(true)}>
         Add room
-      </button>
+      </StyledButton>
       <Modal
         show={openModal}
         size="md"
@@ -90,12 +88,9 @@ export default function RoomAdder() {
               />
             </div>
           </div>
-          <button
-            className="mt-4 px-3 py-2 rounded-md bg-blue-500 text-white text-sm hover:bg-blue-600 hover:cursor-pointer"
-            onClick={handleCreateRoom}
-          >
+          <StyledButton className="mt-4" onClick={handleCreateRoom}>
             Create room
-          </button>
+          </StyledButton>
         </Modal.Body>
       </Modal>
     </>

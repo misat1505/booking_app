@@ -3,6 +3,7 @@ import { Avatar } from "flowbite-react";
 import RoomsInspector from "./RoomsInspector";
 import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
 import Link from "next/link";
+import StyledLink from "@/components/common/StyledLink";
 
 export default function HotelTiles() {
   const { hotel } = useHotelContext();
@@ -36,12 +37,9 @@ export default function HotelTiles() {
               {hotel.owner.email}
             </Link>
           </div>
-          <Link
-            href={"#"}
-            className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white text-sm text-center"
-          >
+          <StyledLink href={"#"}>
             Show {hotel.owner.displayName}&apos;s page
-          </Link>
+          </StyledLink>
         </div>
         <RoomsInspector />
       </div>
