@@ -2,8 +2,7 @@
 import { HotelsContextProvider } from "@/app/contexts/dashboard/hotelsContext";
 import { useUserContext } from "@/app/contexts/userContext";
 import Loading from "@/components/common/Loading";
-import NavbarSpaceFill from "@/components/common/nav/NavbarSpaceFill";
-import DashboardInner from "@/components/dashboard/DasboardInner";
+import DashboardInner from "@/components/dashboard/DashboardInner";
 import useFetch from "@/hooks/useFetch";
 import { Hotel } from "@/models/Hotel";
 

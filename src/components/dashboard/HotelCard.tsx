@@ -2,12 +2,9 @@
 import { Hotel } from "@/models/Hotel";
 import { Carousel } from "flowbite-react";
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import StyledLink from "../common/StyledLink";
 
 export default function HotelCard({ hotel }: { hotel: Hotel }) {
-  const router = useRouter();
-
   if (hotel.description.length > 500)
     hotel.description = hotel.description.slice(0, 500) + "...";
 
@@ -34,12 +31,12 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
       <p className="border-solid border-l-0 border-r-0 border-t-0 border-b border-b-slate-400 px-2 m-0 py-2 text-sm flex-grow">
         {hotel.description}
       </p>
-      <Link
-        className="my-3 bg-blue-500 hover:bg-blue-600 border-none px-3 py-2 rounded-md text-white hover:cursor-pointer w-fit m-auto text-sm"
+      <StyledLink
         href={`/dashboard/hotels/${hotel.uid}`}
+        className="my-3 w-fit mx-auto"
       >
         Show details
-      </Link>
+      </StyledLink>
     </div>
   );
 }

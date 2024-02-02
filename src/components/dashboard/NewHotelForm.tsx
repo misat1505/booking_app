@@ -1,68 +1,52 @@
 "use client";
 import axios from "axios";
 import { Label, Modal, TextInput, Textarea } from "flowbite-react";
-import { ChangeEvent, useRef, useState } from "react";
 import HotelImages from "./HotelImages";
 import { uploadMultipleFiles } from "@/utils/uploadFiles";
 import { useHotelsContext } from "@/app/contexts/dashboard/hotelsContext";
+import StyledButton from "../common/StyledButton";
+import cn from "classnames";
+import { useNewHotelFormContext } from "@/app/contexts/dashboard/newHotelFormContext";
 
 export default function NewHotelForm() {
   const { addHotel } = useHotelsContext();
-  const hotelNameInputRef = useRef<HTMLInputElement>(null);
-  const hotelDescriptionInputRef = useRef<HTMLTextAreaElement>(null);
-  const hotelFilesInputRef = useRef<HTMLInputElement>(null);
-  const [openModal, setOpenModal] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
-
-  const onCloseModal = () => {
-    setOpenModal(false);
-    setFiles([]);
-  };
+  const {
+    form,
+    nameInputRef,
+    descriptionInputRef,
+    imagesInputRef,
+    openModal,
+    onOpenModal,
+    onCloseModal,
+    handleFormChange,
+    isFormValid,
+  } = useNewHotelFormContext();
 
   const handleCreateNewHotel = async () => {
-    const urls = await uploadMultipleFiles(files);
-
-    if (
-      !hotelNameInputRef.current?.value ||
-      !hotelDescriptionInputRef.current?.value ||
-      !files
-    ) {
+    if (!isFormValid()) {
       window.alert("Can't create hotel!");
       return;
     }
 
+    const urls = await uploadMultipleFiles(form.images);
+
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/hotels`,
       {
-        name: hotelNameInputRef.current?.value,
-        description: hotelDescriptionInputRef.current?.value,
+        name: form.name,
+        description: form.description,
         photoURLs: urls,
       }
     );
 
     const newHotel = response.data.hotel;
     addHotel(newHotel);
-    setOpenModal(false);
-    setFiles([]);
-    hotelFilesInputRef.current!.value = "";
-  };
-
-  const handleFilesInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-
-    const filesArray: File[] = Array.from(e.target.files);
-
-    setFiles((prev) => [...prev, ...filesArray]);
+    onCloseModal();
   };
 
   return (
     <>
-      <button
-        className="bg-blue-500 hover:bg-blue-600 px-4 py-3 border-none rounded-md text-white hover:cursor-pointer"
-        onClick={() => setOpenModal(true)}
-      >
-        Create new hotel
-      </button>
+      <StyledButton onClick={onOpenModal}>Create new hotel</StyledButton>
       <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         <Modal.Header />
         <Modal.Body>
@@ -73,50 +57,59 @@ export default function NewHotelForm() {
             <div>
               <div className="mb-2 block">
                 <Label
-                  onClick={() => hotelNameInputRef.current?.focus()}
+                  onClick={() => nameInputRef.current?.focus()}
                   value="Name"
                 />
               </div>
               <TextInput
-                ref={hotelNameInputRef}
+                ref={nameInputRef}
                 placeholder="hotel name"
+                name="name"
+                onChange={handleFormChange}
                 required
               />
             </div>
             <div>
               <div className="mb-2 block">
                 <Label
-                  onClick={() => hotelDescriptionInputRef.current?.focus()}
+                  onClick={() => descriptionInputRef.current?.focus()}
                   value="Description"
                 />
               </div>
-              <Textarea ref={hotelDescriptionInputRef} required />
+              <Textarea
+                ref={descriptionInputRef}
+                required
+                name="description"
+                onChange={handleFormChange}
+              />
             </div>
             <div>
-              <button
-                onClick={() => hotelFilesInputRef.current?.click()}
-                className="bg-slate-400 px-3 py-2 rounded-md text-white hover:bg-slate-500 hover:cursor-pointer"
+              <StyledButton
+                onClick={() => imagesInputRef.current?.click()}
+                className="bg-slate-400 hover:bg-slate-500"
               >
                 Add new photo
-              </button>
+              </StyledButton>
               <input
                 type="file"
                 className="hidden"
+                name="images"
                 accept=".png, .jpg, .svg, .webp"
-                ref={hotelFilesInputRef}
+                ref={imagesInputRef}
                 multiple
-                onChange={handleFilesInputChange}
+                onChange={handleFormChange}
               />
-              <HotelImages images={files} setImages={setFiles} />
+              <HotelImages />
             </div>
-            <div className="w-full">
-              <button
-                className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white"
-                onClick={handleCreateNewHotel}
-              >
-                Create hotel
-              </button>
-            </div>
+            <StyledButton
+              onClick={handleCreateNewHotel}
+              className={cn("mx-auto block", {
+                "!cursor-not-allowed hover:!bg-blue-400": !isFormValid(),
+              })}
+              disabled={!isFormValid()}
+            >
+              Create hotel
+            </StyledButton>
           </div>
         </Modal.Body>
       </Modal>

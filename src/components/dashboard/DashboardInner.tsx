@@ -1,4 +1,5 @@
 import { useHotelsContext } from "@/app/contexts/dashboard/hotelsContext";
+import { NewHotelFormContextProvider } from "@/app/contexts/dashboard/newHotelFormContext";
 import HotelCard from "@/components/dashboard/HotelCard";
 import NewHotelForm from "@/components/dashboard/NewHotelForm";
 import Image from "next/image";
@@ -23,7 +24,9 @@ export default function DashboardInner() {
 
   return (
     <>
-      <NewHotelForm />
+      <NewHotelFormContextProvider>
+        <NewHotelForm />
+      </NewHotelFormContextProvider>
       <div className="w-full m-auto mb-4 grid grid-cols-1 lg:w-3/4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         {hotels.map((hotel) => (
           <HotelCard key={hotel.uid} hotel={hotel} />
