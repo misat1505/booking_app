@@ -1,5 +1,6 @@
 "use client";
 import { useRoomPageContext } from "@/app/contexts/public/RoomPageContext";
+import StyledLink from "@/components/common/StyledLink";
 import { Avatar } from "flowbite-react";
 import Link from "next/link";
 
@@ -23,12 +24,9 @@ export default function OwnerInfo() {
           {hotel.owner.email}
         </Link>
       </div>
-      <Link
-        href={"/"}
-        className="text-center px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white text-sm"
-      >
+      <StyledLink href={"#"}>
         Show {hotel.owner.displayName}&apos;s page
-      </Link>
+      </StyledLink>
     </div>
   );
 }

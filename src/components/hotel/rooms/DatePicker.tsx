@@ -6,10 +6,10 @@ import {
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import DateValidator from "./DateValidator";
 import { useUserContext } from "@/app/contexts/userContext";
-import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Loading from "@/components/common/Loading";
+import StyledLink from "@/components/common/StyledLink";
 
 export default function DatePicker() {
   const { user } = useUserContext();
@@ -69,12 +69,12 @@ export default function DatePicker() {
           height={300}
           className="rounded-lg"
         />
-        <Link
+        <StyledLink
           href={`/login?role=customer&redirect=${selfPath}`}
-          className="px-3 py-2 w-full bg-blue-500 rounded-md text-white hover:bg-blue-600 hover:cursor-pointer text-sm text-center"
+          className="w-full"
         >
           Log in as customer to book.
-        </Link>
+        </StyledLink>
       </div>
     );
 

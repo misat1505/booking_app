@@ -1,6 +1,7 @@
 "use client";
 import { useUserContext } from "@/app/contexts/userContext";
 import Loading from "@/components/common/Loading";
+import StyledButton from "@/components/common/StyledButton";
 import { signInWithGoogle } from "@/firebase/firebase";
 import { User } from "@/models/User";
 import axios from "axios";
@@ -55,12 +56,7 @@ export default function Login() {
           <span className="text-green-500">{role && role.toLowerCase()}</span>.
         </h2>
         <div className="flex space-x-4 justify-center">
-          <button
-            onClick={handleLogin}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border-none hover:cursor-pointer text-sm"
-          >
-            Log in with Google
-          </button>
+          <StyledButton onClick={handleLogin}>Log in with Google</StyledButton>
         </div>
       </div>
     </div>

@@ -4,6 +4,8 @@ import { Label, TextInput } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
+import StyledLink from "../common/StyledLink";
+import StyledButton from "../common/StyledButton";
 
 export default function AccordionInner({ rooms }: { rooms: Room[] }) {
   const router = useRouter();
@@ -56,9 +58,7 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
             <TextInput color="#3e83f8" type="number" ref={maxChargeInputRef} />
           </div>
         </div>
-        <button className="h-12 px-3 py-2 bg-blue-500 rounded-md hover:bg-blue-600 hover:cursor-pointer text-white text-sm mt-4">
-          Apply filter
-        </button>
+        <StyledButton className="h-12">Apply filter</StyledButton>
       </form>
       <div className="mt-12">
         {displayedRooms.map((room) => (
@@ -71,12 +71,9 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
             <div className="font-semibold">
               {room.dailyFee}$ <span className="font-normal">a night</span>
             </div>
-            <Link
-              className="px-3 py-2 bg-blue-500 rounded-md text-white hover:bg-blue-600 hover:cursor-pointer text-sm"
-              href={`/hotels/${room.hotelId}/rooms/${room.uid}`}
-            >
+            <StyledLink href={`/hotels/${room.hotelId}/rooms/${room.uid}`}>
               Book now
-            </Link>
+            </StyledLink>
           </div>
         ))}
       </div>

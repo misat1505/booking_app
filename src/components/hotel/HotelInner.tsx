@@ -3,6 +3,7 @@ import { Hotel } from "@/models/Hotel";
 import { Avatar } from "flowbite-react";
 import RoomsDisplayer from "./RoomsDisplayer";
 import Link from "next/link";
+import StyledLink from "../common/StyledLink";
 
 export default function HotelInner({ hotel }: { hotel: Hotel }) {
   return (
@@ -34,12 +35,9 @@ export default function HotelInner({ hotel }: { hotel: Hotel }) {
               {hotel.owner.email}
             </Link>
           </div>
-          <Link
-            href={"#"}
-            className="px-3 py-2 rounded-md bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white text-sm text-center"
-          >
+          <StyledLink href={"#"}>
             Show {hotel.owner.displayName}&apos;s page
-          </Link>
+          </StyledLink>
         </div>
         <RoomsDisplayer hotel={hotel} />
       </div>
