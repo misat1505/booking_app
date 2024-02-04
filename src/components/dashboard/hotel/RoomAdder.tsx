@@ -14,6 +14,8 @@ import CapacityInput from "./CapacityInput";
 import ChargeInput from "./ChargeInput";
 import { useNewRoomFormContext } from "@/app/contexts/dashboard/newRoomFormContext";
 import cn from "classnames";
+import { toast } from "react-toastify";
+import { errorConfig, successConfig } from "@/utils/showToasts";
 
 export default function RoomAdder() {
   const { hotel, addRoom } = useHotelContext();
@@ -28,14 +30,24 @@ export default function RoomAdder() {
 
     const body = { name, capacity, dailyFee: charge, hotelId: hotel.uid };
 
-    const data = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
-      body
-    );
+    const toastID = toast.loading("Please wait...");
 
-    const newRoom = data.data.room;
+    try {
+      const data = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
+        body
+      );
 
-    addRoom(newRoom);
+      const newRoom = data.data.room;
+
+      addRoom(newRoom);
+      toast.update(toastID, successConfig("Room created successfully."));
+    } catch (e) {
+      toast.update(
+        toastID,
+        errorConfig("An error occured when creating a hotel.")
+      );
+    }
   };
 
   return (
