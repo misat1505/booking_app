@@ -14,8 +14,6 @@ export default function CarouselBackground({ images }: { images: string[] }) {
       className="fixed text-center z-0 top-[88px] w-full"
       style={{
         height: "calc(100vh-88px)",
-        // width: "calc(100% + 2rem)",
-        // marginLeft: "-1rem",
       }}
     >
       <Carousel
@@ -28,10 +26,11 @@ export default function CarouselBackground({ images }: { images: string[] }) {
             <CarouselItem key={id} className="h-full pl-0">
               <Image
                 src={image.replace("\\", "/")}
-                width={2000}
-                height={1000}
+                width={1920}
+                height={1080}
+                objectFit="cover"
                 alt="..."
-                className="h-full object-cover"
+                className="h-full"
               />
             </CarouselItem>
           ))}

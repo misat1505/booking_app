@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-import { Modal } from "flowbite-react";
 import HotelImages from "./HotelImages";
 import { uploadMultipleFiles } from "@/utils/uploadFiles";
 import { useHotelsContext } from "@/app/contexts/dashboard/hotelsContext";
@@ -10,11 +9,18 @@ import { useNewHotelFormContext } from "@/app/contexts/dashboard/newHotelFormCon
 import HotelNameInput from "./HotelNameInput";
 import HotelDescriptionInput from "./HotelDescriptionInput";
 import HotelImagesInput from "./HotelImagesInput";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "../ui/dialog";
 
 export default function NewHotelForm() {
   const { addHotel } = useHotelsContext();
-  const { form, openModal, onOpenModal, onCloseModal, isFormValid } =
-    useNewHotelFormContext();
+  const { form, isFormValid } = useNewHotelFormContext();
 
   const handleCreateNewHotel = async () => {
     if (!isFormValid()) {
@@ -35,35 +41,35 @@ export default function NewHotelForm() {
 
     const newHotel = response.data.hotel;
     addHotel(newHotel);
-    onCloseModal();
   };
 
   return (
-    <>
-      <StyledButton onClick={onOpenModal}>Create new hotel</StyledButton>
-      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
-        <Modal.Header />
-        <Modal.Body>
-          <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Create new hotel
-            </h3>
-            <HotelNameInput />
-            <HotelDescriptionInput />
-            <HotelImagesInput />
-            <HotelImages />
-            <StyledButton
-              onClick={handleCreateNewHotel}
-              className={cn("mx-auto block", {
-                "!cursor-not-allowed hover:!bg-blue-400": !isFormValid(),
-              })}
-              disabled={!isFormValid()}
-            >
-              Create hotel
-            </StyledButton>
-          </div>
-        </Modal.Body>
-      </Modal>
-    </>
+    <Dialog>
+      <DialogTrigger asChild>
+        <StyledButton>Create hotel</StyledButton>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Create new hotel</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col space-y-4">
+          <HotelNameInput />
+          <HotelDescriptionInput />
+          <HotelImagesInput />
+          <HotelImages />
+        </div>
+        <DialogFooter className="sm:justify-start">
+          <StyledButton
+            onClick={handleCreateNewHotel}
+            className={cn("mx-auto block", {
+              "!cursor-not-allowed hover:!bg-blue-400": !isFormValid(),
+            })}
+            disabled={!isFormValid()}
+          >
+            Create hotel
+          </StyledButton>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

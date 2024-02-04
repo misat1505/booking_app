@@ -21,9 +21,6 @@ type NewHotelFormContextProvidedValues = {
   nameInputRef: RefObject<HTMLInputElement>;
   descriptionInputRef: RefObject<HTMLTextAreaElement>;
   imagesInputRef: RefObject<HTMLInputElement>;
-  openModal: boolean;
-  onOpenModal: () => void;
-  onCloseModal: () => void;
   handleFormChange: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -51,14 +48,6 @@ export const NewHotelFormContextProvider = ({
   const nameInputRef = useRef<HTMLInputElement>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
   const imagesInputRef = useRef<HTMLInputElement>(null);
-  const [openModal, setOpenModal] = useState(false);
-
-  const onOpenModal = () => setOpenModal(true);
-
-  const onCloseModal = () => {
-    setOpenModal(false);
-    setForm({ ...initialForm });
-  };
 
   const isFormValid = (): boolean => {
     return (
@@ -105,9 +94,6 @@ export const NewHotelFormContextProvider = ({
         nameInputRef,
         descriptionInputRef,
         imagesInputRef,
-        openModal,
-        onOpenModal,
-        onCloseModal,
         handleFormChange,
         isFormValid,
         deleteImage,

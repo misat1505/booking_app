@@ -1,5 +1,6 @@
 import { useNewHotelFormContext } from "@/app/contexts/dashboard/newHotelFormContext";
-import { Label, TextInput } from "flowbite-react";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 
 export default function HotelNameInput() {
   const { nameInputRef, handleFormChange } = useNewHotelFormContext();
@@ -7,10 +8,9 @@ export default function HotelNameInput() {
   return (
     <div>
       <div className="mb-2 block">
-        <Label onClick={() => nameInputRef.current?.focus()} value="Name" />
+        <Label onClick={() => nameInputRef.current?.focus()}>Name</Label>
       </div>
-      <TextInput
-        color="#3e83f8"
+      <Input
         autoComplete="off"
         ref={nameInputRef}
         placeholder="hotel name"

@@ -1,6 +1,7 @@
 import { useNewHotelFormContext } from "@/app/contexts/dashboard/newHotelFormContext";
-import { Label, Textarea } from "flowbite-react";
 import { ChangeEvent } from "react";
+import { Label } from "../ui/label";
+import { Textarea } from "../ui/textarea";
 
 export default function HotelDescriptionInput() {
   const { descriptionInputRef, handleFormChange } = useNewHotelFormContext();
@@ -18,13 +19,11 @@ export default function HotelDescriptionInput() {
   return (
     <div>
       <div className="mb-2 block">
-        <Label
-          onClick={() => descriptionInputRef.current?.focus()}
-          value="Description"
-        />
+        <Label onClick={() => descriptionInputRef.current?.focus()}>
+          Description
+        </Label>
       </div>
       <Textarea
-        color="#3e83f8"
         ref={descriptionInputRef}
         required
         name="description"
