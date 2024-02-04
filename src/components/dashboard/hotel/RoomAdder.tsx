@@ -1,26 +1,32 @@
-import { useRef, useState } from "react";
-import { Modal, Label, TextInput } from "flowbite-react";
 import axios from "axios";
 import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
 import StyledButton from "@/components/common/StyledButton";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import RoomNameInput from "./RoomNameInput";
+import CapacityInput from "./CapacityInput";
+import ChargeInput from "./ChargeInput";
+import { useNewRoomFormContext } from "@/app/contexts/dashboard/newRoomFormContext";
+import cn from "classnames";
 
 export default function RoomAdder() {
   const { hotel, addRoom } = useHotelContext();
-  const [openModal, setOpenModal] = useState(false);
-  const nameInputRef = useRef<HTMLInputElement>(null);
-  const capacityInputRef = useRef<HTMLInputElement>(null);
-  const chargeInputRef = useRef<HTMLInputElement>(null);
+  const { form, isFormValid } = useNewRoomFormContext();
 
   const handleCreateRoom = async (e: any) => {
     e.preventDefault();
 
-    const name = nameInputRef.current?.value;
-    const capacity = capacityInputRef.current?.value;
-    const dailyFee = chargeInputRef.current?.value;
+    const { name, capacity, charge } = form;
 
-    if (!name || !capacity || !dailyFee) return;
+    if (!name || !capacity || !charge) return;
 
-    const body = { name, capacity, dailyFee, hotelId: hotel.uid };
+    const body = { name, capacity, dailyFee: charge, hotelId: hotel.uid };
 
     const data = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/rooms`,
@@ -30,69 +36,34 @@ export default function RoomAdder() {
     const newRoom = data.data.room;
 
     addRoom(newRoom);
-    setOpenModal(false);
   };
 
   return (
-    <>
-      <StyledButton className="mt-4" onClick={() => setOpenModal(true)}>
-        Add room
-      </StyledButton>
-      <Modal
-        show={openModal}
-        size="md"
-        onClose={() => setOpenModal(false)}
-        popup
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Create new room for {hotel.name}
-            </h3>
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  onClick={() => nameInputRef.current?.focus()}
-                  value="Name"
-                />
-              </div>
-              <TextInput ref={nameInputRef} placeholder="room name" required />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  onClick={() => capacityInputRef.current?.focus()}
-                  value="Capacity"
-                />
-              </div>
-              <TextInput
-                ref={capacityInputRef}
-                placeholder="people in room"
-                required
-                type="number"
-              />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  onClick={() => chargeInputRef.current?.focus()}
-                  value="Daily charge"
-                />
-              </div>
-              <TextInput
-                ref={chargeInputRef}
-                placeholder="daily charge ($)"
-                required
-                type="number"
-              />
-            </div>
-          </div>
-          <StyledButton className="mt-4" onClick={handleCreateRoom}>
+    <Dialog>
+      <DialogTrigger asChild>
+        <StyledButton className="mt-4">Add room</StyledButton>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Create new room for {hotel.name}</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col space-y-4">
+          <RoomNameInput />
+          <CapacityInput />
+          <ChargeInput />
+        </div>
+        <DialogFooter className="sm:justify-start">
+          <StyledButton
+            onClick={handleCreateRoom}
+            disabled={!isFormValid()}
+            className={cn("mt-4 mx-auto", {
+              "!cursor-not-allowed hover:!bg-blue-400": !isFormValid(),
+            })}
+          >
             Create room
           </StyledButton>
-        </Modal.Body>
-      </Modal>
-    </>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

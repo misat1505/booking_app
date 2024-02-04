@@ -3,6 +3,7 @@ import RoomAdder from "./RoomAdder";
 import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
 import Link from "next/link";
 import StyledLink from "@/components/common/StyledLink";
+import { NewRoomFormContextProvider } from "@/app/contexts/dashboard/newRoomFormContext";
 
 export default function RoomsInspector() {
   const { hotel, rooms } = useHotelContext();
@@ -38,7 +39,9 @@ export default function RoomsInspector() {
     <div className="w-full bg-slate-100 p-4 mb-4 rounded-md text-left text-lg border-solid border border-slate-300">
       <h2 className="mb-4 font-bold">Rooms</h2>
       <RoomsInfo />
-      <RoomAdder />
+      <NewRoomFormContextProvider>
+        <RoomAdder />
+      </NewRoomFormContextProvider>
     </div>
   );
 }

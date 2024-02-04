@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 
 export default function NewHotelForm() {
   const { addHotel } = useHotelsContext();
