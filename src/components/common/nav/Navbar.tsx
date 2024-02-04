@@ -5,6 +5,7 @@ import NavbarSidebar from "./NavbarSidebar";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaUser } from "react-icons/fa6";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function Navbar() {
   const { user } = useUserContext();
@@ -21,21 +22,24 @@ export default function Navbar() {
         </Link>
         <div className="flex gap-4 items-center">
           <div>{user?.displayName}</div>
-          <Avatar
-            onClick={() => setOpenSidebar((prev) => !prev)}
-            className="hover:cursor-pointer"
-            title={openSidebar ? "close sidebar" : "open sidebar"}
-          >
-            <AvatarImage src={user?.photoURL} />
-            <AvatarFallback>
-              <FaUser size={30} className="text-slate-600" />
-            </AvatarFallback>
-          </Avatar>
+          <Sheet>
+            <SheetTrigger>
+              <Avatar
+                onClick={() => setOpenSidebar((prev) => !prev)}
+                className="hover:cursor-pointer"
+                title={openSidebar ? "close sidebar" : "open sidebar"}
+              >
+                <AvatarImage src={user?.photoURL} />
+                <AvatarFallback>
+                  <FaUser size={30} className="text-slate-600" />
+                </AvatarFallback>
+              </Avatar>
+            </SheetTrigger>
+            <SheetContent>
+              <NavbarSidebar />
+            </SheetContent>
+          </Sheet>
         </div>
-        <NavbarSidebar
-          openSidebar={openSidebar}
-          setOpenSidebar={setOpenSidebar}
-        />
       </header>
       <div style={{ height: "88px" }} aria-label="false" />
     </>

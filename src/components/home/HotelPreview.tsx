@@ -1,8 +1,9 @@
 "use client";
 import { Hotel } from "@/models/Hotel";
-import { Carousel } from "flowbite-react";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import Image from "next/image";
 import Link from "next/link";
+import styles from "./HotelPreview.module.css";
 
 type HotelPreviewProps = {
   hotel: Hotel;
@@ -17,20 +18,18 @@ export default function HotelPreview({ hotel, price }: HotelPreviewProps) {
       title="show details"
     >
       <Carousel
-        indicators={false}
-        leftControl
-        rightControl
-        className="w-full h-52 object-cover rounded-tr-xl rounded-tl-xl overflow-x-hidden"
+        className={`w-full h-52 object-cover rounded-tr-xl rounded-tl-xl overflow-x-hidden ${styles.carousel}`}
       >
-        <Image
-          src={hotel.photoURLs[
-            Math.floor(Math.random() * hotel.photoURLs.length)
-          ].replace("\\", "/")}
-          width={1000}
-          height={1000}
-          alt="..."
-          className="object-cover z-0 h-full overflow-x-hidden"
-        />
+        <CarouselContent className="h-full">
+          <CarouselItem className="h-full pl-0">
+            <Image
+              src={hotel.photoURLs[0].replace("\\", "/")}
+              fill
+              alt="..."
+              className="h-full object-cover"
+            />
+          </CarouselItem>
+        </CarouselContent>
       </Carousel>
       <div className="mt-4 px-2">
         <h2 className="font-semibold text-md">{hotel.name}</h2>

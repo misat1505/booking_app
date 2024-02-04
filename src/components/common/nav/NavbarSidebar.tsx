@@ -1,18 +1,13 @@
 "use client";
 import { useUserContext } from "@/app/contexts/userContext";
 import { Dispatch, SetStateAction } from "react";
-import Offcanvas from "react-bootstrap/Offcanvas";
+// import Offcanvas from "react-bootstrap/Offcanvas";
 import SidebarGuest from "./SidebarGuest";
 import SidebarSalesman from "./SidebarSalesman";
 import SidebarCustomer from "./SidebarCustomer";
+import { SheetHeader } from "@/components/ui/sheet";
 
-export default function NavbarSidebar({
-  openSidebar,
-  setOpenSidebar,
-}: {
-  openSidebar: boolean;
-  setOpenSidebar: Dispatch<SetStateAction<boolean>>;
-}) {
+export default function NavbarSidebar() {
   const { user } = useUserContext();
 
   const greeting = (date: Date): string => {
@@ -29,21 +24,15 @@ export default function NavbarSidebar({
   };
 
   return (
-    <Offcanvas
-      show={openSidebar}
-      onHide={() => setOpenSidebar(false)}
-      placement="end"
-    >
-      <Offcanvas.Header>
-        <Offcanvas.Title>
-          {greeting(new Date())}, {user ? user.displayName : "guest"}!
-        </Offcanvas.Title>
-      </Offcanvas.Header>
-      <Offcanvas.Body>
+    <>
+      <SheetHeader className="font-semibold text-lg pb-3">
+        {greeting(new Date())}, {user ? user.displayName : "guest"}!
+      </SheetHeader>
+      <div className="h-[calc(100%-0.75rem)]">
         {!user && <SidebarGuest />}
         {user?.role === "SALESMAN" && <SidebarSalesman />}
         {user?.role === "CUSTOMER" && <SidebarCustomer />}
-      </Offcanvas.Body>
-    </Offcanvas>
+      </div>
+    </>
   );
 }
