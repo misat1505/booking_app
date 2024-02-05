@@ -1,7 +1,5 @@
 "use client";
 import { useUserContext } from "@/app/contexts/userContext";
-import { Dispatch, SetStateAction } from "react";
-// import Offcanvas from "react-bootstrap/Offcanvas";
 import SidebarGuest from "./SidebarGuest";
 import SidebarSalesman from "./SidebarSalesman";
 import SidebarCustomer from "./SidebarCustomer";

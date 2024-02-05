@@ -1,6 +1,5 @@
 "use client";
 import { useUserContext } from "@/app/contexts/userContext";
-import { useState } from "react";
 import NavbarSidebar from "./NavbarSidebar";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -9,7 +8,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function Navbar() {
   const { user } = useUserContext();
-  const [openSidebar, setOpenSidebar] = useState(false);
 
   return (
     <>
@@ -24,11 +22,7 @@ export default function Navbar() {
           <div>{user?.displayName}</div>
           <Sheet>
             <SheetTrigger>
-              <Avatar
-                onClick={() => setOpenSidebar((prev) => !prev)}
-                className="hover:cursor-pointer"
-                title={openSidebar ? "close sidebar" : "open sidebar"}
-              >
+              <Avatar className="hover:cursor-pointer">
                 <AvatarImage src={user?.photoURL} />
                 <AvatarFallback>
                   <FaUser size={30} className="text-slate-600" />

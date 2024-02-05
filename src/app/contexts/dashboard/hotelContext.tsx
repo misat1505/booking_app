@@ -3,7 +3,6 @@ import { Hotel } from "@/models/Hotel";
 import { Room } from "@/models/Room";
 import { ReactNode, createContext, useContext, useState } from "react";
 import { useUserContext } from "../userContext";
-import { notFound } from "next/navigation";
 
 type HotelContextProvidedValues = {
   hotel: Hotel;
