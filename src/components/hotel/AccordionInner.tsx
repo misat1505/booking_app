@@ -36,7 +36,7 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
   return (
     <div className="text-left">
       <form
-        className="grid grid-cols-4 gap-12 my-4 text-left mx-8"
+        className="grid grid-cols-4 lg:gap-12 my-4 text-left lg:mx-8"
         onSubmit={handleApplyFilter}
       >
         <div>
