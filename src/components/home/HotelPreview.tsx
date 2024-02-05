@@ -14,7 +14,7 @@ export default function HotelPreview({ hotel, price }: HotelPreviewProps) {
   return (
     <Link
       href={`/hotels/${hotel.uid}`}
-      className="w-full text-left rounded-md flex flex-col hover:bg-slate-100 hover:cursor-pointer"
+      className="w-full text-left rounded-md flex flex-col bg-slate-100 hover:bg-slate-200 hover:cursor-pointer"
       title="show details"
     >
       <Carousel
