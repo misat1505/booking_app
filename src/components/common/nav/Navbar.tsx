@@ -17,7 +17,7 @@ export default function Navbar() {
         <Link href={"/"}>
           <Avatar>
             <AvatarImage src="/logo.avif" />
-            <AvatarFallback>logo</AvatarFallback>
+            <AvatarFallback></AvatarFallback>
           </Avatar>
         </Link>
         <div className="flex gap-4 items-center">
