@@ -1,9 +1,10 @@
 "use client";
 import { Hotel } from "@/models/Hotel";
-import { Avatar } from "flowbite-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import RoomsDisplayer from "./RoomsDisplayer";
 import Link from "next/link";
 import StyledLink from "../common/StyledLink";
+import { FaUser } from "react-icons/fa6";
 
 export default function HotelInner({ hotel }: { hotel: Hotel }) {
   return (
@@ -22,7 +23,12 @@ export default function HotelInner({ hotel }: { hotel: Hotel }) {
         <div className="bg-slate-100 p-4 rounded-md w-1/5 text-left my-4 ml-4 border-solid border border-slate-300 flex flex-col justify-between flex-grow">
           <h2 className="text-xl font-bold">Owner</h2>
           <div className="flex items-center gap-2">
-            <Avatar img={hotel.owner.photoURL} rounded />
+            <Avatar>
+              <AvatarImage src={hotel.owner.photoURL} />
+              <AvatarFallback>
+                <FaUser size={30} className="text-slate-600" />
+              </AvatarFallback>
+            </Avatar>
             <div className="text-sm">{hotel.owner.displayName}</div>
           </div>
           <div>
