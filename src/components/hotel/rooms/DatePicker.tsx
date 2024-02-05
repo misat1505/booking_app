@@ -67,7 +67,7 @@ export default function DatePicker() {
           alt="..."
           width={300}
           height={300}
-          className="rounded-lg"
+          className="rounded-lg mb-4"
         />
         <StyledLink
           href={`/login?role=customer&redirect=${selfPath}`}
