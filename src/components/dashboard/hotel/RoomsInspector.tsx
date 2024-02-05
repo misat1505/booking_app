@@ -1,9 +1,13 @@
-import { Accordion } from "flowbite-react";
 import RoomAdder from "./RoomAdder";
 import { useHotelContext } from "@/app/contexts/dashboard/hotelContext";
-import Link from "next/link";
 import StyledLink from "@/components/common/StyledLink";
 import { NewRoomFormContextProvider } from "@/app/contexts/dashboard/newRoomFormContext";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 
 export default function RoomsInspector() {
   const { hotel, rooms } = useHotelContext();
@@ -13,11 +17,11 @@ export default function RoomsInspector() {
       return <div className="text-sm">{hotel.name} has no rooms.</div>;
 
     return (
-      <Accordion collapseAll>
-        {rooms.map((room, id) => (
-          <Accordion.Panel key={id}>
-            <Accordion.Title className="p-3">{room.name}</Accordion.Title>
-            <Accordion.Content className="p-4">
+      <Accordion type="single" collapsible>
+        {rooms.map((room) => (
+          <AccordionItem value={room.name}>
+            <AccordionTrigger>{room.name}</AccordionTrigger>
+            <AccordionContent>
               <div className="text-sm">
                 <span className="font-semibold">Capacity: </span>
                 {room.capacity}
@@ -28,8 +32,8 @@ export default function RoomsInspector() {
               </div>
               <div className="h-3" />
               <StyledLink href={"#"}>Show details</StyledLink>
-            </Accordion.Content>
-          </Accordion.Panel>
+            </AccordionContent>
+          </AccordionItem>
         ))}
       </Accordion>
     );

@@ -1,6 +1,5 @@
 "use client";
 import { Hotel } from "@/models/Hotel";
-// import { Accordion, AccordionTitle } from "flowbite-react";
 import AccordionInner from "./AccordionInner";
 import useFetch from "@/hooks/useFetch";
 import { Room } from "@/models/Room";
