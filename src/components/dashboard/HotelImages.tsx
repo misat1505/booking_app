@@ -1,4 +1,5 @@
 import { useNewHotelFormContext } from "@/app/contexts/dashboard/newHotelFormContext";
+import Image from "next/image";
 
 export default function HotelImages() {
   const { deleteImage, form } = useNewHotelFormContext();
@@ -12,9 +13,11 @@ export default function HotelImages() {
         Click on any image to delete it.
       </p>
       {form.images.map((image, id) => (
-        <img
+        <Image
           key={id}
           src={URL.createObjectURL(image)}
+          width={500}
+          height={300}
           alt=""
           className="w-1/4 hover:cursor-pointer"
           title="delete"
