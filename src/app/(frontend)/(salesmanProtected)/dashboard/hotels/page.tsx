@@ -6,6 +6,8 @@ import DashboardInner from "@/components/dashboard/DashboardInner";
 import useFetch from "@/hooks/useFetch";
 import { Hotel } from "@/models/Hotel";
 
+export const dynamic = "force-dynamic";
+
 export default function Dashboard() {
   const { user } = useUserContext();
 

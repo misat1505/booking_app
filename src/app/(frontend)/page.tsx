@@ -3,6 +3,8 @@ import { connectToDatabase } from "@/db/mongodb";
 import { Hotel } from "@/models/Hotel";
 import axios from "axios";
 
+export const dynamic = "force-dynamic";
+
 type HotelWithPrice = {
   hotel: Hotel;
   price: number | "N/A";

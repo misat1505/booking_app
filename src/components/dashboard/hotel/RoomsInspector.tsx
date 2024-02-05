@@ -18,8 +18,8 @@ export default function RoomsInspector() {
 
     return (
       <Accordion type="single" collapsible>
-        {rooms.map((room) => (
-          <AccordionItem value={room.name}>
+        {rooms.map((room, id) => (
+          <AccordionItem key={id} value={room.name}>
             <AccordionTrigger>{room.name}</AccordionTrigger>
             <AccordionContent>
               <div className="text-sm">
