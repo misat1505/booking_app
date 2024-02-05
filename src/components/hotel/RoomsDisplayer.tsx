@@ -1,10 +1,16 @@
 "use client";
 import { Hotel } from "@/models/Hotel";
-import { Accordion, AccordionTitle } from "flowbite-react";
+// import { Accordion, AccordionTitle } from "flowbite-react";
 import AccordionInner from "./AccordionInner";
 import useFetch from "@/hooks/useFetch";
 import { Room } from "@/models/Room";
 import Loading from "../common/Loading";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 
 export default function RoomsDisplayer({ hotel }: { hotel: Hotel }) {
   const { data, isLoading } = useFetch<{ rooms: Room[] }>(
@@ -19,13 +25,13 @@ export default function RoomsDisplayer({ hotel }: { hotel: Hotel }) {
           <Loading />
         </div>
       ) : (
-        <Accordion collapseAll>
-          <Accordion.Panel>
-            <AccordionTitle className="p-3">Show rooms</AccordionTitle>
-            <Accordion.Content>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Show rooms</AccordionTrigger>
+            <AccordionContent>
               <AccordionInner rooms={data!.rooms} />
-            </Accordion.Content>
-          </Accordion.Panel>
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
       )}
     </div>

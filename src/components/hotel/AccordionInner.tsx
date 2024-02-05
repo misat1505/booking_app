@@ -1,14 +1,12 @@
 "use client";
 import { Room } from "@/models/Room";
-import { Label, TextInput } from "flowbite-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 import { FormEvent, useRef, useState } from "react";
 import StyledLink from "../common/StyledLink";
 import StyledButton from "../common/StyledButton";
 
 export default function AccordionInner({ rooms }: { rooms: Room[] }) {
-  const router = useRouter();
   const [displayedRooms, setDisplayedRooms] = useState<Room[]>(rooms);
   const capacityInputRef = useRef<HTMLInputElement>(null);
   const minChargeInputRef = useRef<HTMLInputElement>(null);
@@ -37,28 +35,31 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
 
   return (
     <div className="text-left">
-      <form className="flex justify-between" onSubmit={handleApplyFilter}>
-        <div className="flex gap-4">
-          <div>
-            <Label onClick={() => capacityInputRef.current?.focus()}>
-              Capacity
-            </Label>
-            <TextInput color="#3e83f8" type="number" ref={capacityInputRef} />
-          </div>
-          <div>
-            <Label onClick={() => minChargeInputRef.current?.focus()}>
-              Minimum charge ($)
-            </Label>
-            <TextInput color="#3e83f8" type="number" ref={minChargeInputRef} />
-          </div>
-          <div>
-            <Label onClick={() => maxChargeInputRef.current?.focus()}>
-              Maximum charge ($)
-            </Label>
-            <TextInput color="#3e83f8" type="number" ref={maxChargeInputRef} />
-          </div>
+      <form
+        className="grid grid-cols-4 gap-12 my-4 text-left mx-8"
+        onSubmit={handleApplyFilter}
+      >
+        <div>
+          <Label onClick={() => capacityInputRef.current?.focus()}>
+            Capacity
+          </Label>
+          <Input className="mt-2" type="number" ref={capacityInputRef} />
         </div>
-        <StyledButton className="h-12">Apply filter</StyledButton>
+        <div>
+          <Label onClick={() => minChargeInputRef.current?.focus()}>
+            Minimum charge ($)
+          </Label>
+          <Input className="mt-2" type="number" ref={minChargeInputRef} />
+        </div>
+        <div>
+          <Label onClick={() => maxChargeInputRef.current?.focus()}>
+            Maximum charge ($)
+          </Label>
+          <Input className="mt-2" type="number" ref={maxChargeInputRef} />
+        </div>
+        <StyledButton className="h-12 mt-auto mb-auto">
+          Apply filter
+        </StyledButton>
       </form>
       <div className="mt-12">
         {displayedRooms.map((room) => (
