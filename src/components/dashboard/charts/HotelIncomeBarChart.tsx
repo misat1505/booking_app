@@ -3,6 +3,7 @@ import { HotelIncome } from "@/app/api/dashboard/types";
 import useFetch from "@/hooks/useFetch";
 import { BarChart } from "@mui/x-charts/BarChart";
 import styles from "./loadingEffect.module.css";
+import { MdMoneyOff } from "react-icons/md";
 
 export default function HotelIncomeBarChart() {
   const chartHeight = 300;
@@ -17,6 +18,19 @@ export default function HotelIncomeBarChart() {
         style={{ height: `${chartHeight}px` }}
         aria-label="false"
       />
+    );
+
+  if (data.hotelsIncome.length === 0)
+    return (
+      <div
+        className="flex flex-col justify-center items-center gap-4 bg-slate-100 rounded-md"
+        style={{ height: `${chartHeight}px` }}
+      >
+        <div>
+          <MdMoneyOff size={100} className="text-red-500" />
+        </div>
+        Your hotels haven't generated any income yet.
+      </div>
     );
 
   return (

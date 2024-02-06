@@ -10,11 +10,6 @@ export async function getUserHotelsIncome(
     .collection("bookings")
     .aggregate([
       {
-        $match: {
-          userId,
-        },
-      },
-      {
         $addFields: {
           roomIdObjectId: { $toObjectId: "$roomId" },
         },
@@ -47,10 +42,20 @@ export async function getUserHotelsIncome(
         $unwind: "$hotel",
       },
       {
+        $match: {
+          "hotel.ownerId": userId,
+        },
+      },
+      {
         $group: {
           _id: "$hotel._id",
           name: { $first: "$hotel.name" },
           income: { $sum: "$price" },
+        },
+      },
+      {
+        $sort: {
+          income: -1,
         },
       },
       {
@@ -64,5 +69,5 @@ export async function getUserHotelsIncome(
     ])
     .toArray()) as HotelIncome[];
 
-  return data;
+  return data || [];
 }
