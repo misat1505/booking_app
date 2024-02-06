@@ -29,7 +29,7 @@ export default function HotelIncomeBarChart() {
         <div>
           <MdMoneyOff size={100} className="text-red-500" />
         </div>
-        Your hotels haven't generated any income yet.
+        Your hotels haven&apos;t generated any income yet.
       </div>
     );
 
