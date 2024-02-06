@@ -49,15 +49,15 @@ export async function getUserHotelsIncome(
       {
         $group: {
           _id: "$hotel._id",
-          hotelName: { $first: "$hotel.name" },
-          totalPrice: { $sum: "$price" },
+          name: { $first: "$hotel.name" },
+          income: { $sum: "$price" },
         },
       },
       {
         $project: {
-          hotelId: "$_id",
-          hotelName: 1,
-          totalPrice: 1,
+          uid: "$_id",
+          name: 1,
+          income: 1,
           _id: 0,
         },
       },
