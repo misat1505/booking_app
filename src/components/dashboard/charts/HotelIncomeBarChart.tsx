@@ -2,8 +2,8 @@
 import { HotelIncome } from "@/app/api/dashboard/types";
 import useFetch from "@/hooks/useFetch";
 import { BarChart } from "@mui/x-charts/BarChart";
-import styles from "./loadingEffect.module.css";
 import { MdMoneyOff } from "react-icons/md";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function HotelIncomeBarChart() {
   const chartHeight = 300;
@@ -12,13 +12,7 @@ export default function HotelIncomeBarChart() {
   );
 
   if (isLoading || !data)
-    return (
-      <div
-        className={styles.loading}
-        style={{ height: `${chartHeight}px` }}
-        aria-label="false"
-      />
-    );
+    return <Skeleton style={{ height: `${chartHeight}px` }} />;
 
   if (data.hotelsIncome.length === 0)
     return (
