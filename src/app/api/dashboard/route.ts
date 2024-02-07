@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAccessToken } from "../auth/utils/getAccessToken";
 import { createResponse } from "../utils/createResponse";
-import { getUserHotelsBookings, getUserHotelsIncome } from "./functions";
+import {
+  getUserHotelsBookings,
+  getUserHotelsIncome,
+  getUserTopCustomers,
+} from "./functions";
 import { ApiError } from "@/models/api/ApiError";
-import { HotelBookings, HotelIncome } from "./types";
+import { HotelBookings, HotelIncome, TopCustomer } from "./types";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const { success, data } = getAccessToken(req);
@@ -27,6 +31,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const hotelsBookings = await getUserHotelsBookings(data.uid);
     return createResponse<{ hotelsBookings: HotelBookings[] }>(
       { hotelsBookings },
+      { status: 200 }
+    );
+  }
+
+  if (type === "top-customers") {
+    const topCustomers = await getUserTopCustomers(data.uid);
+    return createResponse<{ topCustomers: TopCustomer[] }>(
+      { topCustomers },
       { status: 200 }
     );
   }

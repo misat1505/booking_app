@@ -1,5 +1,7 @@
 import { connectToDatabase } from "@/db/mongodb";
-import { HotelBookings, HotelIncome } from "./types";
+import { HotelBookings, HotelIncome, TopCustomer } from "./types";
+import { auth } from "@/firebase/firebase-admin";
+import { User } from "@/models/User";
 
 export async function getUserHotelsIncome(
   userId: string
@@ -141,4 +143,92 @@ export async function getUserHotelsBookings(
     .toArray()) as HotelBookings[];
 
   return data || [];
+}
+
+export async function getUserTopCustomers(
+  userId: string
+): Promise<TopCustomer[]> {
+  const db = await connectToDatabase();
+
+  const data = (await db
+    .collection("bookings")
+    .aggregate([
+      {
+        $addFields: {
+          roomIdObjectId: { $toObjectId: "$roomId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "rooms",
+          localField: "roomIdObjectId",
+          foreignField: "_id",
+          as: "room",
+        },
+      },
+      {
+        $unwind: "$room",
+      },
+      {
+        $addFields: {
+          hotelIdObjectId: { $toObjectId: "$room.hotelId" },
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels",
+          localField: "hotelIdObjectId",
+          foreignField: "_id",
+          as: "hotel",
+        },
+      },
+      {
+        $unwind: "$hotel",
+      },
+      {
+        $match: {
+          "hotel.ownerId": userId,
+        },
+      },
+      {
+        $group: {
+          _id: "$userId",
+          bookings: { $sum: 1 },
+        },
+      },
+      {
+        $sort: {
+          bookings: -1,
+        },
+      },
+      {
+        $project: {
+          uid: "$_id",
+          bookings: 1,
+          _id: 0,
+        },
+      },
+    ])
+    .toArray()) as { bookings: number; uid: string }[];
+
+  const userIds = data.map((single) => ({ uid: single.uid }));
+  const users = await auth.getUsers(userIds);
+
+  const merged = data
+    .map((single) => {
+      const foundUser = users.users.find((user) => user.uid === single.uid);
+      if (!foundUser) return null;
+
+      const user: Omit<User, "role"> = {
+        uid: foundUser.uid,
+        displayName: foundUser.displayName,
+        email: foundUser.email,
+        photoURL: foundUser.photoURL,
+      };
+
+      return { totalBookings: single.bookings, user } as TopCustomer;
+    })
+    .filter((single): single is TopCustomer => single !== null);
+
+  return merged || [];
 }
