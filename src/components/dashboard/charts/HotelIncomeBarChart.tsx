@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function HotelIncomeBarChart() {
   const chartHeight = 300;
   const { data, isLoading } = useFetch<{ hotelsIncome: HotelIncome[] }>(
-    `${process.env.NEXT_PUBLIC_API_URL}/dashboard`
+    `${process.env.NEXT_PUBLIC_API_URL}/dashboard?type=hotels-income`
   );
 
   if (isLoading || !data)

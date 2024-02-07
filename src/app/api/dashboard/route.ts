@@ -10,6 +10,17 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   if (!success)
     return createResponse<ApiError>({ error: "Unauthorized" }, { status: 401 });
 
-  const hotelsIncome = await getUserHotelsIncome(data.uid);
-  return createResponse({ hotelsIncome }, { status: 200 });
+  const type = req.nextUrl.searchParams.get("type");
+  if (!type)
+    return createResponse<ApiError>({ error: "Have to provide type." });
+
+  if (type === "hotels-income") {
+    const hotelsIncome = await getUserHotelsIncome(data.uid);
+    return createResponse({ hotelsIncome }, { status: 200 });
+  }
+
+  return createResponse<ApiError>(
+    { error: `Invalid type '${type}'` },
+    { status: 400 }
+  );
 }

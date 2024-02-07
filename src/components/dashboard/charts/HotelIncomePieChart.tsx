@@ -9,7 +9,7 @@ import { PieChart } from "@mui/x-charts/PieChart";
 export default function HotelIncomePieChart() {
   const chartHeight = 300;
   const { data, isLoading } = useFetch<{ hotelsIncome: HotelIncome[] }>(
-    `${process.env.NEXT_PUBLIC_API_URL}/dashboard`
+    `${process.env.NEXT_PUBLIC_API_URL}/dashboard?type=hotels-income`
   );
 
   if (isLoading || !data)
