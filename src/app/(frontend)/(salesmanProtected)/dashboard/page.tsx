@@ -1,3 +1,4 @@
+import HotelBookingsBarChart from "@/components/dashboard/charts/HotelBookingsBarChart";
 import HotelIncomeBarChart from "@/components/dashboard/charts/HotelIncomeBarChart";
 import HotelIncomePieChart from "@/components/dashboard/charts/HotelIncomePieChart";
 import Link from "next/link";
@@ -18,6 +19,10 @@ export default function Dashboard() {
       </div>
       <div className="col-span-2 lg:col-span-1">
         <HotelIncomePieChart />
+      </div>
+      <div />
+      <div className="col-span-2 lg:col-span-1">
+        <HotelBookingsBarChart />
       </div>
     </div>
   );
