@@ -36,16 +36,12 @@ export async function getHotelRooms(hotelId: string): Promise<Room[]> {
   return rooms;
 }
 
-export async function getRoom(
-  hotelId: string,
-  roomId: string
-): Promise<Room | null> {
+export async function getRoom(roomId: string): Promise<Room | null> {
   const db = await connectToDatabase();
   const roomsCollection = db.collection("rooms");
 
   const room = (await roomsCollection.findOne({
     _id: new ObjectId(roomId),
-    hotelId,
   })) as MongoRoom | null;
 
   if (!room) return null;

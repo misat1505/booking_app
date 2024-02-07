@@ -40,26 +40,24 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const hotelId = req.nextUrl.searchParams.get("hotel");
     const roomId = req.nextUrl.searchParams.get("room");
 
-    if (!hotelId)
-      return createResponse<ApiError>(
-        { error: "No hotelId given in url." },
-        { status: 400 }
-      );
-
-    if (!roomId) {
+    if (hotelId) {
       const rooms = await getHotelRooms(hotelId);
       return createResponse<MultipleRooms>({ rooms }, { status: 200 });
     }
 
-    const room = await getRoom(hotelId, roomId);
-    if (!room) {
-      return createResponse<ApiError>(
-        { error: `Room ${roomId} not found for hotel ${hotelId}.` },
-        { status: 404 }
-      );
+    if (roomId) {
+      const room = await getRoom(roomId);
+
+      if (!room)
+        return createResponse<ApiError>(
+          { error: `Room ${roomId} not found for hotel ${hotelId}.` },
+          { status: 404 }
+        );
+
+      return createResponse<SingleRoom>({ room }, { status: 200 });
     }
 
-    return createResponse<SingleRoom>({ room }, { status: 200 });
+    throw new Error();
   } catch (e) {
     return createResponse<ApiError>({ error: "Bad request." }, { status: 400 });
   }

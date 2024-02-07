@@ -17,7 +17,7 @@ const fetchData = async (
 ): Promise<RoomsPageData> => {
   const [hotel, room, bookings] = await Promise.all([
     getHotel(hotelId),
-    getRoom(hotelId, roomId),
+    getRoom(roomId),
     getRoomBookings(roomId),
   ]);
 
