@@ -1,5 +1,6 @@
 import StyledLink from "@/components/common/StyledLink";
 import HotelIncomeBarChart from "@/components/dashboard/charts/HotelIncomeBarChart";
+import HotelIncomePieChart from "@/components/dashboard/charts/HotelIncomePieChart";
 
 export default function Dashboard() {
   return (
@@ -10,16 +11,7 @@ export default function Dashboard() {
           <HotelIncomeBarChart />
         </div>
         <div className="col-span-2 lg:col-span-1">
-          <HotelIncomeBarChart />
-        </div>
-        <div className="col-span-2 lg:col-span-1">
-          <HotelIncomeBarChart />
-        </div>
-        <div className="col-span-2 lg:col-span-1">
-          <HotelIncomeBarChart />
-        </div>
-        <div className="col-span-2 lg:col-span-1">
-          <HotelIncomeBarChart />
+          <HotelIncomePieChart />
         </div>
       </div>
     </>
