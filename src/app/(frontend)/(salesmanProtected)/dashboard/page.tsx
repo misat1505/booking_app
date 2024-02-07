@@ -1,6 +1,7 @@
 import HotelBookingsBarChart from "@/components/dashboard/charts/HotelBookingsBarChart";
 import HotelIncomeBarChart from "@/components/dashboard/charts/HotelIncomeBarChart";
 import HotelIncomePieChart from "@/components/dashboard/charts/HotelIncomePieChart";
+import TopCustomers from "@/components/dashboard/charts/TopCustomers";
 import Link from "next/link";
 import { FaHotel } from "react-icons/fa6";
 
@@ -20,7 +21,9 @@ export default function Dashboard() {
       <div className="col-span-2 lg:col-span-1">
         <HotelIncomePieChart />
       </div>
-      <div />
+      <div className="col-span-2 lg:col-span-1">
+        <TopCustomers />
+      </div>
       <div className="col-span-2 lg:col-span-1">
         <HotelBookingsBarChart />
       </div>
