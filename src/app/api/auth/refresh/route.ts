@@ -12,7 +12,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   const { uid, email, role } = data;
   const payload = { uid, email, role } as Partial<User>;
-  const token = encode(payload, { expiresIn: "5m" });
+  const token = encode(payload, { expiresIn: "5h" });
   console.log(token);
   const response = createResponse<{ token: string }>(
     { token },
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   );
 
   const date = new Date();
-  const expDate = new Date(date.setMinutes(date.getMinutes() + 5));
+  const expDate = new Date(date.setHours(date.getHours() + 5));
 
   response.cookies.set("token", token, {
     httpOnly: true,
