@@ -1,32 +1,13 @@
-"use client";
-import { HotelsContextProvider } from "@/app/contexts/dashboard/hotelsContext";
-import { useUserContext } from "@/app/contexts/userContext";
-import Loading from "@/components/common/Loading";
+import { decodeCredentials } from "@/actions/decodeCredentials";
+import { getUserHotels } from "@/app/api/hotels/utils/functions";
 import DashboardInner from "@/components/dashboard/DashboardInner";
-import useFetch from "@/hooks/useFetch";
-import { Hotel } from "@/models/Hotel";
+import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
+export default async function DashboardHotelsPage() {
+  const { success, credentials } = decodeCredentials();
+  if (!success) redirect("/login?role=salesman");
 
-export default function Dashboard() {
-  const { user } = useUserContext();
+  const hotels = await getUserHotels(credentials.uid);
 
-  if (!user) return <></>;
-  return <DashboardPageInner />;
-}
-
-function DashboardPageInner() {
-  const { user } = useUserContext();
-
-  const { data, isLoading } = useFetch<{ hotels: Hotel[] }>(
-    `${process.env.NEXT_PUBLIC_API_URL}/hotels/?user=${user?.uid}`
-  );
-
-  if (isLoading || !data) return <Loading />;
-
-  return (
-    <HotelsContextProvider initHotels={data.hotels}>
-      <DashboardInner />
-    </HotelsContextProvider>
-  );
+  return <DashboardInner hotels={hotels} />;
 }
