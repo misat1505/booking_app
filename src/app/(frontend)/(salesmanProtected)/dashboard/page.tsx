@@ -1,11 +1,21 @@
+import { decodeCredentials } from "@/actions/decodeCredentials";
 import HotelBookingsBarChart from "@/components/dashboard/charts/HotelBookingsBarChart";
 import HotelIncomeBarChart from "@/components/dashboard/charts/HotelIncomeBarChart";
 import HotelIncomePieChart from "@/components/dashboard/charts/HotelIncomePieChart";
 import TopCustomers from "@/components/dashboard/charts/TopCustomers";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { FaHotel } from "react-icons/fa6";
+import { fetchChartsData } from "./service";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const { success, credentials } = decodeCredentials();
+  if (!success) redirect("/login");
+
+  const { hotelsIncome, topCustomers, hotelsBookings } = await fetchChartsData(
+    credentials.uid
+  );
+
   return (
     <div className="grid grid-cols-2 mt-12 gap-4 w-full lg:max-w-[1200px] p-4 mx-auto">
       <Link
@@ -16,16 +26,16 @@ export default function Dashboard() {
         Show my hotels
       </Link>
       <div className="col-span-2 lg:col-span-1">
-        <HotelIncomeBarChart />
+        <HotelIncomeBarChart hotelsIncome={hotelsIncome} />
       </div>
       <div className="col-span-2 lg:col-span-1">
-        <HotelIncomePieChart />
+        <HotelIncomePieChart hotelsIncome={hotelsIncome} />
       </div>
       <div className="col-span-2 lg:col-span-1">
-        <TopCustomers />
+        <TopCustomers topCustomers={topCustomers} />
       </div>
       <div className="col-span-2 lg:col-span-1">
-        <HotelBookingsBarChart />
+        <HotelBookingsBarChart hotelsBookings={hotelsBookings} />
       </div>
     </div>
   );

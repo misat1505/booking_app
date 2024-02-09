@@ -62,7 +62,7 @@ export async function getUserHotelsIncome(
       },
       {
         $project: {
-          uid: "$_id",
+          uid: { $toString: "$_id" },
           name: 1,
           income: 1,
           _id: 0,
@@ -133,7 +133,7 @@ export async function getUserHotelsBookings(
       },
       {
         $project: {
-          uid: "$_id",
+          uid: { $toString: "$_id" },
           name: 1,
           bookings: 1,
           _id: 0,
@@ -203,7 +203,7 @@ export async function getUserTopCustomers(
       },
       {
         $project: {
-          uid: "$_id",
+          uid: { $toString: "$_id" },
           bookings: 1,
           _id: 0,
         },

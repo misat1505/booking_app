@@ -8,16 +8,14 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { FaUser } from "react-icons/fa6";
 
-export default function TopCustomers() {
+export default function TopCustomers({
+  topCustomers,
+}: {
+  topCustomers: TopCustomer[];
+}) {
   const chartHeight = 300;
-  const { data, isLoading } = useFetch<{ topCustomers: TopCustomer[] }>(
-    `${process.env.NEXT_PUBLIC_API_URL}/dashboard?type=top-customers`
-  );
 
-  if (isLoading || !data)
-    return <Skeleton style={{ height: `${chartHeight}px` }} />;
-
-  if (data.topCustomers.length === 0)
+  if (topCustomers.length === 0)
     return (
       <div
         className="flex flex-col justify-center items-center gap-4 bg-slate-100 rounded-md"
@@ -37,7 +35,7 @@ export default function TopCustomers() {
     >
       <h2 className="font-bold text-lg">Top Customers</h2>
       <div>
-        {data.topCustomers.map((topCustomer, id) => (
+        {topCustomers.map((topCustomer, id) => (
           <div
             key={id}
             className="flex justify-between items-center bg-slate-100 border border-1 border-slate-300 p-4 my-4 rounded-md"
