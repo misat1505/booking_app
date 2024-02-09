@@ -10,7 +10,8 @@ import { fetchChartsData } from "./service";
 
 export default async function Dashboard() {
   const { success, credentials } = decodeCredentials();
-  if (!success) redirect("/login");
+  if (!success || credentials.role !== "SALESMAN")
+    redirect("/login?role=salesman");
 
   const { hotelsIncome, topCustomers, hotelsBookings } = await fetchChartsData(
     credentials.uid

@@ -5,7 +5,8 @@ import { redirect } from "next/navigation";
 
 export default async function DashboardHotelsPage() {
   const { success, credentials } = decodeCredentials();
-  if (!success) redirect("/login?role=salesman");
+  if (!success || credentials.role !== "SALESMAN")
+    redirect("/login?role=salesman");
 
   const hotels = await getUserHotels(credentials.uid);
 
