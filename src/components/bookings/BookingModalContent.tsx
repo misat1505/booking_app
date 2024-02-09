@@ -4,26 +4,36 @@ import Loading from "@/components/common/Loading";
 import { Hotel } from "@/models/Hotel";
 import { Room } from "@/models/Room";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { convertDate } from "./utils/convertDate";
+import { fetchRoom } from "@/actions/fetchRoom";
+import { fetchHotel } from "@/actions/fetchHotel";
 
-export default function BookingModalContent({ booking }: { booking: Booking }) {
+export default async function BookingModalContent({
+  booking,
+}: {
+  booking: Booking;
+}) {
   const [room, setRoom] = useState<Room | null>(null);
   const [hotel, setHotel] = useState<Hotel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/rooms?room=${booking.roomId}`
-      );
-      const fetchedRoom = response.data.room as Room;
+      const fetchedRoom = await fetchRoom(booking.roomId);
+      if (!fetchedRoom) {
+        setError(new Error(`Couldn't fetch data for this booking.`));
+        return;
+      }
+
       setRoom(fetchedRoom);
 
-      const response2 = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/hotels?hotel=${fetchedRoom.hotelId}`
-      );
-      const fetchedHotel = response2.data.hotel as Hotel;
+      const fetchedHotel = await fetchHotel(fetchedRoom!.hotelId);
+      if (!fetchedHotel) {
+        setError(new Error(`Couldn't fetch data for this booking.`));
+        return;
+      }
+
       setHotel(fetchedHotel);
 
       setIsLoading(false);
@@ -33,7 +43,15 @@ export default function BookingModalContent({ booking }: { booking: Booking }) {
   }, []);
 
   if (isLoading || !hotel || !room) {
-    return <Loading />;
+    return (
+      <div className="relative w-full h-full py-6">
+        <Loading />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>{error.message}</div>;
   }
 
   const displayedItems = [
