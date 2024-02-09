@@ -1,5 +1,4 @@
 import { Booking } from "@/models/Booking";
-import StyledButton from "../common/StyledButton";
 import { convertDate } from "./utils/convertDate";
 
 export default function BookingCard({ booking }: { booking: Booking }) {
@@ -10,7 +9,9 @@ export default function BookingCard({ booking }: { booking: Booking }) {
         {convertDate(new Date(booking.finish as any))}
       </div>
       <div>Price: {booking.price}$</div>
-      <StyledButton className="mt-4">Show details</StyledButton>
+      <div className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border-none hover:cursor-pointer text-sm w-fit">
+        Show details
+      </div>
     </div>
   );
 }

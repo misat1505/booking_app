@@ -1,3 +1,4 @@
+"use client";
 import { Booking } from "@/models/Booking";
 import { Dialog, DialogTrigger, DialogContent } from "../ui/dialog";
 import BookingCard from "./BookingCard";
