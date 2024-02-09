@@ -1,63 +1,38 @@
+"use client";
+import { HotelWithPrice, fetchHomePreviews } from "@/actions/fetchHomePreviews";
 import HotelPreview from "@/components/home/HotelPreview";
-import { connectToDatabase } from "@/db/mongodb";
-import { Hotel } from "@/models/Hotel";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
-export const dynamic = "force-dynamic";
-
-type HotelWithPrice = {
-  hotel: Hotel;
-  price: number | "N/A";
-};
-
-const getPrices = async (hotels: Hotel[]): Promise<HotelWithPrice[]> => {
-  const db = await connectToDatabase();
-  const roomsCollection = db.collection("rooms");
-
-  const promises = hotels.map(
-    (hotel) =>
-      new Promise(async (resolve) => {
-        const rooms = await roomsCollection
-          .find({ hotelId: hotel.uid })
-          .toArray();
-
-        const smallestPrice = Math.pow(10, 10);
-        const lowestPrice = rooms.reduce(
-          (smallest, current: any) =>
-            parseInt(current.dailyFee) < smallest
-              ? parseInt(current.dailyFee)
-              : smallest,
-          smallestPrice
-        );
-
-        if (lowestPrice === smallestPrice) resolve({ hotel, price: "N/A" });
-        resolve({ hotel, price: lowestPrice });
-      })
+export default function Home() {
+  const { inView, ref } = useInView({ rootMargin: "500px", threshold: 0 });
+  const HOTELS_CHUNK_SIZE = 30;
+  const [hotelsWithPrices, setHotelsWithPrices] = useState<HotelWithPrice[]>(
+    []
   );
 
-  const hotelsWithPrices = await Promise.all(promises);
-  return hotelsWithPrices as any;
-};
+  useEffect(() => {
+    if (!inView) return;
 
-export default async function Home() {
-  const start = 0;
-  const count = 10;
+    const fetchData = async () => {
+      const newHotels = await fetchHomePreviews(
+        hotelsWithPrices.length,
+        HOTELS_CHUNK_SIZE
+      );
+      setHotelsWithPrices((prev) => [...prev, ...newHotels]);
+    };
 
-  const hotels = (
-    await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/hotels/?start=${start}&count=${count}`
-    )
-  ).data.hotels as Hotel[];
-
-  const result = await getPrices(hotels);
+    fetchData();
+  }, [inView]);
 
   return (
     <main>
       <div className="w-4/5 mt-4 m-auto grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 gap-6">
-        {result.map(({ hotel, price }) => (
+        {hotelsWithPrices.map(({ hotel, price }) => (
           <HotelPreview key={hotel.uid} hotel={hotel} price={price} />
         ))}
       </div>
+      <div aria-label="false" ref={ref} className="h-1" />
     </main>
   );
 }
