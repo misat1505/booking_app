@@ -11,7 +11,7 @@ export default async function Bookings() {
   const bookings = await getUserBookings(credentials.uid);
 
   return (
-    <div className="grid grid-cols-4 gap-4 m-auto my-4 max-w-[1500px]">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 m-auto my-4 max-w-[1500px] px-4">
       {bookings.map((booking, id) => (
         <BookingItem key={id} booking={booking} />
       ))}
