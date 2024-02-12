@@ -1,7 +1,7 @@
 "use client";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
+import { refreshToken as refresh } from "@/actions/refreshToken";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   useEffect(() => {
     const refreshToken = async () => {
       try {
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`);
+        await refresh();
       } catch (e) {
         router.push(
           `/login/?role=salesman&redirect=${window.location.pathname}`
@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       }
     };
 
-    setInterval(refreshToken, 3 * 60 * 1000);
+    setInterval(refreshToken, 60 * 60 * 1000);
 
     refreshToken();
   }, []);

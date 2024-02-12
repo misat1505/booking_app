@@ -13,7 +13,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const { uid, email, role } = data;
   const payload = { uid, email, role } as Partial<User>;
   const token = encode(payload, { expiresIn: "5h" });
-  console.log(token);
   const response = createResponse<{ token: string }>(
     { token },
     { status: 200 }
