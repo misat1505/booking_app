@@ -1,4 +1,5 @@
 "use client";
+import { login } from "@/actions/login";
 import { useUserContext } from "@/app/contexts/userContext";
 import Loading from "@/components/common/Loading";
 import StyledButton from "@/components/common/StyledButton";
@@ -23,15 +24,7 @@ export default function Login() {
     try {
       const user = await signInWithGoogle();
       const id = await user.getIdToken();
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
-        { idToken: id, role: role?.toUpperCase() },
-        { withCredentials: true }
-      );
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/user`
-      );
-      const responseUser = response.data.user as User;
+      const responseUser = await login(id, role?.toUpperCase() as User["role"]);
       setUser(responseUser);
       if (role?.toUpperCase() === "SALESMAN")
         router.push(redirect ? redirect : "/dashboard");
