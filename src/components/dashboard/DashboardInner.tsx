@@ -26,13 +26,15 @@ export default function DashboardInner({ hotels }: { hotels: Hotel[] }) {
 
   return (
     <HotelsContextProvider initHotels={hotels}>
-      <NewHotelFormContextProvider>
-        <NewHotelForm />
-      </NewHotelFormContextProvider>
-      <div className="w-fit m-auto mb-4 grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-        {hotels.map((hotel) => (
-          <HotelCard key={hotel.uid} hotel={hotel} />
-        ))}
+      <div className="w-fit m-auto">
+        <NewHotelFormContextProvider>
+          <NewHotelForm />
+        </NewHotelFormContextProvider>
+        <div className="w-fit m-auto mb-4 grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+          {hotels.map((hotel) => (
+            <HotelCard key={hotel.uid} hotel={hotel} />
+          ))}
+        </div>
       </div>
     </HotelsContextProvider>
   );
