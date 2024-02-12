@@ -8,11 +8,7 @@ import { convertDate } from "./utils/convertDate";
 import { fetchRoom } from "@/actions/fetchRoom";
 import { fetchHotel } from "@/actions/fetchHotel";
 
-export default async function BookingModalContent({
-  booking,
-}: {
-  booking: Booking;
-}) {
+export default function BookingModalContent({ booking }: { booking: Booking }) {
   const [room, setRoom] = useState<Room | null>(null);
   const [hotel, setHotel] = useState<Hotel | null>(null);
   const [isLoading, setIsLoading] = useState(true);

@@ -39,7 +39,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-      <div className="bg-white p-8 rounded shadow-md w-96 text-center">
+      <div className="p-8 rounded shadow-md w-96 text-center bg-slate-50">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png"
           className="w-[200px] h-[200px] m-auto"
