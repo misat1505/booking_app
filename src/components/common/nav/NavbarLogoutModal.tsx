@@ -11,15 +11,22 @@ import {
 } from "@/components/ui/dialog";
 import StyledButton from "../StyledButton";
 import { CiLogout } from "react-icons/ci";
+import { logout } from "@/actions/logout";
 
 export default function NavbarLogoutModal() {
   const { setUser } = useUserContext();
   const router = useRouter();
 
   const handleLogout = async () => {
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
+    try {
+      await logout();
+    } catch (e) {}
     setUser(null);
-    if (window.location.pathname.startsWith("/dashboard")) router.push("/");
+    if (
+      window.location.pathname.startsWith("/dashboard") ||
+      window.location.pathname === "/bookings"
+    )
+      router.push("/");
   };
 
   return (
