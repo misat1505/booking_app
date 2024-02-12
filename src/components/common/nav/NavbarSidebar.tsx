@@ -4,6 +4,7 @@ import SidebarGuest from "./SidebarGuest";
 import SidebarSalesman from "./SidebarSalesman";
 import SidebarCustomer from "./SidebarCustomer";
 import { SheetHeader } from "@/components/ui/sheet";
+import Image from "next/image";
 
 export default function NavbarSidebar() {
   const { user } = useUserContext();
@@ -26,7 +27,14 @@ export default function NavbarSidebar() {
       <SheetHeader className="font-semibold text-lg pb-3">
         {greeting(new Date())}, {user ? user.displayName : "guest"}!
       </SheetHeader>
-      <div className="h-[calc(100%-0.75rem)]">
+      <div className="relative h-[calc(100%-0.75rem)]">
+        <Image
+          src={"/logo.avif"}
+          alt="..."
+          width={300}
+          height={200}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        />
         {!user && <SidebarGuest />}
         {user?.role === "SALESMAN" && <SidebarSalesman />}
         {user?.role === "CUSTOMER" && <SidebarCustomer />}

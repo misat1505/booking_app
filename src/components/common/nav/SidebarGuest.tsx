@@ -5,7 +5,7 @@ import StyledLink from "../StyledLink";
 
 export default function SidebarGuest() {
   return (
-    <div className="flex flex-col justify-between h-full">
+    <div className="flex flex-col justify-between h-[calc(100%-2rem)] mt-4">
       <StyledLink href={"/"} variant="nav">
         <IoHome className="text-blue-500" />
         Home
