@@ -20,6 +20,7 @@ export default function SidebarGuest() {
         </StyledLink>
         <StyledLink
           variant="nav"
+          className="mb-0"
           href={`/login?role=salesman&redirect=${window.location.pathname}`}
         >
           <MdSell color="green" />

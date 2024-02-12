@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <main>
-      <div className="w-4/5 mt-4 m-auto grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 gap-6">
+      <div className="w-4/5 my-4 m-auto grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 gap-6">
         {hotelsWithPrices.map(({ hotel, price }) => (
           <HotelPreview key={hotel.uid} hotel={hotel} price={price} />
         ))}

@@ -24,7 +24,7 @@ export default async function Dashboard() {
         href={"/dashboard/hotels"}
       >
         <FaHotel className="text-blue-600" />
-        Show my hotels
+        BROWSE YOUR HOTELS
       </Link>
       <div className="col-span-2 lg:col-span-1">
         <HotelIncomeBarChart hotelsIncome={hotelsIncome} />
