@@ -47,7 +47,7 @@ export default function NewHotelForm() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex items-center bg-slate-50 p-4 border border-1 border-slate-300 rounded-md col-span-2 hover:bg-slate-100 mb-6 font-semibold text-lg gap-4 w-[calc(100%-1.5rem)] mx-auto mt-12">
+        <button className="flex items-center bg-slate-50 p-4 border border-1 border-slate-300 rounded-md col-span-2 hover:bg-slate-100 mb-6 font-semibold text-lg gap-4 w-full mt-12">
           <BsFillHouseAddFill className="text-blue-600" />
           Create new hotel
         </button>

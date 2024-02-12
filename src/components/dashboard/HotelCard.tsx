@@ -11,7 +11,7 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
     hotel.description = hotel.description.slice(0, 500) + "...";
 
   return (
-    <div className="mt-3 mx-2 border-solid border border-slate-400 rounded-xl flex flex-col bg-slate-50 hover:shadow-xl transition-shadow min-w-64 max-w-[350px]">
+    <div className="rounded-xl flex flex-col bg-slate-100 hover:shadow-xl transition-shadow min-w-64 max-w-[350px]">
       <Carousel
         className={`w-full h-52 object-cover rounded-tr-xl rounded-tl-xl overflow-x-hidden ${styles.carousel}`}
         plugins={[Autoplay({ delay: 5000 })]}
@@ -32,12 +32,12 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
         </CarouselContent>
       </Carousel>
       <h4 className="p-2 m-0 text-xl font-bold">{hotel.name}</h4>
-      <p className="border-solid border-l-0 border-r-0 border-t-0 border-b border-b-slate-400 px-2 m-0 py-2 text-sm flex-grow">
+      <p className="border-solid border-l-0 border-r-0 border-t-0  px-2 m-0 py-2 text-sm flex-grow">
         {hotel.description}
       </p>
       <StyledLink
         href={`/dashboard/hotels/${hotel.uid}`}
-        className="my-3 w-fit mx-auto"
+        className="my-3 w-3/4 mx-auto"
       >
         Show details
       </StyledLink>
