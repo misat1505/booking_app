@@ -1,3 +1,4 @@
+import { insertBooking } from "@/actions/insertBooking";
 import { useRoomPageContext } from "@/app/contexts/public/RoomPageContext";
 import StyledButton from "@/components/common/StyledButton";
 import { errorConfig, loadingConfig, successConfig } from "@/utils/showToasts";
@@ -21,18 +22,19 @@ export default function DateValidator() {
 
     const body = {
       roomId: room.uid,
-      start: (dateInterval as any)[0],
-      finish: (dateInterval as any)[1],
+      start: (dateInterval as any)[0] as Date,
+      finish: (dateInterval as any)[1] as Date,
       price: price,
     };
 
     const toastID = toast.loading("Please wait...", loadingConfig());
 
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings`,
-        body
-      );
+      // await axios.post(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings`,
+      //   body
+      // );
+      await insertBooking(body);
       toast.update(toastID, successConfig("Successfully booked."));
     } catch (e) {
       toast.update(toastID, errorConfig("An error occured during booking."));
