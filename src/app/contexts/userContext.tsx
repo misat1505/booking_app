@@ -1,6 +1,6 @@
 "use client";
+import { getUser } from "@/actions/getUser";
 import { User } from "@/models/User";
-import axios from "axios";
 import {
   Dispatch,
   ReactNode,
@@ -26,10 +26,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const retreiveUserSession = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/user`
-        );
-        const fetchedUser = response.data.user || null;
+        const fetchedUser = await getUser();
         setUser(fetchedUser);
       } catch (e) {
         setUser(null);
