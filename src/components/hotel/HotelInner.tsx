@@ -41,7 +41,7 @@ export default function HotelInner({ hotel }: { hotel: Hotel }) {
               {hotel.owner.email}
             </Link>
           </div>
-          <StyledLink href={"#"}>
+          <StyledLink href={`/profile/${hotel.owner.uid}`}>
             Show {hotel.owner.displayName}&apos;s page
           </StyledLink>
         </div>
