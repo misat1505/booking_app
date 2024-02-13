@@ -18,6 +18,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { BsFillHouseAddFill } from "react-icons/bs";
+import { createHotel } from "@/actions/createHotel";
 
 export default function NewHotelForm() {
   const { addHotel } = useHotelsContext();
@@ -31,16 +32,13 @@ export default function NewHotelForm() {
 
     const urls = await uploadMultipleFiles(form.images);
 
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/hotels`,
-      {
-        name: form.name,
-        description: form.description,
-        photoURLs: urls,
-      }
-    );
+    const body = {
+      name: form.name,
+      description: form.description,
+      photoURLs: urls,
+    };
 
-    const newHotel = response.data.hotel;
+    const newHotel = await createHotel(body);
     addHotel(newHotel);
   };
 
