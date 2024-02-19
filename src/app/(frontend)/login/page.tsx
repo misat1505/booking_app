@@ -5,7 +5,6 @@ import Loading from "@/components/common/Loading";
 import StyledButton from "@/components/common/StyledButton";
 import { signInWithGoogle } from "@/firebase/firebase";
 import { User } from "@/models/User";
-import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 

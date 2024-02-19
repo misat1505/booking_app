@@ -26,8 +26,8 @@ export default function CarouselBackground({ images }: { images: string[] }) {
             <CarouselItem key={id} className="h-full">
               <Image
                 src={image.replace("\\", "/")}
-                width={1920}
-                height={1080}
+                width={3840}
+                height={2160}
                 alt="..."
                 className="h-full object-cover"
               />
