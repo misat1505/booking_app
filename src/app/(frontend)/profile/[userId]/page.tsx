@@ -9,16 +9,18 @@ export default async function ProfilePage({
 }: {
   params: { userId: string };
 }) {
-  const user = await auth.getUser(params.userId);
-  const hotels = await getUserHotels(params.userId);
-  const bookings = await getUserBookings(params.userId);
+  const [user, hotels, bookings] = await Promise.all([
+    auth.getUser(params.userId),
+    getUserHotels(params.userId),
+    getUserBookings(params.userId),
+  ]);
 
   return (
     <div className="m-auto relative w-96 h-96 bg-slate-100 mt-40 rounded-2xl transition-all hover:shadow-lg max-w-full">
       <Avatar className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40">
         <AvatarImage src={user.photoURL} />
-        <AvatarFallback>
-          <FaUser />
+        <AvatarFallback className="bg-slate-200">
+          <FaUser className="h-full pt-4 flex-grow" />
         </AvatarFallback>
       </Avatar>
       <div className="pt-24 flex flex-col items-center text-center justify-between h-full pb-8">
