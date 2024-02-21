@@ -41,10 +41,10 @@ export default function TopCustomers({
             className="flex justify-between items-center bg-slate-100 border border-1 border-slate-300 p-4 my-4 rounded-md"
           >
             <div className="flex gap-4 items-center">
-              <Avatar>
+              <Avatar className="flex justify-center items-center">
                 <AvatarImage src={topCustomer.user.photoURL} />
-                <AvatarFallback>
-                  <FaUser />
+                <AvatarFallback className="w-full h-full bg-white">
+                  <FaUser className="flex-grow w-full h-full pt-2 text-slate-600" />
                 </AvatarFallback>
               </Avatar>
               <span className="font-semibold">

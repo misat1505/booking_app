@@ -20,7 +20,7 @@ export default async function ProfilePage({
       <Avatar className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40">
         <AvatarImage src={user.photoURL} />
         <AvatarFallback className="bg-slate-200">
-          <FaUser className="h-full pt-4 flex-grow" />
+          <FaUser className="h-full pt-4 flex-grow text-slate-600" />
         </AvatarFallback>
       </Avatar>
       <div className="pt-24 flex flex-col items-center text-center justify-between h-full pb-8">

@@ -25,7 +25,7 @@ export default function Navbar() {
               <Avatar className="hover:cursor-pointer">
                 <AvatarImage src={user?.photoURL} />
                 <AvatarFallback>
-                  <FaUser size={30} className="text-slate-600" />
+                  <FaUser className="text-slate-600 h-full pt-2 flex-grow" />
                 </AvatarFallback>
               </Avatar>
             </SheetTrigger>
