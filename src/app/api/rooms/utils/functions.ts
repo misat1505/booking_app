@@ -18,6 +18,7 @@ export async function insertNewRoom(newRoom: Omit<Room, "uid">): Promise<Room> {
 }
 
 export async function getHotelRooms(hotelId: string): Promise<Room[]> {
+  console.log(hotelId);
   const db = await connectToDatabase();
   const roomsCollection = db.collection("rooms");
 

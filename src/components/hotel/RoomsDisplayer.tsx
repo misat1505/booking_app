@@ -1,7 +1,6 @@
 "use client";
 import { Hotel } from "@/models/Hotel";
 import AccordionInner from "./AccordionInner";
-import useFetch from "@/hooks/useFetch";
 import { Room } from "@/models/Room";
 import Loading from "../common/Loading";
 import {
@@ -10,11 +9,22 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import { useEffect, useState } from "react";
+import { fetchHotelRooms } from "@/actions/fetchHotelRooms";
 
 export default function RoomsDisplayer({ hotel }: { hotel: Hotel }) {
-  const { data, isLoading } = useFetch<{ rooms: Room[] }>(
-    `${process.env.NEXT_PUBLIC_API_URL}/rooms?hotel=${hotel.uid}`
-  );
+  const [data, setData] = useState<Room[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      const rooms = await fetchHotelRooms(hotel.uid);
+      setData(rooms);
+      setIsLoading(false);
+    };
+
+    fetchRooms();
+  }, []);
 
   return (
     <div className="bg-slate-100 col-span-4 p-4 rounded-md mb-4 border border-solid border-slate-300">
@@ -28,7 +38,7 @@ export default function RoomsDisplayer({ hotel }: { hotel: Hotel }) {
           <AccordionItem value="item-1">
             <AccordionTrigger>Show rooms</AccordionTrigger>
             <AccordionContent>
-              <AccordionInner rooms={data!.rooms} />
+              <AccordionInner rooms={data} />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
