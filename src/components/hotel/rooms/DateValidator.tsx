@@ -2,7 +2,6 @@ import { insertBooking } from "@/actions/insertBooking";
 import { useRoomPageContext } from "@/app/contexts/public/RoomPageContext";
 import StyledButton from "@/components/common/StyledButton";
 import { errorConfig, loadingConfig, successConfig } from "@/utils/showToasts";
-import axios from "axios";
 import { toast } from "react-toastify";
 
 export default function DateValidator() {
@@ -30,10 +29,6 @@ export default function DateValidator() {
     const toastID = toast.loading("Please wait...", loadingConfig());
 
     try {
-      // await axios.post(
-      //   `${process.env.NEXT_PUBLIC_API_URL}/rooms/bookings`,
-      //   body
-      // );
       await insertBooking(body);
       toast.update(toastID, successConfig("Successfully booked."));
     } catch (e) {
