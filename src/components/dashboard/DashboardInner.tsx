@@ -19,7 +19,9 @@ export default function DashboardInner({ hotels }: { hotels: Hotel[] }) {
             className="border-none"
           />
           <p className="my-4 text-sm">You have not created any hotels yet.</p>
-          <NewHotelForm />
+          <NewHotelFormContextProvider>
+            <NewHotelForm />
+          </NewHotelFormContextProvider>
         </div>
       </HotelsContextProvider>
     );
