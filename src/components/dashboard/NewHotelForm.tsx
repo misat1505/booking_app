@@ -49,13 +49,14 @@ export default function NewHotelForm() {
     };
 
     try {
-      console.log(newHotelSchema.parse(body));
+      newHotelSchema.parse(body);
     } catch (e) {
       if (e instanceof z.ZodError) {
         e.errors.forEach((err) => {
           toast.error(err.message);
         });
       }
+      return;
     }
 
     const newHotel = await createHotel(body);
@@ -86,7 +87,7 @@ export default function NewHotelForm() {
             className={cn("mx-auto block", {
               "!cursor-not-allowed hover:!bg-blue-400": !isFormValid(),
             })}
-            // disabled={!isFormValid()}
+            disabled={!isFormValid()}
           >
             Create hotel
           </StyledButton>

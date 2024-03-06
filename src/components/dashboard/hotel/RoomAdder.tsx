@@ -16,6 +16,25 @@ import { useNewRoomFormContext } from "@/app/contexts/dashboard/newRoomFormConte
 import cn from "classnames";
 import { toast } from "react-toastify";
 import { createRoom } from "@/actions/createRoom";
+import { z } from "zod";
+
+const lengthMessage = "Room name has to be between 5 and 30 characters long.";
+
+const newRoomSchema = z.object({
+  name: z
+    .string()
+    .min(5, { message: lengthMessage })
+    .max(30, { message: lengthMessage }),
+  capacity: z
+    .number({ invalid_type_error: "Room capacity has to be a number." })
+    .min(1, { message: "Room has to have capacity of at least 1." }),
+  dailyFee: z
+    .number({ invalid_type_error: `Daily charge has to be a number.` })
+    .max(Math.pow(2, 32), {
+      message: `Daily charge cannot exceed ${Math.pow(2, 32)}.`,
+    }),
+  hotelId: z.string().length(24, { message: "Hotel ID has to have 24 chars." }),
+});
 
 export default function RoomAdder() {
   const { hotel, addRoom } = useHotelContext();
@@ -26,11 +45,20 @@ export default function RoomAdder() {
 
     const { name, capacity, charge } = form;
 
-    if (!name || !capacity || !charge) return;
-
     const body = { name, capacity, dailyFee: charge, hotelId: hotel.uid };
 
-    const promise = createRoom(body);
+    try {
+      newRoomSchema.parse(body);
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        e.errors.forEach((err) => {
+          toast.error(err.message);
+        });
+      }
+      return;
+    }
+
+    const promise = createRoom(body as any);
 
     toast.promise(promise, {
       pending: "Please wait...",
