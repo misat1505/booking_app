@@ -19,17 +19,27 @@ import {
 } from "@/components/ui/dialog";
 import { BsFillHouseAddFill } from "react-icons/bs";
 import { createHotel } from "@/actions/createHotel";
+import { z } from "zod";
+import { toast } from "react-toastify";
+
+const lengthMessage = "Hotel name has to be between 5 and 50 characters long.";
+
+const newHotelSchema = z.object({
+  name: z
+    .string()
+    .min(5, { message: lengthMessage })
+    .max(50, { message: lengthMessage }),
+  description: z.string(),
+  photoURLs: z
+    .array(z.string())
+    .min(1, { message: "At least one photo URL is required." }),
+});
 
 export default function NewHotelForm() {
   const { addHotel } = useHotelsContext();
   const { form, isFormValid } = useNewHotelFormContext();
 
   const handleCreateNewHotel = async () => {
-    if (!isFormValid()) {
-      window.alert("Can't create hotel!");
-      return;
-    }
-
     const urls = await uploadMultipleFiles(form.images);
 
     const body = {
@@ -37,6 +47,16 @@ export default function NewHotelForm() {
       description: form.description,
       photoURLs: urls,
     };
+
+    try {
+      console.log(newHotelSchema.parse(body));
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        e.errors.forEach((err) => {
+          toast.error(err.message);
+        });
+      }
+    }
 
     const newHotel = await createHotel(body);
     addHotel(newHotel);
@@ -66,7 +86,7 @@ export default function NewHotelForm() {
             className={cn("mx-auto block", {
               "!cursor-not-allowed hover:!bg-blue-400": !isFormValid(),
             })}
-            disabled={!isFormValid()}
+            // disabled={!isFormValid()}
           >
             Create hotel
           </StyledButton>
