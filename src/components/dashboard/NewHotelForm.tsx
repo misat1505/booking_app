@@ -62,8 +62,8 @@ export default function NewHotelForm() {
 
     toast.promise(promise, {
       pending: "Please wait...",
-      error: "An error occured when creating new room.",
-      success: "Room created successfully.",
+      error: "An error occured when creating new hotel.",
+      success: "Hotel created successfully.",
     });
 
     const newHotel = await promise;
