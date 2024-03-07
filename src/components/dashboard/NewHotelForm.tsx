@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import HotelImages from "./HotelImages";
 import { uploadMultipleFiles } from "@/utils/uploadFiles";
 import { useHotelsContext } from "@/app/contexts/dashboard/hotelsContext";
@@ -59,7 +58,16 @@ export default function NewHotelForm() {
       return;
     }
 
-    const newHotel = await createHotel(body);
+    const promise = createHotel(body);
+
+    toast.promise(promise, {
+      pending: "Please wait...",
+      error: "An error occured when creating new room.",
+      success: "Room created successfully.",
+    });
+
+    const newHotel = await promise;
+
     addHotel(newHotel);
   };
 

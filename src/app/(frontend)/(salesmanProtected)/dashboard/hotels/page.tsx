@@ -1,6 +1,6 @@
 import { decodeCredentials } from "@/actions/decodeCredentials";
 import { getUserHotels } from "@/app/api/hotels/utils/functions";
-import DashboardInner from "@/components/dashboard/DashboardInner";
+import Hotels from "@/components/dashboard/Hotels";
 import { redirect } from "next/navigation";
 
 export default async function DashboardHotelsPage() {
@@ -10,5 +10,5 @@ export default async function DashboardHotelsPage() {
 
   const hotels = await getUserHotels(credentials.uid);
 
-  return <DashboardInner hotels={hotels} />;
+  return <Hotels hotels={hotels} />;
 }
