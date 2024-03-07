@@ -22,7 +22,9 @@ export default function AccordionInner({ rooms }: { rooms: Room[] }) {
     if (!capacity && !minCharge && !maxCharge) return setDisplayedRooms(rooms);
 
     const filteredRooms = rooms
-      .filter((room) => capacity && room.capacity == parseInt(capacity))
+      .filter((room) =>
+        Boolean(capacity) ? room.capacity == parseInt(capacity!) : true
+      )
       .filter((room) =>
         Boolean(minCharge) ? room.dailyFee >= parseInt(minCharge!) : true
       )
