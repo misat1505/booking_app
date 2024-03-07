@@ -12,7 +12,7 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/booking2_mongodb
       - JWT_SECRET=gwsuydwqfuyqewgfyeqgfiugeqfqfpiue
     volumes:
-      - server_files:/public/static
+      - server_files:/app/public/static
 
   mongodb:
     image: mongo

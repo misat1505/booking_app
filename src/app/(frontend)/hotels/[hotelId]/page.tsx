@@ -14,7 +14,7 @@ export default async function HotelPreviewPage({
   return (
     <div>
       <CarouselBackground images={hotel.photoURLs} />
-      <div className="absolute z-10 top-0">
+      <div className="absolute z-10 top-0 w-full">
         <HotelInner hotel={hotel} />
       </div>
     </div>
