@@ -9,6 +9,10 @@ import { FaHotel } from "react-icons/fa6";
 import { fetchChartsData } from "./service";
 
 export default async function Dashboard() {
+  console.log(process.env.NEXT_PUBLIC_IMAGE_SERVER_URL);
+  console.log(process.env.MONGODB_URI);
+  console.log(process.env.JWT_SECRET);
+
   const { success, credentials } = decodeCredentials();
   if (!success || credentials.role !== "SALESMAN")
     redirect("/login?role=salesman");

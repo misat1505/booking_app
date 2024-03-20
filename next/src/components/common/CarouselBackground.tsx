@@ -4,7 +4,6 @@ import {
   CarouselItem,
   CarouselContent,
 } from "@/components/ui/carousel";
-import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import styles from "@/components/home/HotelPreview.module.css";
 
@@ -24,14 +23,10 @@ export default function CarouselBackground({ images }: { images: string[] }) {
         <CarouselContent className="h-full">
           {images.map((image, id) => (
             <CarouselItem key={id} className="h-full">
-              <Image
-                src={`${
-                  process.env.NEXT_PUBLIC_IMAGE_SERVER_URL
-                }${image.replace("\\", "/")}`}
-                width={3840}
-                height={2160}
+              <img
+                src={image.replace("\\", "/")}
                 alt="..."
-                className="h-full object-cover"
+                className="h-full object-cover w-full"
               />
             </CarouselItem>
           ))}

@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 export default function Home() {
+  console.log(process.env.NEXT_PUBLIC_IMAGE_SERVER_URL);
+  console.log(process.env.MONGODB_URI);
+  console.log(process.env.JWT_SECRET);
   const { inView, ref } = useInView({ rootMargin: "500px", threshold: 0 });
   const HOTELS_CHUNK_SIZE = 30;
   const [hotelsWithPrices, setHotelsWithPrices] = useState<HotelWithPrice[]>(

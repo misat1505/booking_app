@@ -25,7 +25,7 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
         <CarouselContent className="h-full">
           {hotel.photoURLs.map((photo, id) => (
             <CarouselItem key={id} className="h-full pl-0">
-              <Image
+              <img
                 src={`${
                   process.env.NEXT_PUBLIC_IMAGE_SERVER_URL
                 }${photo.replace("\\", "/")}`}

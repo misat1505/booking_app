@@ -29,11 +29,7 @@ export default async function HotelPage({
     <HotelContextProvider initHotel={hotel} initRooms={rooms}>
       <CarouselBackground
         images={hotel.photoURLs.map(
-          (photo) =>
-            `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}${photo.replace(
-              "\\",
-              "/"
-            )}`
+          (photo) => `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}${photo}`
         )}
       />
       <div className="absolute z-10 top-0 w-full">

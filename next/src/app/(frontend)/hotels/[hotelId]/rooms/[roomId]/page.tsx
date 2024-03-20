@@ -45,7 +45,11 @@ export default async function RoomPage({
 
   return (
     <RoomPageContextProvider hotel={hotel} room={room} bookings={bookings}>
-      <CarouselBackground images={hotel.photoURLs} />
+      <CarouselBackground
+        images={hotel.photoURLs.map(
+          (photo) => `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}${photo}`
+        )}
+      />
 
       <div className="absolute z-10 grid grid-cols-1 lg:grid-cols-2 top-[150px] min-width-full w-full lg:w-auto p-4 lg:left-1/2 lg:-translate-x-1/2 gap-6">
         <RoomInfo />
