@@ -23,7 +23,9 @@ export default function HotelPreview({ hotel, price }: HotelPreviewProps) {
         <CarouselContent className="h-full">
           <CarouselItem className="h-full pl-0">
             <Image
-              src={hotel.photoURLs[0].replace("\\", "/")}
+              src={`${
+                process.env.NEXT_PUBLIC_IMAGE_SERVER_URL
+              }${hotel.photoURLs[0].replace("\\", "/")}`}
               fill
               alt="..."
               className="h-full object-cover"

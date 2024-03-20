@@ -20,6 +20,7 @@ import { BsFillHouseAddFill } from "react-icons/bs";
 import { createHotel } from "@/actions/createHotel";
 import { z } from "zod";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const lengthMessage = "Hotel name has to be between 5 and 50 characters long.";
 
@@ -39,12 +40,21 @@ export default function NewHotelForm() {
   const { form, isFormValid } = useNewHotelFormContext();
 
   const handleCreateNewHotel = async () => {
-    const urls = await uploadMultipleFiles(form.images);
+    const filePromises = form.images.map((image) => {
+      const formData = new FormData();
+      formData.append("file", image);
+      return axios.post(
+        `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}/upload`,
+        formData
+      );
+    });
+
+    const urls = await Promise.all(filePromises);
 
     const body = {
       name: form.name,
       description: form.description,
-      photoURLs: urls,
+      photoURLs: (urls as any[]).map((url) => url.data.path),
     };
 
     try {

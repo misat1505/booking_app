@@ -1,18 +1,18 @@
 version: "3.8"
 services:
-  next-app:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    depends_on:
-      - mongodb
-    environment:
-      - MONGODB_URI=mongodb://mongodb:27017/booking2_mongodb
-      - JWT_SECRET=gwsuydwqfuyqewgfyeqgfiugeqfqfpiue
-    volumes:
-      - server_files:/app/public/static
+  # next-app:
+  #   build:
+  #     context: ./next
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - mongodb
+  #   environment:
+  #     - MONGODB_URI=mongodb://mongodb:27017/booking2_mongodb
+  #     - JWT_SECRET=gwsuydwqfuyqewgfyeqgfiugeqfqfpiue
+  #   volumes:
+  #     - server_files:/app/public/static
 
   mongodb:
     image: mongo
@@ -20,8 +20,8 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - booking2_mongodb_data:/data/db
+      - booking3_mongodb_data:/data/db
 
 volumes:
-  booking2_mongodb_data:
+  booking3_mongodb_data:
   server_files:

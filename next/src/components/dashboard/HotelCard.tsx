@@ -9,6 +9,11 @@ import styles from "@/components/home/HotelPreview.module.css";
 export default function HotelCard({ hotel }: { hotel: Hotel }) {
   if (hotel.description.length > 500)
     hotel.description = hotel.description.slice(0, 500) + "...";
+  hotel.photoURLs.forEach((photo) => {
+    console.log(
+      `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}${photo.replace("\\", "/")}`
+    );
+  });
 
   return (
     <div className="rounded-xl flex flex-col bg-slate-100 hover:shadow-xl transition-shadow min-w-64 max-w-[350px]">
@@ -21,7 +26,9 @@ export default function HotelCard({ hotel }: { hotel: Hotel }) {
           {hotel.photoURLs.map((photo, id) => (
             <CarouselItem key={id} className="h-full pl-0">
               <Image
-                src={photo.replace("\\", "/")}
+                src={`${
+                  process.env.NEXT_PUBLIC_IMAGE_SERVER_URL
+                }${photo.replace("\\", "/")}`}
                 width={2000}
                 height={1000}
                 alt="..."

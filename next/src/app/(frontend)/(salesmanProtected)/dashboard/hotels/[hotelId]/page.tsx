@@ -27,7 +27,15 @@ export default async function HotelPage({
 
   return (
     <HotelContextProvider initHotel={hotel} initRooms={rooms}>
-      <CarouselBackground images={hotel.photoURLs} />
+      <CarouselBackground
+        images={hotel.photoURLs.map(
+          (photo) =>
+            `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}${photo.replace(
+              "\\",
+              "/"
+            )}`
+        )}
+      />
       <div className="absolute z-10 top-0 w-full">
         <HotelTiles />
       </div>

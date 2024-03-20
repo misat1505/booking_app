@@ -25,7 +25,9 @@ export default function CarouselBackground({ images }: { images: string[] }) {
           {images.map((image, id) => (
             <CarouselItem key={id} className="h-full">
               <Image
-                src={image.replace("\\", "/")}
+                src={`${
+                  process.env.NEXT_PUBLIC_IMAGE_SERVER_URL
+                }${image.replace("\\", "/")}`}
                 width={3840}
                 height={2160}
                 alt="..."
