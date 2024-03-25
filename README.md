@@ -1,6 +1,13 @@
 # Hotel Booking Next.js Project
 
-This project is a hotel booking application built using Next.js, utilizing a separate Express server for handling file storage and serving static files. It leverages MongoDB for data storage, Tailwind CSS for styling, Firebase for authentication, and Shadcn/ui for frontend components. You can easily set up and run the project using Docker Compose.
+This project encapsulates a dynamic hotel booking application powered by Next.js. Within its architecture, it accommodates two distinct user personas: the Salesman, entrusted with the creation of hotels and rooms, and the Customer, empowered to reserve specific rooms for designated time frames. Seamlessly integrated with an Express server for efficient file management and static file serving, this application thrives on MongoDB for robust data storage. Tailwind CSS enriches the interface with contemporary styling, while Firebase seamlessly handles authentication. Shadcn/ui elevates the frontend with sophisticated components, ensuring an immersive user experience. With Docker Compose, initiation and operation of the project become a streamlined affair.
+
+## Usage
+
+- **Discover Hotels**: Witness a captivating array of hotels at your fingertips.![home page](/assets/home_page.png)
+- **Hotel Details**: Dive deep into the essence of your chosen hotel.![hotel page](/assets/hotel_page.png)
+- **Salesman Insights**: Track your financial standing effortlessly.![dashboard](/assets/dashboard.png)
+- **Effortless Navigation**: Seamlessly navigate through pages via a convenient side sheet.![navigation](/assets/navigation.png)
 
 ## Features
 
