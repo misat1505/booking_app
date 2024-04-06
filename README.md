@@ -29,5 +29,5 @@ This project encapsulates a dynamic hotel booking application powered by Next.js
 
 1. Clone this repository.
 2. Install Docker if not already installed.
-3. Run `docker-compose up` to start the project.
+3. Run `docker compose up` to start the project.
 4. Access the application via the provided URL.
