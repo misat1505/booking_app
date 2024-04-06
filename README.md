@@ -16,14 +16,6 @@ This project encapsulates a dynamic hotel booking application powered by Next.js
 - **File Storage**: The Express server efficiently handles file storage and serves static files to enhance performance.
 - **Data Management**: MongoDB is used for efficient data storage and retrieval, ensuring seamless operation of the application.
 
-## How to Run
-
-To run the project, make sure you have Docker installed on your system. Then, execute the following command:
-
-```
-docker compose up
-```
-
 ## Technologies Used
 
 - **Next.js**: Core of the application.
